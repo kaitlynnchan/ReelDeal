@@ -2,7 +2,7 @@ package cmpt276.assign3.assign3game.model;
 
 /**
  * ItemsManager class
- * Stores a collection of booleans
+ * Stores a 2D array of booleans
  *
  * Value of boolean legend:
  *      true = item present
@@ -12,7 +12,7 @@ public class ItemsManager {
     private boolean[][] items;
     private int rows;
     private int cols;
-    private int itemTotal;
+    private int totalItems;
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
@@ -32,14 +32,15 @@ public class ItemsManager {
         return cols;
     }
 
-    public int getItemTotal() {
-        return itemTotal;
+    public int getTotalItems() {
+        return totalItems;
     }
 
-    public void setParams(int rows, int cols, int itemTotal){
+    public void setParams(int rows, int cols, int totalItems){
         this.rows = rows;
         this.cols = cols;
-        this.itemTotal = itemTotal;
+        this.totalItems = totalItems;
+        this.items = new boolean[rows][cols];
     }
 
     public void setItemValue(int row, int col, boolean value) {
@@ -47,8 +48,6 @@ public class ItemsManager {
     }
 
     public void fillArray(){
-        items = new boolean[rows][cols];
-
         // Set every value to default false
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
@@ -57,37 +56,37 @@ public class ItemsManager {
         }
 
         // Randomly add itemTotal amount of items into array
-        int i = itemTotal;
-        while(i > 0){
+        int tempTotalItems = totalItems;
+        while(tempTotalItems > 0){
             int row = (int) ( Math.random() * rows );
             int col = (int) ( Math.random() * cols );
-            if(!isThere(row, col)) {
+            if(!isItemThere(row, col)) {
                 items[row][col] = true;
-                i--;
+                tempTotalItems--;
             }
         }
     }
 
     public int scanRowCol(int row, int col){
-        if(isThere(row, col)){
+        if(isItemThere(row, col)){
             return -1;
         }
 
         int count = 0;
         for(int r = 0; r < rows; r++){
-            if(isThere(r, col)){
+            if(isItemThere(r, col)){
                 count++;
             }
         }
         for(int c = 0; c < cols; c++){
-            if(isThere(row, c)){
+            if(isItemThere(row, c)){
                 count++;
             }
         }
         return count;
     }
 
-    public boolean isThere(int row, int col){
+    public boolean isItemThere(int row, int col){
         return items[row][col];
     }
 

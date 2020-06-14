@@ -15,16 +15,17 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 
 /**
  * Game Screen
- * Displays grid of buttons
+ * Displays number of scans used, items found, total items, high score, and games played
+ * Displays a grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
-    private ItemsManager items;
+    private ItemsManager items = ItemsManager.getInstance();
     private Button[][] buttons;
     private int scans = 0;
     private int found = 0;
-    private int rows;
-    private int cols;
-    private int itemTotal;
+    private int rows = 4;
+    private int cols = 6;
+    private int totalItems = 2;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -36,28 +37,22 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        items = ItemsManager.getInstance();
-
-        // Temporary parameters since options have not been created yet
-        items.setParams(4,6,2);
-        rows = items.getRows();
-        cols = items.getCols();
-        itemTotal = items.getItemTotal();
+        // Temporary parameters
+        items.setParams(rows,cols, totalItems);
 
         buttons = new Button[rows][cols];
-
         items.fillArray();
 
-        setupText();
+        setupTextDisplay();
         setupButtonGrid();
     }
 
-    private void setupText() {
-        String strItemTotal = getString(R.string.items_total);
-        strItemTotal += " " + itemTotal;
+    private void setupTextDisplay() {
+        String strTotalItems = getString(R.string.items_total);
+        strTotalItems += " " + totalItems;
 
         TextView txtItemTotal = findViewById(R.id.textViewItemsTotal);
-        txtItemTotal.setText(strItemTotal);
+        txtItemTotal.setText(strTotalItems);
 
         // Setup high score
 
@@ -72,8 +67,7 @@ public class GameActivity extends AppCompatActivity {
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
+                    1.0f ));
             table.addView(tableRow);
 
             for(int c = 0; c < cols; c++){
@@ -90,41 +84,7 @@ public class GameActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int count = items.scanRowCol(FINAL_ROW, FINAL_COL);
-                        if(count == -1){
-                            // Set image of button to item
-
-                            items.setItemValue(FINAL_ROW, FINAL_COL, false);
-
-                            // Update found count text
-                            found++;
-                            String strFound = getString(R.string.found_count);
-                            strFound = "" + found;
-
-                            TextView txtFound = findViewById(R.id.textViewFoundCount);
-                            txtFound.setText(strFound);
-
-                            // Update already clicked buttons
-                            updateButtonText(FINAL_ROW, FINAL_COL);
-
-                            if(found == itemTotal){
-                                // Display win screen
-                            }
-
-                        } else{
-                            button.setPadding(0,0,0,0);
-                            button.setText(count + "");
-
-                            // Update scan count text
-                            scans++;
-                            String strScans = getString(R.string.scans_used);
-                            strScans = "" + scans;
-
-                            TextView txtScans = findViewById(R.id.textViewScansCount);
-                            txtScans.setText(strScans);
-                            button.setClickable(false);
-
-                        }
+                        updateButtons(FINAL_ROW, FINAL_COL);
                     }
                 });
 
@@ -134,25 +94,72 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void updateButtons(int row, int col) {
+        Button currButton = buttons[row][col];
+        int count = items.scanRowCol(row, col);
+        if(count == -1){
+            items.setItemValue(row, col, false);
+
+            // Lock button size
+            for(int r = 0; r < rows; r++){
+                for(int c = 0; c < cols; c++){
+                    Button btn = buttons[r][c];
+
+                    int width = btn.getWidth();
+                    btn.setMinWidth(width);
+                    btn.setMaxWidth(width);
+
+                    int height = btn.getHeight();
+                    btn.setMinHeight(height);
+                    btn.setMaxHeight(height);
+                }
+            }
+
+            // Set image and scale it
+            currButton.setBackgroundResource(R.drawable.ic_launcher_background);
+
+            // Update found count text
+            found++;
+            TextView txtFound = findViewById(R.id.textViewFoundCount);
+            txtFound.setText("" + found);
+
+            // Update already clicked buttons
+            updateButtonText(row, col);
+
+            if(found == totalItems){
+                // Display win screen
+            }
+
+        } else{
+            currButton.setPadding(0,0,0,0);
+            currButton.setText(count + "");
+
+            // Update scan count text
+            scans++;
+            TextView txtScans = findViewById(R.id.textViewScansCount);
+            txtScans.setText("" + scans);
+
+            currButton.setClickable(false);
+        }
+    }
+
     private void updateButtonText(int row, int col) {
         for(int r = 0; r < rows; r++){
             Button temp = buttons[r][col];
-            if(!temp.isClickable()){
-                int count = Integer.parseInt(temp.getText().toString());
-                if(count > 0){
-                    count--;
-                    temp.setText(count + "");
-                }
-            }
+            setButtonText(temp);
         }
         for(int c = 0; c < cols; c++){
             Button temp = buttons[row][c];
-            if(!temp.isClickable()){
-                int count = Integer.parseInt(temp.getText().toString());
-                if(count > 0){
-                    count--;
-                    temp.setText(count + "");
-                }
+            setButtonText(temp);
+        }
+    }
+
+    private void setButtonText(Button temp) {
+        if(!temp.isClickable()){
+            int count = Integer.parseInt(temp.getText().toString());
+            if(count > 0){
+                count--;
+                temp.setText(count + "");
             }
         }
     }
