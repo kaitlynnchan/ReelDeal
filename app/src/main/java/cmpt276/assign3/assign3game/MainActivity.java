@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                Intent intent = GameActivity.makeIntent(MainActivity.this);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivityForResult(intent, 42);
             }
         });
