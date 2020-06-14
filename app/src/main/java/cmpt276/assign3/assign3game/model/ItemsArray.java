@@ -35,11 +35,27 @@ public class ItemsArray {
         this.items = new boolean[rows][cols];
     }
 
+    public void setItemValue(int row, int col, boolean value) {
+        items[row][col] = value;
+    }
+
     public void fillArray(){
-        // Randomly add itemTotal amount of items into array
+        // Set every value to default false
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 items[r][c] = false;
+                System.out.println("should work");
+            }
+        }
+
+        // Randomly add itemTotal amount of items into array
+        int i = itemTotal;
+        while(i > 0){
+            int row = (int) ( Math.random() * rows );
+            int col = (int) ( Math.random() * cols );
+            if(!isThere(row, col)) {
+                items[row][col] = true;
+                i--;
             }
         }
     }

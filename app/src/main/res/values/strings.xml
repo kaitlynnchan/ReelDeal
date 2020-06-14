@@ -14,4 +14,5 @@
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
     <string name="found_count">0</string>
+    <string name="items_total">Items Total:</string>
 </resources>

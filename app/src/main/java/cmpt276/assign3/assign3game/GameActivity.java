@@ -39,7 +39,17 @@ public class GameActivity extends AppCompatActivity {
 
         items.fillArray();
 
+        setupText();
         setupButtonGrid();
+    }
+
+    private void setupText() {
+        int itemTotal = items.getItemTotal();
+        String strItemTotal = getString(R.string.items_total);
+        strItemTotal += " " + itemTotal;
+
+        TextView txtItemTotal = findViewById(R.id.textViewItemsTotal);
+        txtItemTotal.setText(strItemTotal);
     }
 
     private void setupButtonGrid() {
@@ -47,7 +57,6 @@ public class GameActivity extends AppCompatActivity {
 
         int rows = items.getRows();
         int cols = items.getCols();
-        int itemTotal = items.getItemTotal();
 
         for(int r = 0; r < rows; r++){
             TableRow tableRow = new TableRow(this);
@@ -75,8 +84,9 @@ public class GameActivity extends AppCompatActivity {
                         int count = items.scanRowCol(FINAL_ROW, FINAL_COL);
                         if(count == -1){
                             // Set image of button to item
-                            // Set array position as false
+                            items.setItemValue(FINAL_ROW, FINAL_COL, false);
 
+                            // Update found count text
                             found++;
                             String strFound = getString(R.string.found_count);
                             strFound = "" + found;
@@ -86,6 +96,7 @@ public class GameActivity extends AppCompatActivity {
                         } else{
                             button.setText(count + "");
 
+                            // Update scan count text
                             scans++;
                             String strScans = getString(R.string.scans_used);
                             strScans = "" + scans;
