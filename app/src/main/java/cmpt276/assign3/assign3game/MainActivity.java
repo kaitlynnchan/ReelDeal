@@ -1,5 +1,8 @@
 package cmpt276.assign3.assign3game;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+/**
+ * Main menu
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,32 +31,42 @@ public class MainActivity extends AppCompatActivity {
         setupMainBackground();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     private void playWelcomeScreen() {
         // Implement welcome screen
     }
 
     private void setupButtons() {
-        Button btnPlay = findViewById(R.id.buttonPlay);
+        final Button btnPlay = findViewById(R.id.buttonPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup game activity
+                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
             }
         });
 
-        Button btnOptions = findViewById(R.id.buttonOptions);
+
+        final Button btnOptions = findViewById(R.id.buttonOptions);
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup options activity
+                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
             }
         });
 
-        Button btnHelp = findViewById(R.id.buttonHelp);
+        final Button btnHelp = findViewById(R.id.buttonHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup to help activity
+                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
             }
         });
     }
