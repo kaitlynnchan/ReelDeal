@@ -15,7 +15,6 @@ import android.widget.Button;
  * Displays play, options, and help buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
-    private int buttonBorderID = R.drawable.button_border;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupButtons() {
         final Button btnPlay = findViewById(R.id.buttonPlay);
+        btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                // Setup game screen
                 Intent intent = GameActivity.makeIntent(MainActivity.this);
                 startActivityForResult(intent, 42);
             }
@@ -46,20 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         final Button btnOptions = findViewById(R.id.buttonOptions);
+        btnOptions.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup options screen
-                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
             }
         });
 
         final Button btnHelp = findViewById(R.id.buttonHelp);
+        btnHelp.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup to help screen
-                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
             }
         });
     }
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (resultCode){
             case GameActivity.RESULT_CANCELED:
-                Button btnPlay = findViewById(R.id.buttonPlay);
-                btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+                // Reset buttons
+                setupButtons();
                 break;
             default:
                 assert false;
