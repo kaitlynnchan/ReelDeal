@@ -8,17 +8,31 @@ public class ItemsArray {
 
     // Singleton implementation of ItemsArray
     private static ItemsArray instance;
-    private ItemsArray(int rows, int cols, int itemTotal){
-        this.items = new boolean[rows][cols];
+    private ItemsArray(){}
+    public static ItemsArray getInstance(){
+        if(instance == null){
+            instance = new ItemsArray();
+        }
+        return instance;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getItemTotal() {
+        return itemTotal;
+    }
+
+    public void setParams(int rows, int cols, int itemTotal){
         this.rows = rows;
         this.cols = cols;
         this.itemTotal = itemTotal;
-    }
-    public static ItemsArray getInstance(int rows, int cols, int itemTotal){
-        if(instance == null){
-            instance = new ItemsArray(rows, cols, itemTotal);
-        }
-        return instance;
+        this.items = new boolean[rows][cols];
     }
 
     public void fillArray(){

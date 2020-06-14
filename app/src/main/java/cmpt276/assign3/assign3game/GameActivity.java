@@ -18,11 +18,9 @@ import cmpt276.assign3.assign3game.model.ItemsArray;
  * Displays grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
-    private int rows = 4;
-    private int cols = 6;
-    private int itemTotal = 2;
     private ItemsArray items;
     private int scans = 0;
+    private int found = 0;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -34,7 +32,11 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        items = ItemsArray.getInstance(rows, cols, itemTotal);
+        items = ItemsArray.getInstance();
+
+        // Temporary setting parameters
+        items.setParams(4,6,2);
+
         items.fillArray();
 
         setupButtonGrid();
@@ -42,6 +44,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupButtonGrid() {
         TableLayout table = findViewById(R.id.tableLayoutButtonGrid);
+
+        int rows = items.getRows();
+        int cols = items.getCols();
+        int itemTotal = items.getItemTotal();
 
         for(int r = 0; r < rows; r++){
             TableRow tableRow = new TableRow(this);
@@ -70,14 +76,21 @@ public class GameActivity extends AppCompatActivity {
                         if(count == -1){
                             // Set image of button to item
                             // Set array position as false
+
+                            found++;
+                            String strFound = getString(R.string.found_count);
+                            strFound = "" + found;
+
+                            TextView txtFound = findViewById(R.id.textViewFoundCount);
+                            txtFound.setText(strFound);
                         } else{
                             button.setText(count + "");
 
                             scans++;
-                            String strScans = getString(R.string.scans_count);
-                            strScans += " " + scans;
+                            String strScans = getString(R.string.scans_used);
+                            strScans = "" + scans;
 
-                            TextView txtScans = findViewById(R.id.textViewScans);
+                            TextView txtScans = findViewById(R.id.textViewScansCount);
                             txtScans.setText(strScans);
                         }
                     }
