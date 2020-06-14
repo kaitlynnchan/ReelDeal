@@ -1,7 +1,10 @@
 package cmpt276.assign3.assign3game;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -33,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Setup game screen
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+
+                // Setup game screen
+                Intent intent = GameActivity.makeIntent(MainActivity.this);
+                startActivityForResult(intent, 42);
             }
         });
 
@@ -56,6 +62,20 @@ public class MainActivity extends AppCompatActivity {
                 btnHelp.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode){
+            case GameActivity.RESULT_CANCELED:
+                Button btnPlay = findViewById(R.id.buttonPlay);
+                btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+                break;
+            default:
+                assert false;
+        }
     }
 
     private void setupMainBackground() {
