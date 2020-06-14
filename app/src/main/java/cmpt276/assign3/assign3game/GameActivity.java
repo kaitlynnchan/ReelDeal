@@ -11,16 +11,20 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import cmpt276.assign3.assign3game.model.ItemsArray;
+import cmpt276.assign3.assign3game.model.ItemsManager;
 
 /**
  * Game Screen
  * Displays grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
-    private ItemsArray items;
+    private ItemsManager items;
+    private Button[][] buttons;
     private int scans = 0;
     private int found = 0;
+    private int rows;
+    private int cols;
+    private int itemTotal;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -32,10 +36,15 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        items = ItemsArray.getInstance();
+        items = ItemsManager.getInstance();
 
-        // Temporary setting parameters
+        // Temporary parameters since options have not been created yet
         items.setParams(4,6,2);
+        rows = items.getRows();
+        cols = items.getCols();
+        itemTotal = items.getItemTotal();
+
+        buttons = new Button[rows][cols];
 
         items.fillArray();
 
@@ -44,19 +53,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupText() {
-        int itemTotal = items.getItemTotal();
         String strItemTotal = getString(R.string.items_total);
         strItemTotal += " " + itemTotal;
 
         TextView txtItemTotal = findViewById(R.id.textViewItemsTotal);
         txtItemTotal.setText(strItemTotal);
+
+        // Setup high score
+
+        // Setup games played
     }
 
     private void setupButtonGrid() {
         TableLayout table = findViewById(R.id.tableLayoutButtonGrid);
-
-        int rows = items.getRows();
-        int cols = items.getCols();
 
         for(int r = 0; r < rows; r++){
             TableRow tableRow = new TableRow(this);
@@ -84,6 +93,7 @@ public class GameActivity extends AppCompatActivity {
                         int count = items.scanRowCol(FINAL_ROW, FINAL_COL);
                         if(count == -1){
                             // Set image of button to item
+
                             items.setItemValue(FINAL_ROW, FINAL_COL, false);
 
                             // Update found count text
@@ -93,7 +103,16 @@ public class GameActivity extends AppCompatActivity {
 
                             TextView txtFound = findViewById(R.id.textViewFoundCount);
                             txtFound.setText(strFound);
+
+                            // Update already clicked buttons
+                            updateButtonText(FINAL_ROW, FINAL_COL);
+
+                            if(found == itemTotal){
+                                // Display win screen
+                            }
+
                         } else{
+                            button.setPadding(0,0,0,0);
                             button.setText(count + "");
 
                             // Update scan count text
@@ -103,11 +122,37 @@ public class GameActivity extends AppCompatActivity {
 
                             TextView txtScans = findViewById(R.id.textViewScansCount);
                             txtScans.setText(strScans);
+                            button.setClickable(false);
+
                         }
                     }
                 });
 
                 tableRow.addView(button);
+                buttons[r][c] = button;
+            }
+        }
+    }
+
+    private void updateButtonText(int row, int col) {
+        for(int r = 0; r < rows; r++){
+            Button temp = buttons[r][col];
+            if(!temp.isClickable()){
+                int count = Integer.parseInt(temp.getText().toString());
+                if(count > 0){
+                    count--;
+                    temp.setText(count + "");
+                }
+            }
+        }
+        for(int c = 0; c < cols; c++){
+            Button temp = buttons[row][c];
+            if(!temp.isClickable()){
+                int count = Integer.parseInt(temp.getText().toString());
+                if(count > 0){
+                    count--;
+                    temp.setText(count + "");
+                }
             }
         }
     }

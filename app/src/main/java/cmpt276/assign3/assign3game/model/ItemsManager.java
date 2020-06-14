@@ -1,17 +1,25 @@
 package cmpt276.assign3.assign3game.model;
 
-public class ItemsArray {
+/**
+ * ItemsManager class
+ * Stores a collection of booleans
+ *
+ * Value of boolean legend:
+ *      true = item present
+ *      false = item not present
+ */
+public class ItemsManager {
     private boolean[][] items;
     private int rows;
     private int cols;
     private int itemTotal;
 
-    // Singleton implementation of ItemsArray
-    private static ItemsArray instance;
-    private ItemsArray(){}
-    public static ItemsArray getInstance(){
+    // Singleton implementation of ItemsManager
+    private static ItemsManager instance;
+    private ItemsManager(){}
+    public static ItemsManager getInstance(){
         if(instance == null){
-            instance = new ItemsArray();
+            instance = new ItemsManager();
         }
         return instance;
     }
@@ -32,7 +40,6 @@ public class ItemsArray {
         this.rows = rows;
         this.cols = cols;
         this.itemTotal = itemTotal;
-        this.items = new boolean[rows][cols];
     }
 
     public void setItemValue(int row, int col, boolean value) {
@@ -40,11 +47,12 @@ public class ItemsArray {
     }
 
     public void fillArray(){
+        items = new boolean[rows][cols];
+
         // Set every value to default false
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 items[r][c] = false;
-                System.out.println("should work");
             }
         }
 
@@ -61,18 +69,18 @@ public class ItemsArray {
     }
 
     public int scanRowCol(int row, int col){
-        if(items[row][col] == true){
+        if(isThere(row, col)){
             return -1;
         }
 
         int count = 0;
-        for(int r = row; r < rows; r++){
-            if(items[r][col] == true){
+        for(int r = 0; r < rows; r++){
+            if(isThere(r, col)){
                 count++;
             }
         }
-        for(int c = col; c < cols; c++){
-            if(items[row][c] == true){
+        for(int c = 0; c < cols; c++){
+            if(isThere(row, c)){
                 count++;
             }
         }
@@ -82,4 +90,5 @@ public class ItemsArray {
     public boolean isThere(int row, int col){
         return items[row][col];
     }
+
 }
