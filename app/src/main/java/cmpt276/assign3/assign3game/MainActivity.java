@@ -2,46 +2,63 @@ package cmpt276.assign3.assign3game;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
 
+/**
+ * Main menu
+ * Displays play, options, and help buttons to navigate screens
+ */
 public class MainActivity extends AppCompatActivity {
+    private int buttonBorderID = R.drawable.button_border;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        playWelcomeScreen();
+        setupButtons();
+        setupMainBackground();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void playWelcomeScreen() {
+        // Implement welcome screen
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void setupButtons() {
+        final Button btnPlay = findViewById(R.id.buttonPlay);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Setup game screen
+                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+            }
+        });
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+        final Button btnOptions = findViewById(R.id.buttonOptions);
+        btnOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Setup options screen
+                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+            }
+        });
+
+        final Button btnHelp = findViewById(R.id.buttonHelp);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Setup to help screen
+                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(buttonBorderID));
+            }
+        });
+    }
+
+    private void setupMainBackground() {
+        // Implement background based on theme
     }
 }
