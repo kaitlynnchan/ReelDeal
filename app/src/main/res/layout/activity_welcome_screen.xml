@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000" >
+    android:background="@drawable/ocean_background">
 
   <!--  <ImageView
         android:id="@+id/logo"
@@ -12,14 +14,51 @@
         android:src="@drawable/logo" />
         -->
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="172dp"
-        android:gravity="center_horizontal"
-        android:text="Welcome!!!"
-        android:textColor="#ffffff"
-        android:textSize="40dp" />
+  <TextView
+      android:id="@+id/textViewGameTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="272dp"
+      android:layout_marginEnd="164dp"
+      android:layout_marginRight="164dp"
+      android:text="GAME\n NAME"
+      android:textSize="30sp"
+      app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
+      app:layout_constraintTop_toTopOf="@+id/imageFishingPole" />
 
-</RelativeLayout>
+  <ImageView
+      android:id="@+id/imageFishingPole"
+      android:layout_width="692dp"
+      android:layout_height="314dp"
+      android:layout_marginTop="48dp"
+      android:layout_marginEnd="176dp"
+      android:layout_marginRight="176dp"
+      android:visibility="visible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/fishing_pole" />
+
+  <ImageView
+      android:id="@+id/imageFishingRod"
+      android:layout_width="692dp"
+      android:layout_height="314dp"
+      android:layout_marginTop="48dp"
+      android:layout_marginEnd="176dp"
+      android:layout_marginRight="176dp"
+      android:visibility="invisible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/fishing_rod" />
+
+  <ImageView
+      android:id="@+id/imageFishingWire"
+      android:layout_width="wrap_content"
+      android:layout_height="314dp"
+      android:layout_marginEnd="144dp"
+      android:layout_marginRight="144dp"
+      android:visibility="invisible"
+      app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
+      app:layout_constraintTop_toTopOf="@+id/imageFishingPole"
+      app:srcCompat="@drawable/fishing_wire" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
