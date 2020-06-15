@@ -2,10 +2,13 @@ package cmpt276.assign3.assign3game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class WelcomeScreen extends AppCompatActivity {
@@ -18,13 +21,15 @@ public class WelcomeScreen extends AppCompatActivity {
 
         moveFishingRod();
 
+        setupSkipButton();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override public void run() {
-//                Intent i = new Intent(WelcomeScreen.this, MainActivity.class); startActivity(i);
+//                Intent i = MainActivity.makeLaunchIntent(WelcomeScreen.this); startActivity(i);
 //                finish();
 //            }
 //        }, 3000);
     }
+
 
     private void moveFishingRod() {
 //        rotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
@@ -45,5 +50,20 @@ public class WelcomeScreen extends AppCompatActivity {
             imgFishingWire.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    private void setupSkipButton() {
+        final Button btnSkip = findViewById(R.id.buttonSkip);
+        btnSkip.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSkip.setBackground(WelcomeScreen.this.getResources().getDrawable(R.drawable.button_border));
+
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
