@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ocean_background">
+    android:background="@drawable/ocean_background" >
 
   <!--  <ImageView
         android:id="@+id/logo"
@@ -13,18 +13,6 @@
         android:layout_centerInParent="true"
         android:src="@drawable/logo" />
         -->
-
-  <TextView
-      android:id="@+id/textViewGameTitle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="272dp"
-      android:layout_marginEnd="164dp"
-      android:layout_marginRight="164dp"
-      android:text="GAME\n NAME"
-      android:textSize="30sp"
-      app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
-      app:layout_constraintTop_toTopOf="@+id/imageFishingPole" />
 
   <ImageView
       android:id="@+id/imageFishingPole"
@@ -72,5 +60,27 @@
       android:text="SKIP"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
+
+  <View
+      android:id="@+id/view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="#CC000000"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/textViewGameTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="300dp"
+      android:layout_marginRight="300dp"
+      android:text="GAME\n NAME"
+      android:textSize="30sp"
+      app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
+      app:layout_constraintTop_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
