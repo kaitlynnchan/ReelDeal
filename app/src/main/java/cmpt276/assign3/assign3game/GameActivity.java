@@ -2,6 +2,10 @@ package cmpt276.assign3.assign3game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -95,7 +99,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateButtons(int row, int col) {
-        Button currButton = buttons[row][col];
+        Button button = buttons[row][col];
         int count = items.scanRowCol(row, col);
         if(count == -1){
             items.setItemValue(row, col, false);
@@ -115,8 +119,14 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
 
-            // Set image and scale it
-            currButton.setBackgroundResource(R.drawable.ic_launcher_background);
+            // Set and scale image
+            button.setBackgroundResource(R.drawable.ic_launcher_background);
+//            int newWidth = button.getWidth();
+//            int newHeight = button.getHeight();
+//            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_black_24dp);
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+//            Resources resource = getResources();
+//            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
             // Update found count text
             found++;
@@ -131,15 +141,15 @@ public class GameActivity extends AppCompatActivity {
             }
 
         } else{
-            currButton.setPadding(0,0,0,0);
-            currButton.setText(count + "");
+            button.setPadding(0,0,0,0);
+            button.setText(count + "");
 
             // Update scan count text
             scans++;
             TextView txtScans = findViewById(R.id.textViewScansCount);
             txtScans.setText("" + scans);
 
-            currButton.setClickable(false);
+            button.setClickable(false);
         }
     }
 
