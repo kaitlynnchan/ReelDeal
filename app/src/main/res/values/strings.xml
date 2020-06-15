@@ -9,4 +9,13 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="scans_used">Scans Used:</string>
+    <string name="scans_count">0</string>
+    <string name="found">Found:</string>
+    <string name="found_count">0</string>
+    <string name="items_total">Items Total:</string>
+    <string name="high_score">High Score:</string>
+    <string name="games_played">Games Played:</string>
+    <string name="game_name">GAME NAME</string>
 </resources>
