@@ -48,13 +48,6 @@ public class ItemsManager {
     }
 
     public void fillArray(){
-        // Set every value to default false
-        for(int r = 0; r < rows; r++){
-            for(int c = 0; c < cols; c++){
-                items[r][c] = false;
-            }
-        }
-
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){
