@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +34,7 @@ public class WelcomeScreen extends AppCompatActivity {
                 Intent i = MainActivity.makeLaunchIntent(WelcomeScreen.this); startActivity(i);
                 finish();
             }
-        }, 9000);
+        }, 10000);
     }
 
     private void startTimer() {
@@ -43,14 +45,13 @@ public class WelcomeScreen extends AppCompatActivity {
                 overlay.setAlpha((float)0.5);
 
                 ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
-                TextView gameTitle = findViewById(R.id.textViewGameTitle);
                 imgFishingPole.setAlpha(0);
-                gameTitle.setAlpha(0);
 
-                TextView gameTitleCenter = findViewById(R.id.textViewTitleCenter);
-                TextView authors = findViewById(R.id.textViewAuthors);
-                gameTitleCenter.setAlpha(1);
-                authors.setAlpha(1);
+                TextView gameTitle = findViewById(R.id.textViewGameTitle);
+                Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
+                scale.setFillAfter(true);
+                gameTitle.startAnimation(scale);
+
             }
         }, 5500);
     }
@@ -74,6 +75,23 @@ public class WelcomeScreen extends AppCompatActivity {
         moveX.setStartDelay(3000);
         moveX.setDuration(2000);
         moveX.start();
+
+        // Move
+        ObjectAnimator moveY2 = ObjectAnimator.ofFloat(gameTitle, "translationY", -350);
+        moveY2.setStartDelay(5500);
+        moveY2.setDuration(1000);
+        moveY2.start();
+
+        ObjectAnimator moveX2 = ObjectAnimator.ofFloat(gameTitle, "translationX", 225);
+        moveX2.setStartDelay(5500);
+        moveX2.setDuration(1000);
+        moveX2.start();
+
+        TextView authors = findViewById(R.id.textViewAuthors);
+        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, "translationX", 1100);
+        moveAuthorX.setStartDelay(5525);
+        moveAuthorX.setDuration(1000);
+        moveAuthorX.start();
     }
 
     private void setupSkipButton() {

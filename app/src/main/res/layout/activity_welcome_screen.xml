@@ -87,35 +87,16 @@
       app:layout_constraintTop_toBottomOf="parent" />
 
   <TextView
-      android:id="@+id/textViewTitleCenter"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:alpha="0"
-      android:padding="20dp"
-      android:shadowColor="#FFFFFF"
-      android:shadowDx="0.0"
-      android:shadowDy="0.0"
-      android:shadowRadius="50"
-      android:text="GAME\n       NAME"
-      android:textColor="#FFFFFF"
-      android:textSize="50sp"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-  <TextView
       android:id="@+id/textViewAuthors"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:alpha="0"
+      android:layout_marginBottom="120dp"
+      android:alpha="1"
       android:gravity="center"
       android:text="by Kaitlynn Chan and\n Sunayani Sarkar"
       android:textColor="#FFFFFF"
       android:textSize="18sp"
-      app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
-      app:layout_constraintStart_toStartOf="@+id/textViewTitleCenter"
-      app:layout_constraintTop_toBottomOf="@+id/textViewTitleCenter" />
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
