@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class WelcomeScreen extends AppCompatActivity {
 
     @Override
@@ -21,28 +24,45 @@ public class WelcomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_screen);
 
         moveFishingRod();
-
         setupSkipButton();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override public void run() {
-//                Intent i = MainActivity.makeLaunchIntent(WelcomeScreen.this); startActivity(i);
-//                finish();
-//            }
-//        }, 3000);
+        startTimer();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                Intent i = MainActivity.makeLaunchIntent(WelcomeScreen.this); startActivity(i);
+                finish();
+            }
+        }, 9000);
+    }
+
+    private void startTimer() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                View overlay = findViewById(R.id.viewOverlay);
+                overlay.setAlpha((float)0.5);
+
+                ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
+                TextView gameTitle = findViewById(R.id.textViewGameTitle);
+                imgFishingPole.setAlpha(0);
+                gameTitle.setAlpha(0);
+
+                TextView gameTitleCenter = findViewById(R.id.textViewTitleCenter);
+                TextView authors = findViewById(R.id.textViewAuthors);
+                gameTitleCenter.setAlpha(1);
+                authors.setAlpha(1);
+            }
+        }, 5500);
     }
 
 
     private void moveFishingRod() {
-//        rotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
-
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
         Animation rotate = new RotateAnimation(0f, 30f, 50, 50);
         rotate.setDuration(2500);
         rotate.setRepeatCount(1);
         rotate.setRepeatMode(Animation.REVERSE);
-//        rotate.setFillAfter(true);
         imgFishingPole.setAnimation(rotate);
-        imgFishingPole.setVisibility(View.INVISIBLE);
 
         TextView gameTitle = findViewById(R.id.textViewGameTitle);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", -250);
@@ -54,16 +74,6 @@ public class WelcomeScreen extends AppCompatActivity {
         moveX.setStartDelay(3000);
         moveX.setDuration(2000);
         moveX.start();
-
-
-
-//        if(imgFishingPole.getVisibility() == View.INVISIBLE){
-//            ImageView imgFishingRod = findViewById(R.id.imageFishingRod);
-//            ImageView imgFishingWire = findViewById(R.id.imageFishingWire);
-//            imgFishingRod.setVisibility(View.VISIBLE);
-//            imgFishingWire.setVisibility(View.VISIBLE);
-//
-//        }
     }
 
     private void setupSkipButton() {
