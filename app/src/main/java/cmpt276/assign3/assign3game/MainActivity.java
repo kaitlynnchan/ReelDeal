@@ -1,6 +1,5 @@
 package cmpt276.assign3.assign3game;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,14 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playWelcomeScreen();
         setupButtons();
         setupMainBackground();
-    }
-
-    private void playWelcomeScreen() {
-        Intent intent = WelcomeScreen.makeLaunchIntent(this);
-        startActivity(intent);
     }
 
     private void setupButtons() {

@@ -3,7 +3,6 @@ package cmpt276.assign3.assign3game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,16 +15,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Welcome Screen
+ * Plays a fishing animation
+ * Allows users to be able to skip the welcome
+ * animation and go to main menu
+ */
 public class WelcomeScreen extends AppCompatActivity {
 
+    private Handler handler = new Handler();
     private int heightScreen;
     private int widthScreen;
     private int timer;
-
-    public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, WelcomeScreen.class);
-        return intent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,10 @@ public class WelcomeScreen extends AppCompatActivity {
         fishingGameTitle();
         setupSkipButton();
 
-        new Handler().postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override public void run() {
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
+                startActivity(intent);
                 finish();
             }
         }, timer);
@@ -125,6 +128,10 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnSkip.setBackground(WelcomeScreen.this.getResources().getDrawable(R.drawable.button_border));
+                handler.removeCallbacksAndMessages(null);
+
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
+                startActivity(intent);
                 finish();
             }
         });
