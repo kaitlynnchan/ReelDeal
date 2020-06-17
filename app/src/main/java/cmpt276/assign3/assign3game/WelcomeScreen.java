@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,12 +19,21 @@ import java.util.TimerTask;
 
 public class WelcomeScreen extends AppCompatActivity {
 
+    private DisplayMetrics displayMetrics;
+    private int heightScreen;
+    private int widthScreen;
     private int timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
+
+        displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        heightScreen = displayMetrics.heightPixels;
+        widthScreen = displayMetrics.widthPixels;
 
         moveFishingRod();
         setupSkipButton();
@@ -48,12 +58,12 @@ public class WelcomeScreen extends AppCompatActivity {
 
         timer += 3000;
         TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", -250);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", (float) (heightScreen / 5) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(2000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX", 350);
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX", (float) widthScreen / 5);
         moveX.setStartDelay(timer);
         moveX.setDuration(2000);
         moveX.start();
@@ -63,19 +73,25 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void moveAfterFishing() {
-        final TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", -350);
+        final TextView gameTitle = findViewById(R.id.textViewGameTitle);;
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
+                "translationY",
+                (float) (heightScreen / 3) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX", 225);
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
+                "translationX",
+                (float) widthScreen / 7);
         moveX.setStartDelay(timer);
         moveX.setDuration(1000);
         moveX.start();
 
         TextView authors = findViewById(R.id.textViewAuthors);
-        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, "translationX", 1100);
+        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
+                "translationX",
+                (float) (widthScreen / 3) * 2);
         moveAuthorX.setStartDelay(timer);
         moveAuthorX.setDuration(1000);
         moveAuthorX.start();
