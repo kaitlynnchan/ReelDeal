@@ -26,29 +26,6 @@
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/fishing_pole" />
 
-  <ImageView
-      android:id="@+id/imageFishingRod"
-      android:layout_width="692dp"
-      android:layout_height="314dp"
-      android:layout_marginTop="48dp"
-      android:layout_marginEnd="176dp"
-      android:layout_marginRight="176dp"
-      android:visibility="invisible"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/fishing_rod" />
-
-  <ImageView
-      android:id="@+id/imageFishingWire"
-      android:layout_width="wrap_content"
-      android:layout_height="314dp"
-      android:layout_marginEnd="144dp"
-      android:layout_marginRight="144dp"
-      android:visibility="invisible"
-      app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
-      app:layout_constraintTop_toTopOf="@+id/imageFishingPole"
-      app:srcCompat="@drawable/fishing_wire" />
-
   <Button
       android:id="@+id/buttonSkip"
       android:layout_width="wrap_content"
@@ -65,9 +42,7 @@
       android:id="@+id/viewOverlay"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:alpha="0"
       android:background="#000000"
-      android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"

@@ -37,6 +37,11 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void moveFishingRod() {
+        View overlay = findViewById(R.id.viewOverlay);
+        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
+        fadeOut.setFillAfter(true);
+        overlay.startAnimation(fadeOut);
+
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
         Animation rotate = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
@@ -59,15 +64,15 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void moveAfterFishing() {
         final TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY2 = ObjectAnimator.ofFloat(gameTitle, "translationY", -350);
-        moveY2.setStartDelay(timer);
-        moveY2.setDuration(1000);
-        moveY2.start();
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", -350);
+        moveY.setStartDelay(timer);
+        moveY.setDuration(1000);
+        moveY.start();
 
-        ObjectAnimator moveX2 = ObjectAnimator.ofFloat(gameTitle, "translationX", 225);
-        moveX2.setStartDelay(timer);
-        moveX2.setDuration(1000);
-        moveX2.start();
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX", 225);
+        moveX.setStartDelay(timer);
+        moveX.setDuration(1000);
+        moveX.start();
 
         TextView authors = findViewById(R.id.textViewAuthors);
         ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, "translationX", 1100);
@@ -79,7 +84,9 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void run() {
                 View overlay = findViewById(R.id.viewOverlay);
-                overlay.setAlpha((float) 0.5);
+                Animation fadeIn = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_fade_in);
+                fadeIn.setFillAfter(true);
+                overlay.startAnimation(fadeIn);
 
                 Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
                 scale.setFillAfter(true);
