@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -48,12 +49,6 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void fishingGameTitle() {
-        // Overlay hide
-        View overlay = findViewById(R.id.viewOverlay);
-        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
-        fadeOut.setFillAfter(true);
-        overlay.startAnimation(fadeOut);
-
         // Fishing pole animations
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
         Animation rotate = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_rotate);
@@ -84,10 +79,11 @@ public class WelcomeScreen extends AppCompatActivity {
     private void moveAfterFishing() {
         // Black overlay animation
         View overlay = findViewById(R.id.viewOverlay);
-        Animation fadeIn = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_fade_in);
-        fadeIn.setStartOffset(timer);
-        fadeIn.setFillAfter(true);
-        overlay.startAnimation(fadeIn);
+        overlay.setVisibility(View.VISIBLE);
+        ViewPropertyAnimator fadeIn = overlay.animate();
+        fadeIn.alpha(0.5f);
+        fadeIn.setStartDelay(timer);
+        fadeIn.setDuration(1000);
 
         // Game title animations
         TextView gameTitle = findViewById(R.id.textViewGameTitle);
