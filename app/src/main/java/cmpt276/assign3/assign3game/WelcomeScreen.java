@@ -3,6 +3,7 @@ package cmpt276.assign3.assign3game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,56 +15,64 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class WelcomeScreen extends AppCompatActivity {
 
-    private DisplayMetrics displayMetrics;
     private int heightScreen;
     private int widthScreen;
     private int timer;
+
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, WelcomeScreen.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
-        displayMetrics = new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         heightScreen = displayMetrics.heightPixels;
         widthScreen = displayMetrics.widthPixels;
 
-        moveFishingRod();
+        fishingGameTitle();
         setupSkipButton();
 
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                Intent i = MainActivity.makeLaunchIntent(WelcomeScreen.this); startActivity(i);
                 finish();
             }
-        }, timer*2);
+        }, timer);
     }
 
-    private void moveFishingRod() {
+    private void fishingGameTitle() {
+        // Overlay hide
         View overlay = findViewById(R.id.viewOverlay);
         Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
         fadeOut.setFillAfter(true);
         overlay.startAnimation(fadeOut);
 
+        // Fishing pole animations
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
         Animation rotate = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
 
         timer += 3000;
+
+        // Game title animations
         TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, "translationY", (float) (heightScreen / 5) * -1);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
+                "translationY",
+                (float) (heightScreen / 5) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(2000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX", (float) widthScreen / 5);
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
+                "translationX",
+                (float) widthScreen / 5);
         moveX.setStartDelay(timer);
         moveX.setDuration(2000);
         moveX.start();
@@ -73,7 +82,15 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     private void moveAfterFishing() {
-        final TextView gameTitle = findViewById(R.id.textViewGameTitle);;
+        // Black overlay animation
+        View overlay = findViewById(R.id.viewOverlay);
+        Animation fadeIn = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_fade_in);
+        fadeIn.setStartOffset(timer);
+        fadeIn.setFillAfter(true);
+        overlay.startAnimation(fadeIn);
+
+        // Game title animations
+        TextView gameTitle = findViewById(R.id.textViewGameTitle);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
@@ -88,6 +105,12 @@ public class WelcomeScreen extends AppCompatActivity {
         moveX.setDuration(1000);
         moveX.start();
 
+        Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
+        scale.setStartOffset(timer);
+        scale.setFillAfter(true);
+        gameTitle.startAnimation(scale);
+
+        // Author animation
         TextView authors = findViewById(R.id.textViewAuthors);
         ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
                 "translationX",
@@ -96,21 +119,7 @@ public class WelcomeScreen extends AppCompatActivity {
         moveAuthorX.setDuration(1000);
         moveAuthorX.start();
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                View overlay = findViewById(R.id.viewOverlay);
-                Animation fadeIn = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_fade_in);
-                fadeIn.setFillAfter(true);
-                overlay.startAnimation(fadeIn);
-
-                Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
-                scale.setFillAfter(true);
-                gameTitle.startAnimation(scale);
-
-                timer += 1000 + 4000;
-            }
-        }, timer);
+        timer += 1000 + 4000;
     }
 
     private void setupSkipButton() {
@@ -120,9 +129,6 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnSkip.setBackground(WelcomeScreen.this.getResources().getDrawable(R.drawable.button_border));
-
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
-                startActivity(intent);
                 finish();
             }
         });

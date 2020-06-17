@@ -34,7 +34,7 @@
       android:layout_marginRight="16dp"
       android:layout_marginBottom="16dp"
       android:background="@drawable/button_shadow"
-      android:text="SKIP"
+      android:text="@string/welcome_skip"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
@@ -56,7 +56,7 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="300dp"
       android:layout_marginRight="300dp"
-      android:text="GAME\n    NAME"
+      android:text="@string/welcome_game_name"
       android:textColor="#FFFFFF"
       android:textSize="30sp"
       android:textStyle="bold"
@@ -69,7 +69,7 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="115dp"
       android:alpha="1"
-      android:text="by Kaitlynn Chan\n    and Sunayani Sarkar"
+      android:text="@string/welcome_authors"
       android:textColor="#FFFFFF"
       android:textSize="18sp"
       app:layout_constraintBottom_toBottomOf="parent"

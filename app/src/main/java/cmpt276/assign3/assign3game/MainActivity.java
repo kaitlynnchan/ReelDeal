@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void playWelcomeScreen() {
-        // Implement welcome screen
+        Intent intent = WelcomeScreen.makeLaunchIntent(this);
+        startActivity(intent);
     }
 
     private void setupButtons() {
