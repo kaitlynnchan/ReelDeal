@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,27 +8,44 @@
     tools:context=".OptionsActivity">
 
     <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupSettings"
+        android:layout_width="280dp"
+        android:layout_height="162dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="334dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/mines6"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="50dp"
             android:text="Six Mines" />
 
         <RadioButton
             android:id="@+id/mines12"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="50dp"
             android:text="Twelve Mines" />
 
         <RadioButton
             android:id="@+id/random"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="50dp"
             android:text="Random Number" />
     </RadioGroup>
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/settingsText"
+        android:layout_width="555dp"
+        android:layout_height="45dp"
+        android:text="Choose the Number of Mines you would like to play with:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.165" />
+</androidx.constraintlayout.widget.ConstraintLayout>
