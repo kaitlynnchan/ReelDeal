@@ -1,5 +1,9 @@
 package cmpt276.assign3.assign3game.model;
 
+import android.content.Intent;
+
+import static android.content.Intent.getIntent;
+
 /**
  * ItemsManager class
  * Stores a 2D array of booleans
@@ -82,5 +86,12 @@ public class ItemsManager {
     public boolean isItemThere(int row, int col){
         return items[row][col];
     }
+/*
+    Intent intent =  getIntent();
 
+    private Intent getIntent() {
+        return intent;
+    }
+
+    String choice = intent.getStringExtra("KEY");*/
 }
