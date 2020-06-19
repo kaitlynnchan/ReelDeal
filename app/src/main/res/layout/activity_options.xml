@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OptionsActivity">
-<!--
+
     <RadioGroup
         android:id="@+id/radioGroupSettings"
-        android:layout_width="280dp"
-        android:layout_height="162dp"
+        android:layout_width="270dp"
+        android:layout_height="199dp"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,36 +20,42 @@
         app:layout_constraintVertical_bias="0.578">
 
         <RadioButton
-            android:id="@+id/mines6"
+            android:id="@+id/object6"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Six Mines" />
+            android:text="Six Objects" />
 
         <RadioButton
-            android:id="@+id/mines12"
+            android:id="@+id/object10"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Twelve Mines" />
+            android:text="Ten Objects" />
 
         <RadioButton
-            android:id="@+id/random"
+            android:id="@+id/object15"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Random Number" />
+            android:text="Fifteen Objects" />
+
+        <RadioButton
+            android:id="@+id/object20"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Twenty Objects" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/settingsText"
         android:layout_width="281dp"
         android:layout_height="65dp"
-        android:text="Choose the Number of Mines you would like to play with:"
+        android:text="Choose the Number of O you would like to play with:"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <TextView
         android:id="@+id/text_Size"
@@ -77,22 +83,22 @@
         app:layout_constraintVertical_bias="0.578">
 
         <RadioButton
-            android:id="@+id/size4X4"
+            android:id="@+id/size4X6"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="4X4" />
+            android:text="4 Rows &#38; 6 columns" />
 
         <RadioButton
-            android:id="@+id/size6X6"
+            android:id="@+id/size5X10"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="6X6" />
+            android:text="5 Rows &#38; 10 columns" />
 
         <RadioButton
-            android:id="@+id/size12X12"
+            android:id="@+id/size6X15"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="12X12" />
+            android:text="6 Rows &#38; 15 columns" />
     </RadioGroup>
 
     <Button
@@ -105,5 +111,5 @@
         app:layout_constraintHorizontal_bias="0.898"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />-->
+        app:layout_constraintVertical_bias="0.87" />
 </androidx.constraintlayout.widget.ConstraintLayout>
