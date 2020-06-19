@@ -20,7 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
+import cmpt276.assign3.assign3game.model.GameConfig;
 import cmpt276.assign3.assign3game.model.ItemsManager;
 
 /**
@@ -45,7 +47,8 @@ public class GameActivity extends AppCompatActivity {
     private int cols = 6;
     private int totalItems = 2;
     private int gamesPlayed;
-    private int highScore;
+    private int highScore = -1;
+    private GameConfig configs ;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -64,6 +67,7 @@ public class GameActivity extends AppCompatActivity {
         buttons = new Button[rows][cols];
         items.fillArray();
 
+
         loadData();
         gamesPlayed++;
         saveData();
@@ -71,7 +75,9 @@ public class GameActivity extends AppCompatActivity {
 
         setupTextDisplay();
         setupButtonGrid();
-    }
+//        configs = GameConfig.getInstance();
+//        configs.add(items);
+}
 
     private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
