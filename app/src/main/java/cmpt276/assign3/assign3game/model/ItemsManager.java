@@ -20,7 +20,7 @@ public class ItemsManager {
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
-    private ItemsManager(){}
+    private ItemsManager(){/*to prevent others from instantiating*/}
     public static ItemsManager getInstance(){
         if(instance == null){
             instance = new ItemsManager();
