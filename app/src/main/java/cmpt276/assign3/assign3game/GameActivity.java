@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private int found = 0;
     private int rows = 4;
     private int cols = 6;
-    private int totalItems = 2;
+    private int totalItems = items.getTotalItems();
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -42,7 +42,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // Temporary parameters
-        items.setParams(rows,cols, totalItems);
+        items.setRows(rows);
+        items.setCols(cols);
+//        items.setParams(rows,cols, totalItems);
 
         buttons = new Button[rows][cols];
         items.fillArray();

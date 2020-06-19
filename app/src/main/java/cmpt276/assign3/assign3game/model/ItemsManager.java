@@ -40,11 +40,16 @@ public class ItemsManager {
         return totalItems;
     }
 
-    public void setParams(int rows, int cols, int totalItems){
+    public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public void setCols(int cols) {
         this.cols = cols;
+    }
+
+    public void setTotalItems(int totalItems) {
         this.totalItems = totalItems;
-        this.items = new boolean[rows][cols];
     }
 
     public void setItemValue(int row, int col, boolean value) {
@@ -52,6 +57,7 @@ public class ItemsManager {
     }
 
     public void fillArray(){
+        items = new boolean[rows][cols];
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){

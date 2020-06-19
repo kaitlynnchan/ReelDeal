@@ -8,7 +8,7 @@
     tools:context=".OptionsActivity">
 
     <RadioGroup
-        android:id="@+id/radioGroupSettings"
+        android:id="@+id/radioGroupObjectTotal"
         android:layout_width="270dp"
         android:layout_height="199dp"
         android:layout_alignParentBottom="true"
@@ -19,29 +19,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.578">
 
-        <RadioButton
-            android:id="@+id/object6"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Six Objects" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/object6"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:text="Six Objects" />-->
 
-        <RadioButton
-            android:id="@+id/object10"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Ten Objects" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/object10"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:text="Ten Objects" />-->
 
-        <RadioButton
-            android:id="@+id/object15"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Fifteen Objects" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/object15"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:text="Fifteen Objects" />-->
 
-        <RadioButton
-            android:id="@+id/object20"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Twenty Objects" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/object20"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:text="Twenty Objects" />-->
     </RadioGroup>
 
     <TextView
