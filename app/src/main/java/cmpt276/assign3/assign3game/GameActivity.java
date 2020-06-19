@@ -61,20 +61,15 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-//        items.setHighScoreConfigParams(1,1);
-
         configs = GameConfig.getInstance();
         index = configs.getIndex(items);
-//        highScore = configs.get(index).getHighScore();
 
         buttons = new Button[rows][cols];
         items.fillArray();
 
-
         loadData();
         gamesPlayed++;
         saveData();
-//        highScore = items.getHighScore(rows, cols, totalItems);
 
         setupTextDisplay();
         setupButtonGrid();
@@ -88,22 +83,15 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt(EDITOR_COLS, cols);
         editor.putInt(EDITOR_TOTAL_ITEMS, totalItems);
 
-//        Gson gson = new Gson();
-//        String json = gson.toJson(items.getHighScoreConfig());
-//        editor.putString("task list", json);
-//        editor.putInt(EDITOR_HIGH_SCORE, items.getHighScore(rows, cols, totalItems));
+        Gson gson = new Gson();
+        String json = gson.toJson(configs.getConfig());
+        editor.putString("task list", json);
         editor.apply();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
-//        Gson gson = new Gson();
-//        String json = sharedPreferences.getString("task list", null);
-//        Type type = new TypeToken<int[][]>() {}.getType();
-//        int[][] arr = gson.fromJson(json, type);
-//        items.setHighScoreConfig(arr);
-//        highScore = items.getHighScore(rows, cols, totalItems);
     }
 
     private void setupTextDisplay() {
@@ -196,13 +184,13 @@ public class GameActivity extends AppCompatActivity {
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
                     configs.get(index).setHighScore(scans);
+                    saveData();
 
                     TextView txtHighScore = findViewById(R.id.textViewHighScore);
                     String strHighScore = getString(R.string.high_score);
                     strHighScore += "  " + scans;
                     txtHighScore.setText(strHighScore);
                 }
-                System.out.println(highScore + "," + scans);
             }
 
         } else{

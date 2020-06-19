@@ -16,6 +16,10 @@ public class GameConfig {
         return instance;
     }
 
+    public ArrayList<ItemsManager> getConfig() {
+        return config;
+    }
+
     public ItemsManager get(int index){
         return config.get(index);
     }
@@ -30,6 +34,10 @@ public class GameConfig {
             }
         }
         return -1;
+    }
+
+    public void setConfig(ArrayList<ItemsManager> config) {
+        this.config = config;
     }
 
     public void add(ItemsManager manager){
