@@ -13,6 +13,11 @@ public class ItemsManager {
     private int rows;
     private int cols;
     private int totalItems;
+//    private int[][] highScoreConfig;
+//    private final int COL_ROWS = 0;
+//    private final int COL_COLS = 1;
+//    private final int COL_TOTAL_ITEMS = 2;
+//    private final int COL_HIGH_SCORE = 3;
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
@@ -36,6 +41,31 @@ public class ItemsManager {
         return totalItems;
     }
 
+//    public int[][] getHighScoreConfig(){
+//        return highScoreConfig;
+//    }
+
+//    public int getHighScore(int rows, int cols, int totalItems){
+//        int r = doesHighScoreConfigExists(rows, cols, totalItems);
+//        if(r != -1){
+//            return highScoreConfig[r][COL_HIGH_SCORE];
+//        }
+//        // returns -1 if config doesn't exist
+//        return -1;
+//    }
+
+//    public int doesHighScoreConfigExists(int rows, int cols, int totalItems){
+//        for(int r = 0; r < highScoreConfig.length; r++){
+//            if(highScoreConfig[r][COL_ROWS] == rows
+//                    && highScoreConfig[r][COL_COLS] == cols
+//                    && highScoreConfig[r][COL_TOTAL_ITEMS] == totalItems){
+//                return r;
+//            }
+//        }
+//        // returns -1 if config doesnt exist
+//        return -1;
+//    }
+
     public void setParams(int rows, int cols, int totalItems){
         this.rows = rows;
         this.cols = cols;
@@ -46,6 +76,16 @@ public class ItemsManager {
     public void setItemValue(int row, int col, boolean value) {
         items[row][col] = value;
     }
+
+//    public void setHighScoreConfig(int[][] highScoreConfig){
+//        this.highScoreConfig = highScoreConfig;
+//    }
+
+//    public void setHighScoreConfigParams(int sizeOptions, int totalItemsOptions) {
+//        // int[][] --> each row indicates a new game configuration
+//        // each row contains: number of rows, number of cols, number of items, highscore
+//        this.highScoreConfig = new int[sizeOptions * totalItemsOptions][4];
+//    }
 
     public void fillArray(){
         // Randomly add itemTotal amount of items into array
@@ -59,6 +99,32 @@ public class ItemsManager {
             }
         }
     }
+
+//    public void createNewHighScoreConfig(int rows, int cols, int totalItems, int score){
+//        // Creates new config entry
+//        int row = 0;
+//        while(highScoreConfig[row][COL_ROWS] != 0){
+//            row++;
+//        }
+//        highScoreConfig[row][COL_ROWS] = rows;
+//        highScoreConfig[row][COL_COLS] = cols;
+//        highScoreConfig[row][COL_TOTAL_ITEMS] = totalItems;
+//        highScoreConfig[row][COL_HIGH_SCORE] = score;
+//    }
+//
+//    public void setHighScore(int rows, int cols, int totalItems, int score){
+//        for(int r = 0; r < highScoreConfig.length; r++){
+//            if(highScoreConfig[r][COL_ROWS] == rows
+//                    && highScoreConfig[r][COL_COLS] == cols
+//                    && highScoreConfig[r][COL_TOTAL_ITEMS] == totalItems){
+//                if(highScoreConfig[r][COL_HIGH_SCORE] > score){
+//                    highScoreConfig[r][COL_HIGH_SCORE] = score;
+//                    return;
+//                }
+//            }
+//        }
+//
+//    }
 
     public int scanRowCol(int row, int col){
         if(isItemThere(row, col)){
