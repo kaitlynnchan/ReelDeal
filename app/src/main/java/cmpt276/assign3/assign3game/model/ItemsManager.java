@@ -13,7 +13,7 @@ public class ItemsManager {
     private int rows;
     private int cols;
     private int totalItems;
-//    private int highScore;
+    private int highScore;
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
@@ -37,11 +37,24 @@ public class ItemsManager {
         return totalItems;
     }
 
-    public void setParams(int rows, int cols, int totalItems){
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public void setCols(int cols) {
         this.cols = cols;
+    }
+
+    public void setTotalItems(int totalItems) {
         this.totalItems = totalItems;
-        this.items = new boolean[rows][cols];
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
     }
 
     public void setItemValue(int row, int col, boolean value) {
@@ -49,6 +62,8 @@ public class ItemsManager {
     }
 
     public void fillArray(){
+        items = new boolean[rows][cols];
+
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){

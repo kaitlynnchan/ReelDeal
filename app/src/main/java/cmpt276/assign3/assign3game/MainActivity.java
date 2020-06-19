@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import cmpt276.assign3.assign3game.model.GameConfig;
+import cmpt276.assign3.assign3game.model.ItemsManager;
+
 /**
  * Main menu
  * Displays play, options, and help buttons to navigate screens
@@ -26,8 +29,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        createItemsManager();
         setupButtons();
         setupMainBackground();
+    }
+
+    private void createItemsManager() {
+        GameConfig config = GameConfig.getInstance();
+        ItemsManager items = ItemsManager.getInstance();
+
+        // Temporary parameters
+        items.setRows(4);
+        items.setCols(6);
+        items.setTotalItems(2);
+
+        if(config.isThere(items)){
+            int index = config.getIndex(items);
+            int highScore = config.get(index).getHighScore();
+            items.setHighScore(highScore);
+        } else{
+            items.setHighScore(-1);
+            config.add(items);
+        }
     }
 
     private void setupButtons() {

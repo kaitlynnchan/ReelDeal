@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GameConfig {
 
-    private ArrayList<ItemsManager> config;
+    private ArrayList<ItemsManager> config = new ArrayList<>();
 
     // Singleton implementation of ItemsManager
     private static GameConfig instance;
@@ -16,10 +16,24 @@ public class GameConfig {
         return instance;
     }
 
+    public ItemsManager get(int index){
+        return config.get(index);
+    }
+
+    public int getIndex(ItemsManager manager){
+        for(int i = 0; i < config.size(); i++){
+            ItemsManager l = config.get(i);
+            if(l.getRows() == manager.getRows()
+                    && l.getCols() == manager.getCols()
+                    && l.getTotalItems() == manager.getTotalItems()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void add(ItemsManager manager){
-//        if(!isThere(manager)){
-            config.add(manager);
-//        }
+        config.add(manager);
     }
 
     public boolean isThere(ItemsManager manager){
@@ -27,7 +41,9 @@ public class GameConfig {
             return false;
         }
         for(ItemsManager l : config){
-            if(l == manager){
+            if(l.getRows() == manager.getRows()
+                    && l.getCols() == manager.getCols()
+                    && l.getTotalItems() == manager.getTotalItems()){
                 return true;
             }
         }

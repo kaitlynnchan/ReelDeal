@@ -43,12 +43,13 @@ public class GameActivity extends AppCompatActivity {
     private Button[][] buttons;
     private int scans = 0;
     private int found = 0;
-    private int rows = 4;
-    private int cols = 6;
-    private int totalItems = 2;
+    private int rows = items.getRows();
+    private int cols = items.getCols();
+    private int totalItems = items.getTotalItems();
     private int gamesPlayed;
-    private int highScore = -1;
-    private GameConfig configs ;
+    private int highScore = items.getHighScore();
+    private GameConfig configs;
+    private int index;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -60,9 +61,11 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        // Temporary parameters
-        items.setParams(rows, cols, totalItems);
 //        items.setHighScoreConfigParams(1,1);
+
+        configs = GameConfig.getInstance();
+        index = configs.getIndex(items);
+//        highScore = configs.get(index).getHighScore();
 
         buttons = new Button[rows][cols];
         items.fillArray();
@@ -75,8 +78,6 @@ public class GameActivity extends AppCompatActivity {
 
         setupTextDisplay();
         setupButtonGrid();
-//        configs = GameConfig.getInstance();
-//        configs.add(items);
 }
 
     private void saveData() {
@@ -115,11 +116,11 @@ public class GameActivity extends AppCompatActivity {
         // Setup high score
         TextView txtHighScore = findViewById(R.id.textViewHighScore);
         String strHighScore = getString(R.string.high_score);
-//        if(highScore == -1){
-//            strHighScore += "  " + 0;
-//        } else{
-//            strHighScore += "  " + highScore;
-//        }
+        if(highScore == -1){
+            strHighScore += "  " + 0;
+        } else{
+            strHighScore += "  " + highScore;
+        }
         txtHighScore.setText(strHighScore);
 
         // Setup games played
@@ -193,12 +194,15 @@ public class GameActivity extends AppCompatActivity {
                 // Display win screen
 
                 // Setup new high score
-//                if(highScore == -1){
-//                    items.createNewHighScoreConfig(rows, cols, totalItems, scans);
-//                } else if(scans < highScore){
-//                    items.setHighScore(rows, cols, totalItems, scans);
-//                }
-//                System.out.println(highScore + "," + items.getHighScore(rows, cols, totalItems));
+                if(highScore == -1 || scans < highScore){
+                    configs.get(index).setHighScore(scans);
+
+                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
+                    String strHighScore = getString(R.string.high_score);
+                    strHighScore += "  " + scans;
+                    txtHighScore.setText(strHighScore);
+                }
+                System.out.println(highScore + "," + scans);
             }
 
         } else{
