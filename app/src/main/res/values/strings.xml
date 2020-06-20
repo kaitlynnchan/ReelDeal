@@ -21,4 +21,7 @@
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_game_name">GAME\n\t\t\t\tNAME</string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
+    <string name="win_title">You Win!!</string>
+    <string name="score">Score:</string>
+    <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu</string>
 </resources>
