@@ -19,14 +19,20 @@ public class OptionsActivity extends AppCompatActivity {
     private RadioGroup radioGroupSize;
     private int savedRows;
     private int savedColumns;
-
+    private ItemsManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
         savedNumObjects = getNumObjects(this);
+        savedRows = getNumRows(this);
+        savedColumns = getNumColumns(this);
         radioButtons();
+        manager = ItemsManager.getInstance();
+        manager.setTotalItems(savedNumObjects);
+        manager.setCols(savedColumns);
+        manager.setRows(savedRows);
     }
 
     private void radioButtons() {
@@ -42,7 +48,7 @@ public class OptionsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     savedNumObjects = numObj;
-                    saveValues();
+                    savePreferences();
                 }
             });
             radioGroupObject.addView(radioButtonObject);
@@ -68,7 +74,7 @@ public class OptionsActivity extends AppCompatActivity {
                     savedRows = numR;
                     savedColumns = numC;
 
-                    saveValues();
+                    savePreferences();
                 }
             });
             radioGroupSize.addView(radioButtonSize);
@@ -79,7 +85,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
-    private void saveValues() {
+    private void savePreferences() {
         SharedPreferences preferences = this.getSharedPreferences("Prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("Objects", savedNumObjects);
@@ -91,13 +97,22 @@ public class OptionsActivity extends AppCompatActivity {
 
     static public int getNumObjects(Context c){
         SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
-        // Need to define a default value
         return preferences.getInt("Objects", 6);
+    }
+
+    static public int getNumRows(Context c){
+        SharedPreferences preferences = c.getSharedPreferences("Rows", MODE_PRIVATE);
+        return preferences.getInt("Rows", 4);
+    }
+
+    static public int getNumColumns(Context c){
+        SharedPreferences preferences = c.getSharedPreferences("Columns", MODE_PRIVATE);
+        return preferences.getInt("Columns", 6);
     }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        setResult(OptionsActivity.RESULT_CANCELED, intent);
+        setResult(OptionsActivity.RESULT_OK, intent);
         finish();
         super.onBackPressed();
     }
