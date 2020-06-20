@@ -10,21 +10,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeScreen"
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity android:name=".HelpActivity"
+            android:label="@string/title_activity_help"
             android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name=".WelcomeScreen"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity">
 
         </activity>
