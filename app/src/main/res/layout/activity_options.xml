@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.578">
-
+<!--
         <RadioButton
             android:id="@+id/size4X6"
             android:layout_width="match_parent"
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="6 Rows &#38; 15 columns" />
-    </RadioGroup>
+
 
     <Button
         android:id="@+id/Select"
@@ -112,4 +112,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.87" />
+-->  </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

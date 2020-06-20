@@ -3,6 +3,7 @@ package cmpt276.assign3.assign3game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,9 @@ public class OptionsActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupObject;
     private int savedNumObjects;
+    private RadioGroup radioGroupSize;
+    private int savedRows;
+    private int savedColumns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,23 +52,30 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
 
-//       radioGroupSize = findViewById(R.id.radioGroupSize);
+         radioGroupSize = findViewById(R.id.radioGroupSize);
 //        textViewSize = findViewById(R.id.text_Size);
-        /*int[] row = getResources().getIntArray(R.array.objectSizeRow);
+        int[] row = getResources().getIntArray(R.array.objectSizeRow);
         int[] column = getResources().getIntArray(R.array.objectSizeColumn);
         for (int i = 0; i < row.length; i++)
         {
-            int numR = row[i];
-            int numC = column[i];
+            final int numR = row[i];
+            final int numC = column[i];
+            RadioButton radioButtonSize = new RadioButton(this);
             radioButtonSize.setText(numR + " rows & " + numC + " columns");
             radioButtonSize.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    savedRows = numR;
+                    savedColumns = numC;
 
+                    saveValues();
                 }
             });
             radioGroupSize.addView(radioButtonSize);
-        }*/
+            if(numR == savedRows && numC == savedColumns){
+                radioButtonSize.setChecked(true);
+            }
+        }
 
     }
 
@@ -72,8 +83,8 @@ public class OptionsActivity extends AppCompatActivity {
         SharedPreferences preferences = this.getSharedPreferences("Prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("Objects", savedNumObjects);
-//        editor.putInt("Rows", rows);
-//        editor.putInt("Columns", columns);
+        editor.putInt("Rows", savedRows);
+        editor.putInt("Columns", savedColumns);
         editor.apply();
 
     }
@@ -82,5 +93,12 @@ public class OptionsActivity extends AppCompatActivity {
         SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
         // Need to define a default value
         return preferences.getInt("Objects", 6);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(OptionsActivity.RESULT_CANCELED, intent);
+        finish();
+        super.onBackPressed();
     }
 }

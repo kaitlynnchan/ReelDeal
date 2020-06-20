@@ -6,4 +6,14 @@
         <item>15</item>
         <item>20</item>
     </integer-array>
+    <integer-array name="objectSizeRow">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+    <integer-array name="objectSizeColumn">
+        <item>6</item>
+        <item>10</item>
+        <item>15</item>
+    </integer-array>
 </resources>
