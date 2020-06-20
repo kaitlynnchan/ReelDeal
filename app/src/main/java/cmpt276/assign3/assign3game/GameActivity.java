@@ -1,5 +1,6 @@
 package cmpt276.assign3.assign3game;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,7 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import cmpt276.assign3.assign3game.model.GameConfig;
+import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.ItemsManager;
 
 /**
@@ -32,27 +35,29 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  */
 public class GameActivity extends AppCompatActivity {
 
-    public static final String EDITOR_GAMES_PLAYED = "games played";
+    public static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String SHARED_PREFERENCES = "shared preferences";
-    public static final String EDITOR_ROWS = "rows";
-    public static final String EDITOR_COLS = "cols";
-    public static final String EDITOR_TOTAL_ITEMS = "number of items";
-    public static final String EDITOR_HIGH_SCORE = "high score";
+    public static final String EDITOR_GAMES_PLAYED = "games played";
+    public static final String EDITOR_GAME_CONFIG = "game configurations";
+    public static final String EDITOR_BUTTON_ARRAY = "button array";
+    public static final String EDITOR_IS_GAME_FINISHED = "is the game finished";
 
     private ItemsManager items = ItemsManager.getInstance();
+    private GameConfigs configs = GameConfigs.getInstance();
     private Button[][] buttons;
-    private int scans = 0;
-    private int found = 0;
     private int rows = items.getRows();
     private int cols = items.getCols();
     private int totalItems = items.getTotalItems();
-    private int gamesPlayed;
     private int highScore = items.getHighScore();
-    private GameConfig configs;
+    private int gamesPlayed;
+    private int scans = 0;
+    private int found = 0;
     private int index;
+    private boolean isGameFinished = false;
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
+        intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
         return intent;
     }
 
@@ -61,10 +66,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        configs = GameConfig.getInstance();
+        buttons = new Button[rows][cols];
         index = configs.getIndex(items);
 
-        buttons = new Button[rows][cols];
         items.fillArray();
 
         loadData();
@@ -73,25 +77,59 @@ public class GameActivity extends AppCompatActivity {
 
         setupTextDisplay();
         setupButtonGrid();
-}
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
-        editor.putInt(EDITOR_ROWS, rows);
-        editor.putInt(EDITOR_COLS, cols);
-        editor.putInt(EDITOR_TOTAL_ITEMS, totalItems);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(configs.getConfig());
-        editor.putString("task list", json);
-        editor.apply();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
+        isGameFinished = sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
+//        if(!isGameFinished){
+//            Gson gson = new Gson();
+//            String jsonBtn = sharedPreferences.getString(EDITOR_BUTTON_ARRAY, null);
+//            Type type = new TypeToken<Button[][]>() {}.getType();
+//            Button[][] arrTemp = gson.fromJson(jsonBtn, type);
+//            if(arrTemp != null) {
+//                buttons = arrTemp;
+//            }
+//
+//            items = configs.get(index);
+//            rows = items.getRows();
+//            cols = items.getCols();
+//            totalItems = items.getTotalItems();
+//            highScore = items.getHighScore();
+//
+//            if(buttons.length == rows && buttons[0].length == cols){
+//                setSavedGame();
+//            }
+//        }
+    }
+
+
+//    private void setSavedGame() {
+//        for(int r = 0; r < buttons.length; r++){
+//            for(int c = 0; c < buttons[r].length; c++){
+//                if(!buttons[r][c].isClickable()){
+//                    updateButtons(r, c);
+//                    System.out.println("button");
+//                }
+//            }
+//        }
+//
+//    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
+        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(configs.getConfigs());
+        editor.putString(EDITOR_GAME_CONFIG, json);
+
+        String jsonBtn = gson.toJson(buttons);
+        editor.putString(EDITOR_BUTTON_ARRAY, jsonBtn);
+        editor.apply();
     }
 
     private void setupTextDisplay() {
@@ -180,6 +218,7 @@ public class GameActivity extends AppCompatActivity {
 
             if(found == totalItems){
                 // Display win screen
+                isGameFinished = true;
 
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
@@ -194,6 +233,45 @@ public class GameActivity extends AppCompatActivity {
             }
 
         } else{
+
+            Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
+            waveLeft.setDuration(500);
+            waveLeft.setRepeatCount(1);
+            waveLeft.setRepeatMode(Animation.REVERSE);
+
+            Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
+            waveRight.setDuration(500);
+            waveRight.setRepeatCount(1);
+            waveRight.setRepeatMode(Animation.REVERSE);
+
+            Animation waveAbove = new TranslateAnimation(0, 0, 0, -15);
+            waveAbove.setDuration(500);
+            waveAbove.setRepeatCount(1);
+            waveAbove.setRepeatMode(Animation.REVERSE);
+
+            Animation waveBelow = new TranslateAnimation(0, 0, 0, 15);
+            waveBelow.setDuration(500);
+            waveBelow.setRepeatCount(1);
+            waveBelow.setRepeatMode(Animation.REVERSE);
+            button.startAnimation(waveBelow);
+
+            for(int rBelow = row + 1; rBelow < rows; rBelow++){
+                Button temp = buttons[rBelow][col];
+                temp.startAnimation(waveBelow);
+            }
+            for(int rAbove = row - 1; rAbove >= 0; rAbove--){
+                Button temp = buttons[rAbove][col];
+                temp.startAnimation(waveAbove);
+            }
+            for(int cRight = col + 1; cRight < cols; cRight++){
+                Button temp = buttons[row][cRight];
+                temp.startAnimation(waveRight);
+            }
+            for(int cLeft = col - 1; cLeft >= 0; cLeft--){
+                Button temp = buttons[row][cLeft];
+                temp.startAnimation(waveLeft);
+            }
+
             button.setPadding(0,0,0,0);
             button.setText(count + "");
 
@@ -245,8 +323,11 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+//        if(!isGameFinished){
+//            saveData();
+//        }
         Intent intent = new Intent();
-        setResult(GameActivity.RESULT_CANCELED, intent);
+        setResult(GameActivity.RESULT_OK, intent);
         finish();
         super.onBackPressed();
     }

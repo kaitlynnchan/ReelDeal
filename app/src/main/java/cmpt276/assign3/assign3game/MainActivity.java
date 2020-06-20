@@ -17,7 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import cmpt276.assign3.assign3game.model.GameConfig;
+import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.ItemsManager;
 
 /**
@@ -26,7 +26,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private GameConfig config = GameConfig.getInstance();
+    private GameConfigs config = GameConfigs.getInstance();
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, MainActivity.class);
@@ -47,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
+        String json = sharedPreferences.getString(GameActivity.EDITOR_GAME_CONFIG, null);
         Type type = new TypeToken<ArrayList<ItemsManager>>() {}.getType();
         ArrayList<ItemsManager> arrTemp = gson.fromJson(json, type);
         if(arrTemp != null) {
-            config.setConfig(arrTemp);
+            config.setConfigs(arrTemp);
         }
 
     }
@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
         items.setCols(5);
         items.setTotalItems(2);
 
-        if(config.isThere(items)){
-            int index = config.getIndex(items);
-            int highScore = config.get(index).getHighScore();
-            items.setHighScore(highScore);
-        } else{
+        int index = config.getIndex(items);
+        if(index == -1){
             items.setHighScore(-1);
             config.add(items);
+        } else{
+            int highScore = config.get(index).getHighScore();
+            items.setHighScore(highScore);
         }
     }
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, false);
                 startActivityForResult(intent, 42);
             }
         });
@@ -118,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 // Reset buttons
                 setupButtons();
                 createItemsManager();
+                break;
+            case GameActivity.RESULT_OK:
+                setupButtons();
                 break;
             default:
                 assert false;
