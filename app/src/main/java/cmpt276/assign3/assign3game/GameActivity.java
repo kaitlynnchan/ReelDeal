@@ -27,8 +27,8 @@ public class GameActivity extends AppCompatActivity {
     private Button[][] buttons;
     private int scans = 0;
     private int found = 0;
-    private int rows = 4;
-    private int cols = 6;
+    private int rows = items.getRows();
+    private int cols = items.getCols();
     private int totalItems = items.getTotalItems();
 
     public static Intent makeLaunchIntent(Context context){

@@ -15,24 +15,20 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 public class OptionsActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupObject;
-    private int savedNumObjects;
+    public int savedNumObjects;
     private RadioGroup radioGroupSize;
-    private int savedRows;
-    private int savedColumns;
-    private ItemsManager manager;
+    public int savedRows;
+    public int savedColumns;
+    private ItemsManager manager = ItemsManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-
         savedNumObjects = getNumObjects(this);
         savedRows = getNumRows(this);
         savedColumns = getNumColumns(this);
         radioButtons();
-        manager = ItemsManager.getInstance();
-        manager.setTotalItems(savedNumObjects);
-        manager.setCols(savedColumns);
-        manager.setRows(savedRows);
+
     }
 
     private void radioButtons() {
@@ -73,7 +69,6 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     savedRows = numR;
                     savedColumns = numC;
-
                     savePreferences();
                 }
             });
@@ -113,6 +108,9 @@ public class OptionsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent();
         setResult(OptionsActivity.RESULT_OK, intent);
+        manager.setTotalItems(savedNumObjects);
+        manager.setCols(savedColumns);
+        manager.setRows(savedRows);
         finish();
         super.onBackPressed();
     }
