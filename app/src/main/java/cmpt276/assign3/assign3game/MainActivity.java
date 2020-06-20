@@ -1,5 +1,6 @@
 package cmpt276.assign3.assign3game;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Setup to help screen
                 btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
+
+                Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
+                startActivityForResult(intent, 42);
             }
         });
     }
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (resultCode){
-            case GameActivity.RESULT_CANCELED:
+            case Activity.RESULT_CANCELED:
                 // Reset buttons
                 setupButtons();
                 break;
