@@ -83,7 +83,7 @@ public class GameActivity extends AppCompatActivity {
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
-        isGameFinished = sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
+//        isGameFinished = sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
 //        if(!isGameFinished){
 //            Gson gson = new Gson();
 //            String jsonBtn = sharedPreferences.getString(EDITOR_BUTTON_ARRAY, null);
@@ -218,23 +218,23 @@ public class GameActivity extends AppCompatActivity {
             updateButtonText(row, col);
 
             if(found == totalItems){
+//                isGameFinished = true;
+
+                // Setup new high score
+                if(highScore == -1 || scans < highScore){
+                    configs.get(index).setHighScore(scans);
+//                    saveData();
+
+                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
+                    String strHighScore = getString(R.string.high_score);
+                    strHighScore += "  " + scans;
+                    txtHighScore.setText(strHighScore);
+                }
+
                 // Display win screen
                 FragmentManager manager = getSupportFragmentManager();
                 WinFragment dialogWin = new WinFragment(scans);
                 dialogWin.show(manager, TAG_WIN_DIALOG);
-
-//                isGameFinished = true;
-//
-//                // Setup new high score
-//                if(highScore == -1 || scans < highScore){
-//                    configs.get(index).setHighScore(scans);
-//                    saveData();
-//
-//                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
-//                    String strHighScore = getString(R.string.high_score);
-//                    strHighScore += "  " + scans;
-//                    txtHighScore.setText(strHighScore);
-//                }
             }
 
         } else{

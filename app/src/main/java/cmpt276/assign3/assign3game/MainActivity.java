@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         int columns = OptionsActivity.getNumColumns(this);
         items.setCols(columns);
 
-
+        // Set highscore depending whether config exists or not
         int index = config.getIndex(items);
         if(index == -1){
             items.setHighScore(-1);
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode){
             case REQUEST_CODE_GAME:
+                createItemsManager();
                 break;
             case REQUEST_CODE_OPTIONS:
                 createItemsManager();

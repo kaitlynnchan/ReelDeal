@@ -2,6 +2,7 @@ package cmpt276.assign3.assign3game;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ public class WinFragment extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 btnOk.setBackground(WinFragment.this.getResources().getDrawable(R.drawable.button_border));
+                Intent intent = new Intent();
+                getActivity().setResult(GameActivity.RESULT_OK, intent);
                 getActivity().finish();
             }
         });
