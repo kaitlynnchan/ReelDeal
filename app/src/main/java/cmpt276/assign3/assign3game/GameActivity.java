@@ -14,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import cmpt276.assign3.assign3game.model.ItemsManager;
 
@@ -23,6 +24,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  * Displays a grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
+    public static final String TAG_WIN_DIALOG = "Win dialog";
     private ItemsManager items = ItemsManager.getInstance();
     private Button[][] buttons;
     private int scans = 0;
@@ -122,6 +124,9 @@ public class GameActivity extends AppCompatActivity {
 
             if(found == totalItems){
                 // Display win screen
+                FragmentManager manager = getSupportFragmentManager();
+                WinFragment dialogWin = new WinFragment(scans);
+                dialogWin.show(manager, TAG_WIN_DIALOG);
             }
 
         } else{

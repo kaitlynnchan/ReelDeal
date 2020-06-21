@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:scaleX="-1"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewWin"
+        app:layout_constraintEnd_toStartOf="@+id/textViewWin"
+        app:layout_constraintTop_toTopOf="@+id/textViewWin"
+        app:srcCompat="@drawable/confetti" />
+
+    <ImageView
+        android:id="@+id/imageRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewWin"
+        app:layout_constraintStart_toEndOf="@+id/textViewWin"
+        app:layout_constraintTop_toTopOf="@+id/textViewWin"
+        app:srcCompat="@drawable/confetti" />
+
+    <TextView
+        android:id="@+id/textViewWin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@string/win_title"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textCongrats"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textCongrats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:text="@string/congrats_message"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/score"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonOK"
+        app:layout_constraintStart_toStartOf="@+id/textCongrats"
+        app:layout_constraintTop_toTopOf="@+id/buttonOK" />
+
+    <Button
+        android:id="@+id/buttonOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_shadow"
+        android:text="@android:string/ok"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textCongrats"
+        app:layout_constraintTop_toBottomOf="@+id/textCongrats" />
+</androidx.constraintlayout.widget.ConstraintLayout>
