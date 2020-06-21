@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private void createItemsManager() {
         int numObjects = OptionsActivity.getNumObjects(this);
         manager.setTotalItems(numObjects);
+        int rows = OptionsActivity.getNumRows(this);
+        manager.setRows(rows);
+        int columns = OptionsActivity.getNumColumns(this);
+        manager.setCols(columns);
     }
 
     private void playWelcomeScreen() {
@@ -47,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-                if (flag == 0)
+                /*if (flag == 0)
                 {
                     manager.setRows(4);
                     manager.setCols(6);
                     manager.setTotalItems(6);
-                }
+                }*/
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivityForResult(intent, 42);
             }
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 // Setup options screen
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
                 flag++;
-                Intent intent = new Intent(getApplicationContext(), OptionsActivity.class);
+                Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
                 /*OptionsActivity options = new OptionsActivity();
                 manager.setTotalItems(options.savedNumObjects);
@@ -95,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
             case GameActivity.RESULT_CANCELED:
                 // Reset buttons
                 setupButtons();
+                break;
+            case OptionsActivity.RESULT_OK:
+                createItemsManager();
                 break;
             default:
                 assert false;
