@@ -20,6 +20,12 @@ public class OptionsActivity extends AppCompatActivity {
     public int savedRows;
     public int savedColumns;
     private ItemsManager manager = ItemsManager.getInstance();
+
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, OptionsActivity.class);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
