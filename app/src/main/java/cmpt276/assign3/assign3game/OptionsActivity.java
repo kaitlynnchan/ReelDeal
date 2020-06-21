@@ -14,12 +14,13 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    private RadioGroup radioGroupObject;
+    public static final String PREFS = "Prefs";
+    public static final String EDITOR_OBJECTS = "Objects";
+    public static final String EDITOR_ROWS = "Rows";
+    public static final String EDITOR_COLUMNS = "Columns";
     public int savedNumObjects;
-    private RadioGroup radioGroupSize;
     public int savedRows;
     public int savedColumns;
-    private ItemsManager manager = ItemsManager.getInstance();
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, OptionsActivity.class);
@@ -38,7 +39,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void radioButtons() {
-        radioGroupObject = findViewById(R.id.radioGroupObjectTotal);
+        RadioGroup radioGroupObject = findViewById(R.id.radioGroupObjectTotal);
         int[] numObjs = getResources().getIntArray(R.array.objectNumber);
         for (int i = 0; i < numObjs.length; i++)
         {
@@ -59,7 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
 
-        radioGroupSize = findViewById(R.id.radioGroupSize);
+        RadioGroup radioGroupSize = findViewById(R.id.radioGroupSize);
         int[] row = getResources().getIntArray(R.array.objectSizeRow);
         int[] column = getResources().getIntArray(R.array.objectSizeColumn);
         for (int i = 0; i < row.length; i++)
@@ -85,28 +86,28 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void savePreferences() {
-        SharedPreferences preferences = this.getSharedPreferences("Prefs", MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("Objects", savedNumObjects);
-        editor.putInt("Rows", savedRows);
-        editor.putInt("Columns", savedColumns);
+        editor.putInt(EDITOR_OBJECTS, savedNumObjects);
+        editor.putInt(EDITOR_ROWS, savedRows);
+        editor.putInt(EDITOR_COLUMNS, savedColumns);
         editor.apply();
 
     }
 
     static public int getNumObjects(Context c){
-        SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
-        return preferences.getInt("Objects", 6);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_OBJECTS, 2);
     }
 
     static public int getNumRows(Context c){
-        SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
-        return preferences.getInt("Rows", 4);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_ROWS, 4);
     }
 
     static public int getNumColumns(Context c){
-        SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
-        return preferences.getInt("Columns", 6);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_COLUMNS, 6);
     }
     @Override
     public void onBackPressed() {

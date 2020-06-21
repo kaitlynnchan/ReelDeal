@@ -1,9 +1,5 @@
 package cmpt276.assign3.assign3game.model;
 
-import android.content.Intent;
-
-import static android.content.Intent.getIntent;
-
 /**
  * ItemsManager class
  * Stores a 2D array of booleans

@@ -1,6 +1,5 @@
 package cmpt276.assign3.assign3game;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,6 +18,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 public class MainActivity extends AppCompatActivity {
 
     private ItemsManager manager = ItemsManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

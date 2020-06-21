@@ -41,11 +41,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        // Temporary parameters
-//        items.setRows(rows);
-//        items.setCols(cols);
-//        items.setParams(rows,cols, totalItems);
-
         buttons = new Button[rows][cols];
         items.fillArray();
 
