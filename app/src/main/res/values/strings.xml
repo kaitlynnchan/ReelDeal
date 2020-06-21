@@ -18,4 +18,23 @@
     <string name="high_score">High Score:</string>
     <string name="games_played">Games Played:</string>
     <string name="game_name">GAME NAME</string>
+    <string name="welcome_skip">SKIP</string>
+    <string name="welcome_game_name">GAME\n\t\t\t\tNAME</string>
+    <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="about_authors"><u>About Authors</u></string>
+    <string name="about_authors_content">Creators include Kaitlynn Chan and Sunayani Sarkar. \n
+        <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">Website</a></string>
+    <string name="how_to_play"><u>How to play</u></string>
+    <string name="how_to_play_content"><b>Setting the game</b>
+        \n\tTo set the game go into OPTIONS and select the game size and number of items to find.
+        \n\n<b>Playing the game</b>
+        \n\tTo play the game click the PLAY button on the main menu, then the game will be shown. Click
+        the buttons to find the items. A number will be shown indicating how many items are in the
+        picked row and column. If the button you clicked is the item a picture of the item is shown.
+        \n\n<b>Winning the game</b>
+        \n\tTo win the game you must find all of the items.
+    </string>
+    <string name="citations"><u>Citations</u></string>
+    <string name="citations_content">blah blah</string>
 </resources>

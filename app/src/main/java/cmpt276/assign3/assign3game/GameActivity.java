@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                 final int FINAL_ROW = r;
                 final int FINAL_COL = c;
 
-                final Button button = new Button(this);
+                Button button = new Button(this);
                 button.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,
@@ -102,28 +102,15 @@ public class GameActivity extends AppCompatActivity {
             items.setItemValue(row, col, false);
 
             // Lock button size
-            for(int r = 0; r < rows; r++){
-                for(int c = 0; c < cols; c++){
-                    Button btn = buttons[r][c];
-
-                    int width = btn.getWidth();
-                    btn.setMinWidth(width);
-                    btn.setMaxWidth(width);
-
-                    int height = btn.getHeight();
-                    btn.setMinHeight(height);
-                    btn.setMaxHeight(height);
-                }
-            }
+            lockButton();
 
             // Set and scale image
-            button.setBackgroundResource(R.drawable.ic_launcher_background);
-//            int newWidth = button.getWidth();
-//            int newHeight = button.getHeight();
-//            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_black_24dp);
-//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-//            Resources resource = getResources();
-//            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+            int newWidth = button.getWidth();
+            int newHeight = button.getHeight();
+            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+            Resources resource = getResources();
+            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
             // Update found count text
             found++;
@@ -147,6 +134,22 @@ public class GameActivity extends AppCompatActivity {
             txtScans.setText("" + scans);
 
             button.setClickable(false);
+        }
+    }
+
+    private void lockButton() {
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < cols; c++){
+                Button button = buttons[r][c];
+
+                int width = button.getWidth();
+                button.setMinWidth(width);
+                button.setMaxWidth(width);
+
+                int height = button.getHeight();
+                button.setMinHeight(height);
+                button.setMaxHeight(height);
+            }
         }
     }
 
