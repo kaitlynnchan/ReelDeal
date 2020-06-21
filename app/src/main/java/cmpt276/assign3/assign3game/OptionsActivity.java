@@ -114,6 +114,7 @@ public class OptionsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent();
         setResult(OptionsActivity.RESULT_OK, intent);
+        //Only works if i call instance here
         manager.setTotalItems(savedNumObjects);
         manager.setCols(savedColumns);
         manager.setRows(savedRows);

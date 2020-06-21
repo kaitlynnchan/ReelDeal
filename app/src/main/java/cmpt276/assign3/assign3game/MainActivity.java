@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 flag++;
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
+                //For Result is causing linking errors between OptionsActivity and GameActivity
+                //startActivityForResult(intent, 1);
                 /*OptionsActivity options = new OptionsActivity();
                 manager.setTotalItems(options.savedNumObjects);
                 manager.setCols(options.savedColumns);
