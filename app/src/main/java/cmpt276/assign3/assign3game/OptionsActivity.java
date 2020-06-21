@@ -37,7 +37,7 @@ public class OptionsActivity extends AppCompatActivity {
         radioButtons();
 
     }
-
+// Yay
     private void radioButtons() {
         RadioGroup radioGroupObject = findViewById(R.id.radioGroupObjectTotal);
         int[] numObjs = getResources().getIntArray(R.array.objectNumber);

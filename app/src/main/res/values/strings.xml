@@ -37,7 +37,4 @@
     </string>
     <string name="citations"><u>Citations</u></string>
     <string name="citations_content">blah blah</string>
-    <string name="win_title">You Win!!</string>
-    <string name="score">Score:</string>
-    <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu</string>
 </resources>
