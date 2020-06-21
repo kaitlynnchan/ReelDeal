@@ -27,6 +27,9 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  */
 public class MainActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_GAME = 42;
+    public static final int REQUEST_CODE_OPTIONS = 43;
+
     private GameConfigs config = GameConfigs.getInstance();
 
     public static Intent makeLaunchIntent(Context context){
@@ -46,15 +49,27 @@ public class MainActivity extends AppCompatActivity {
         setupMainBackground();
     }
 
+    private void loadData() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(GameActivity.EDITOR_GAME_CONFIG, null);
+        Type type = new TypeToken<ArrayList<ItemsManager>>() {}.getType();
+        ArrayList<ItemsManager> arrTemp = gson.fromJson(json, type);
+        if(arrTemp != null) {
+            config.setConfigs(arrTemp);
+        }
+
+    }
+
     private void createItemsManager() {
         ItemsManager items = ItemsManager.getInstance();
 
         int numObjects = OptionsActivity.getNumObjects(this);
-        manager.setTotalItems(numObjects);
+        items.setTotalItems(numObjects);
         int rows = OptionsActivity.getNumRows(this);
-        manager.setRows(rows);
+        items.setRows(rows);
         int columns = OptionsActivity.getNumColumns(this);
-        manager.setCols(columns);
+        items.setCols(columns);
 
 
         int index = config.getIndex(items);
@@ -71,18 +86,6 @@ public class MainActivity extends AppCompatActivity {
         // Implement welcome screen
     }
 
-    private void loadData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(GameActivity.EDITOR_GAME_CONFIG, null);
-        Type type = new TypeToken<ArrayList<ItemsManager>>() {}.getType();
-        ArrayList<ItemsManager> arrTemp = gson.fromJson(json, type);
-        if(arrTemp != null) {
-            config.setConfigs(arrTemp);
-        }
-
-    }
-
     private void setupButtons() {
         final Button btnPlay = findViewById(R.id.buttonPlay);
         btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
@@ -91,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, false);
-                startActivityForResult(intent, 42);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                startActivityForResult(intent, REQUEST_CODE_GAME);
             }
         });
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 // Setup options screen
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, REQUEST_CODE_OPTIONS);
             }
         });
 
@@ -127,20 +130,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (resultCode){
-            case Activity.RESULT_CANCELED:
-                // Reset buttons
-                setupButtons();
-                createItemsManager();
+        setupButtons();
+
+        if(resultCode == Activity.RESULT_CANCELED){
+            return;
+        }
+
+        switch (requestCode){
+            case REQUEST_CODE_GAME:
                 break;
-            case GameActivity.RESULT_OK:
-                setupButtons();
-                break;
-            case OptionsActivity.RESULT_OK:
+            case REQUEST_CODE_OPTIONS:
                 createItemsManager();
                 break;
             default:
                 assert false;
+
         }
     }
 

@@ -35,10 +35,10 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  * Displays a grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
-    public static final String TAG_WIN_DIALOG = "Win dialog";
 
-    public static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
+    public static final String TAG_WIN_DIALOG = "Win dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
+    public static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String EDITOR_GAMES_PLAYED = "games played";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
     public static final String EDITOR_BUTTON_ARRAY = "button array";
@@ -57,9 +57,8 @@ public class GameActivity extends AppCompatActivity {
     private int index;
     private boolean isGameFinished = false;
 
-    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
+    public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
-        intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
         return intent;
     }
 
@@ -68,9 +67,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Setting parameters
         buttons = new Button[rows][cols];
         index = configs.getIndex(items);
-
         items.fillArray();
 
         loadData();
@@ -223,18 +222,19 @@ public class GameActivity extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 WinFragment dialogWin = new WinFragment(scans);
                 dialogWin.show(manager, TAG_WIN_DIALOG);
-                isGameFinished = true;
 
-                // Setup new high score
-                if(highScore == -1 || scans < highScore){
-                    configs.get(index).setHighScore(scans);
-                    saveData();
-
-                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
-                    String strHighScore = getString(R.string.high_score);
-                    strHighScore += "  " + scans;
-                    txtHighScore.setText(strHighScore);
-                }
+//                isGameFinished = true;
+//
+//                // Setup new high score
+//                if(highScore == -1 || scans < highScore){
+//                    configs.get(index).setHighScore(scans);
+//                    saveData();
+//
+//                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
+//                    String strHighScore = getString(R.string.high_score);
+//                    strHighScore += "  " + scans;
+//                    txtHighScore.setText(strHighScore);
+//                }
             }
 
         } else{
@@ -258,7 +258,6 @@ public class GameActivity extends AppCompatActivity {
             waveBelow.setDuration(500);
             waveBelow.setRepeatCount(1);
             waveBelow.setRepeatMode(Animation.REVERSE);
-            button.startAnimation(waveBelow);
 
             for(int rBelow = row + 1; rBelow < rows; rBelow++){
                 Button temp = buttons[rBelow][col];
