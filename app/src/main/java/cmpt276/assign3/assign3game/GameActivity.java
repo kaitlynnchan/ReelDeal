@@ -239,6 +239,7 @@ public class GameActivity extends AppCompatActivity {
 
         } else{
 
+            // Fix animations to move one at a time
             Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
             waveLeft.setDuration(500);
             waveLeft.setRepeatCount(1);
@@ -263,14 +264,17 @@ public class GameActivity extends AppCompatActivity {
                 Button temp = buttons[rBelow][col];
                 temp.startAnimation(waveBelow);
             }
+
             for(int rAbove = row - 1; rAbove >= 0; rAbove--){
                 Button temp = buttons[rAbove][col];
                 temp.startAnimation(waveAbove);
             }
+
             for(int cRight = col + 1; cRight < cols; cRight++){
                 Button temp = buttons[row][cRight];
                 temp.startAnimation(waveRight);
             }
+
             for(int cLeft = col - 1; cLeft >= 0; cLeft--){
                 Button temp = buttons[row][cLeft];
                 temp.startAnimation(waveLeft);
