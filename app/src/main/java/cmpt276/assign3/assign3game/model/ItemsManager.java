@@ -25,6 +25,10 @@ public class ItemsManager {
         return instance;
     }
 
+    public boolean[][] getArray() {
+        return items;
+    }
+
     public int getRows() {
         return rows;
     }
@@ -39,6 +43,10 @@ public class ItemsManager {
 
     public int getHighScore() {
         return highScore;
+    }
+
+    public void setItems(boolean[][] items) {
+        this.items = items;
     }
 
     public void setRows(int rows) {

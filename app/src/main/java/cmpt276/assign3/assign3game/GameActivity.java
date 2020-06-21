@@ -55,7 +55,7 @@ public class GameActivity extends AppCompatActivity {
     private int scans = 0;
     private int found = 0;
     private int index;
-    private boolean isGameFinished = false;
+    private boolean isGameFinished; // getGameFinished(this)
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -70,21 +70,21 @@ public class GameActivity extends AppCompatActivity {
         // Setting parameters
         buttons = new Button[rows][cols];
         index = configs.getIndex(items);
-        items.fillArray();
+        isGameFinished = getGameFinished(this);
+//        items.fillArray();
 
         loadData();
         gamesPlayed++;
-        saveData();
 
         setupTextDisplay();
         setupButtonGrid();
+        saveData();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
-//        isGameFinished = sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
-//        if(!isGameFinished){
+        if(!isGameFinished){
 //            Gson gson = new Gson();
 //            String jsonBtn = sharedPreferences.getString(EDITOR_BUTTON_ARRAY, null);
 //            Type type = new TypeToken<Button[][]>() {}.getType();
@@ -93,18 +93,17 @@ public class GameActivity extends AppCompatActivity {
 //                buttons = arrTemp;
 //            }
 //
-//            items = configs.get(index);
-//            rows = items.getRows();
-//            cols = items.getCols();
-//            totalItems = items.getTotalItems();
-//            highScore = items.getHighScore();
+////            items = configs.get(index);
+////            rows = items.getRows();
+////            cols = items.getCols();
+////            totalItems = items.getTotalItems();
+////            highScore = items.getHighScore();
 //
 //            if(buttons.length == rows && buttons[0].length == cols){
 //                setSavedGame();
 //            }
-//        }
+        }
     }
-
 
 //    private void setSavedGame() {
 //        for(int r = 0; r < buttons.length; r++){
@@ -128,10 +127,17 @@ public class GameActivity extends AppCompatActivity {
         String json = gson.toJson(configs.getConfigs());
         editor.putString(EDITOR_GAME_CONFIG, json);
 
-        String jsonBtn = gson.toJson(buttons);
-        editor.putString(EDITOR_BUTTON_ARRAY, jsonBtn);
+//        Gson gsonBtn = new Gson();
+//        String jsonBtn = gsonBtn.toJson(buttons);
+//        editor.putString(EDITOR_BUTTON_ARRAY, jsonBtn);
         editor.apply();
     }
+
+    static public boolean getGameFinished(Context c){
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
+    }
+
 
     private void setupTextDisplay() {
         String strTotalItems = getString(R.string.items_total);
@@ -217,13 +223,14 @@ public class GameActivity extends AppCompatActivity {
             // Update already clicked buttons
             updateButtonText(row, col);
 
+            // Game finished
             if(found == totalItems){
-//                isGameFinished = true;
+                isGameFinished = true;
+                saveData();
 
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
                     configs.get(index).setHighScore(scans);
-//                    saveData();
 
                     TextView txtHighScore = findViewById(R.id.textViewHighScore);
                     String strHighScore = getString(R.string.high_score);
@@ -331,9 +338,6 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        if(!isGameFinished){
-//            saveData();
-//        }
         Intent intent = new Intent();
         setResult(GameActivity.RESULT_OK, intent);
         finish();

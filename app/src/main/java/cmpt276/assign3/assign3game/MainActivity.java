@@ -79,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
             int highScore = config.get(index).getHighScore();
             items.setHighScore(highScore);
         }
+
+        boolean isGameFinished = GameActivity.getGameFinished(this);
+        if(!isGameFinished){
+            // set array filling to either saved state or fill new
+            items.setItems(config.get(index).getArray());
+        } else{
+            items.fillArray();
+        }
+
     }
 
 
