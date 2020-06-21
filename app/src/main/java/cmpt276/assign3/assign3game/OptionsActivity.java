@@ -97,7 +97,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     static public int getNumObjects(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        return preferences.getInt(EDITOR_OBJECTS, 2);
+        return preferences.getInt(EDITOR_OBJECTS, 6);
     }
 
     static public int getNumRows(Context c){

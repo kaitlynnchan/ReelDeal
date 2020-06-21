@@ -9,54 +9,60 @@
 
     <RadioGroup
         android:id="@+id/radioGroupObjectTotal"
-        android:layout_width="270dp"
-        android:layout_height="199dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578">
-    </RadioGroup>
+        app:layout_constraintEnd_toEndOf="@+id/settingsText"
+        app:layout_constraintStart_toStartOf="@+id/settingsText"
+        app:layout_constraintTop_toBottomOf="@+id/settingsText"
+        app:layout_constraintVertical_bias="0.155"></RadioGroup>
 
     <TextView
         android:id="@+id/settingsText"
-        android:layout_width="281dp"
-        android:layout_height="65dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="16dp"
         android:text="Choose the Number of O you would like to play with:"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/textOptions"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toBottomOf="@+id/textOptions" />
 
     <TextView
         android:id="@+id/text_Size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose size of game: "
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/settingsText"
+        app:layout_constraintStart_toEndOf="@+id/textOptions"
+        app:layout_constraintTop_toTopOf="@+id/settingsText" />
 
     <RadioGroup
         android:id="@+id/radioGroupSize"
-        android:layout_width="280dp"
-        android:layout_height="162dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintStart_toStartOf="@+id/text_Size"
+        app:layout_constraintTop_toTopOf="@+id/radioGroupObjectTotal"></RadioGroup>
+
+    <TextView
+        android:id="@+id/textOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="OPTIONS"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578">
-    </RadioGroup>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
