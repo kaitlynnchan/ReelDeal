@@ -19,7 +19,6 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 public class MainActivity extends AppCompatActivity {
 
     private ItemsManager manager = ItemsManager.getInstance();
-    private int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +50,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-                /*if (flag == 0)
-                {
-                    manager.setRows(4);
-                    manager.setCols(6);
-                    manager.setTotalItems(6);
-                }*/
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivityForResult(intent, 42);
             }
@@ -70,15 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Setup options screen
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-                flag++;
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
-                startActivity(intent);
-                //For Result is causing linking errors between OptionsActivity and GameActivity
-                //startActivityForResult(intent, 1);
-                /*OptionsActivity options = new OptionsActivity();
-                manager.setTotalItems(options.savedNumObjects);
-                manager.setCols(options.savedColumns);
-                manager.setRows(options.savedRows);*/
+                startActivityForResult(intent, 1);
             }
         });
 

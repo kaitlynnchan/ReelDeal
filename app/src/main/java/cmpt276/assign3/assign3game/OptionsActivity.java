@@ -39,7 +39,6 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void radioButtons() {
         radioGroupObject = findViewById(R.id.radioGroupObjectTotal);
-//        textViewObject = findViewById(R.id.settingsText);
         int[] numObjs = getResources().getIntArray(R.array.objectNumber);
         for (int i = 0; i < numObjs.length; i++)
         {
@@ -60,8 +59,7 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
 
-         radioGroupSize = findViewById(R.id.radioGroupSize);
-//        textViewSize = findViewById(R.id.text_Size);
+        radioGroupSize = findViewById(R.id.radioGroupSize);
         int[] row = getResources().getIntArray(R.array.objectSizeRow);
         int[] column = getResources().getIntArray(R.array.objectSizeColumn);
         for (int i = 0; i < row.length; i++)
@@ -102,22 +100,18 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     static public int getNumRows(Context c){
-        SharedPreferences preferences = c.getSharedPreferences("Rows", MODE_PRIVATE);
+        SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
         return preferences.getInt("Rows", 4);
     }
 
     static public int getNumColumns(Context c){
-        SharedPreferences preferences = c.getSharedPreferences("Columns", MODE_PRIVATE);
+        SharedPreferences preferences = c.getSharedPreferences("Prefs", MODE_PRIVATE);
         return preferences.getInt("Columns", 6);
     }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
         setResult(OptionsActivity.RESULT_OK, intent);
-        //Only works if i call instance here
-        manager.setTotalItems(savedNumObjects);
-        manager.setCols(savedColumns);
-        manager.setRows(savedRows);
         finish();
         super.onBackPressed();
     }

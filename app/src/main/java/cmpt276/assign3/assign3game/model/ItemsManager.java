@@ -92,12 +92,4 @@ public class ItemsManager {
     public boolean isItemThere(int row, int col){
         return items[row][col];
     }
-/*
-    Intent intent =  getIntent();
-
-    private Intent getIntent() {
-        return intent;
-    }
-
-    String choice = intent.getStringExtra("KEY");*/
 }
