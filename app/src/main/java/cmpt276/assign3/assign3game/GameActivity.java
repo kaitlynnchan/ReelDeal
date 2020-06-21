@@ -29,9 +29,9 @@ public class GameActivity extends AppCompatActivity {
     private Button[][] buttons;
     private int scans = 0;
     private int found = 0;
-    private int rows = 4;
-    private int cols = 6;
-    private int totalItems = 2;
+    private int rows = items.getRows();
+    private int cols = items.getCols();
+    private int totalItems = items.getTotalItems();
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -42,9 +42,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        // Temporary parameters
-        items.setParams(rows,cols, totalItems);
 
         buttons = new Button[rows][cols];
         items.fillArray();
