@@ -16,7 +16,7 @@ public class ItemsManager {
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
-    private ItemsManager(){}
+    private ItemsManager(){/*to prevent others from instantiating*/}
     public static ItemsManager getInstance(){
         if(instance == null){
             instance = new ItemsManager();
@@ -36,11 +36,16 @@ public class ItemsManager {
         return totalItems;
     }
 
-    public void setParams(int rows, int cols, int totalItems){
+    public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public void setCols(int cols) {
         this.cols = cols;
+    }
+
+    public void setTotalItems(int totalItems) {
         this.totalItems = totalItems;
-        this.items = new boolean[rows][cols];
     }
 
     public void setItemValue(int row, int col, boolean value) {
@@ -48,6 +53,7 @@ public class ItemsManager {
     }
 
     public void fillArray(){
+        items = new boolean[rows][cols];
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){
@@ -82,5 +88,4 @@ public class ItemsManager {
     public boolean isItemThere(int row, int col){
         return items[row][col];
     }
-
 }

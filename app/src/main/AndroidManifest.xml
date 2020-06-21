@@ -16,6 +16,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity">
         </activity>
+        <activity android:name=".OptionsActivity"
+            android:label="OptionsActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
         <activity
             android:name=".WelcomeScreen"
             android:screenOrientation="sensorLandscape"
