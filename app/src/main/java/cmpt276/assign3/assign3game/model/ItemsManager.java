@@ -17,7 +17,7 @@ public class ItemsManager {
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
-    private ItemsManager(){}
+    private ItemsManager(){/*to prevent others from instantiating*/}
     public static ItemsManager getInstance(){
         if(instance == null){
             instance = new ItemsManager();
@@ -63,7 +63,6 @@ public class ItemsManager {
 
     public void fillArray(){
         items = new boolean[rows][cols];
-
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){

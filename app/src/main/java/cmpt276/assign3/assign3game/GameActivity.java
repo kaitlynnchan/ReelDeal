@@ -18,6 +18,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +35,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  * Displays a grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
+    public static final String TAG_WIN_DIALOG = "Win dialog";
 
     public static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String SHARED_PREFERENCES = "shared preferences";
@@ -218,6 +220,9 @@ public class GameActivity extends AppCompatActivity {
 
             if(found == totalItems){
                 // Display win screen
+                FragmentManager manager = getSupportFragmentManager();
+                WinFragment dialogWin = new WinFragment(scans);
+                dialogWin.show(manager, TAG_WIN_DIALOG);
                 isGameFinished = true;
 
                 // Setup new high score

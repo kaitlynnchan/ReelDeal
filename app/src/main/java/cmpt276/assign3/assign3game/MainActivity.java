@@ -1,5 +1,6 @@
 package cmpt276.assign3.assign3game;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +41,34 @@ public class MainActivity extends AppCompatActivity {
 
         loadData();
         createItemsManager();
+        playWelcomeScreen();
         setupButtons();
         setupMainBackground();
+    }
+
+    private void createItemsManager() {
+        ItemsManager items = ItemsManager.getInstance();
+
+        int numObjects = OptionsActivity.getNumObjects(this);
+        manager.setTotalItems(numObjects);
+        int rows = OptionsActivity.getNumRows(this);
+        manager.setRows(rows);
+        int columns = OptionsActivity.getNumColumns(this);
+        manager.setCols(columns);
+
+
+        int index = config.getIndex(items);
+        if(index == -1){
+            items.setHighScore(-1);
+            config.add(items);
+        } else{
+            int highScore = config.get(index).getHighScore();
+            items.setHighScore(highScore);
+        }
+    }
+
+    private void playWelcomeScreen() {
+        // Implement welcome screen
     }
 
     private void loadData() {
@@ -54,24 +81,6 @@ public class MainActivity extends AppCompatActivity {
             config.setConfigs(arrTemp);
         }
 
-    }
-
-    private void createItemsManager() {
-        ItemsManager items = ItemsManager.getInstance();
-
-        // Temporary parameters
-        items.setRows(4);
-        items.setCols(5);
-        items.setTotalItems(2);
-
-        int index = config.getIndex(items);
-        if(index == -1){
-            items.setHighScore(-1);
-            config.add(items);
-        } else{
-            int highScore = config.get(index).getHighScore();
-            items.setHighScore(highScore);
-        }
     }
 
     private void setupButtons() {
@@ -95,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Setup options screen
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
+                Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -105,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Setup to help screen
                 btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
+
+                Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
+                startActivityForResult(intent, 42);
             }
         });
     }
@@ -114,13 +128,16 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (resultCode){
-            case GameActivity.RESULT_CANCELED:
+            case Activity.RESULT_CANCELED:
                 // Reset buttons
                 setupButtons();
                 createItemsManager();
                 break;
             case GameActivity.RESULT_OK:
                 setupButtons();
+                break;
+            case OptionsActivity.RESULT_OK:
+                createItemsManager();
                 break;
             default:
                 assert false;
