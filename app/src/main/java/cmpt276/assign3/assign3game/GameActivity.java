@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -17,9 +18,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.ItemsManager;
@@ -56,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
     private int index;
     private boolean isGameFinished = false; // getGameFinished(this)
     private boolean[][] itemRevealed = new boolean[rows][cols];
+    private boolean isGameSaved;
 
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
@@ -74,17 +81,16 @@ public class GameActivity extends AppCompatActivity {
 
         loadData();
         setupTextDisplay();
-        setupButtonGrid();
 
         Intent intent = getIntent();
-        boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
+        isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
         System.out.println("isGameSaved:" + isGameSaved);
         if(isGameSaved){
             loadSavedGame();
         } else{
             items.fillArray();
+            setupButtonGrid();
         }
-
         saveData();
     }
 
@@ -143,7 +149,9 @@ public class GameActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateButtons(FINAL_ROW, FINAL_COL);
+                        int count = items.scanRowCol(FINAL_ROW, FINAL_COL);
+                        System.out.println(buttons[FINAL_ROW][FINAL_COL].getWidth() + "," + buttons[FINAL_ROW][FINAL_COL].getHeight());
+                        updateButtons(FINAL_ROW, FINAL_COL, count);
                     }
                 });
 
@@ -153,9 +161,8 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void updateButtons(int row, int col) {
+    private void updateButtons(int row, int col, int count) {
         Button button = buttons[row][col];
-        int count = items.scanRowCol(row, col);
         if(count == -1){
             setItemFound(row, col);
 
@@ -303,34 +310,50 @@ public class GameActivity extends AppCompatActivity {
                 && preferencesBtns.getInt(EDITOR_BTN_ITEMS, 0) == totalItems){
             items.setItems(configs.get(index).getArray());
 
+            setupButtonGrid();
+
+            int widthBtn = preferencesBtns.getInt("width", 0);
+            int heighthBtn = preferencesBtns.getInt("height", 0);
+//
             for(int r = 0; r < rows; r++){
                 for(int c = 0; c < cols; c++){
                     boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
                     if(!isButtonClickable){
-                        updateButtons(r, c);
+                        int count = items.scanRowCol(r, c);
+                        updateButtons(r, c, count);
                     }
                     boolean test = preferencesBtns.getBoolean("itemRevealed[" + r + "][" + c + "] value", false);
                     if(test){
-//                        setItemFound(r, c);
+                        itemRevealed[r][c] = true;
+
+                        for(int r2 = 0; r2 < rows; r2++){
+                            for(int c2 = 0; c2 < cols; c2++){
+                                Button btnLock = buttons[r2][c2];
+
+                                btnLock.setMinWidth(widthBtn);
+                                btnLock.setMaxWidth(widthBtn);
+
+                                btnLock.setMinHeight(heighthBtn);
+                                btnLock.setMaxHeight(heighthBtn);
+                            }
+                        }
+
+                        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
+                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, widthBtn, heighthBtn, true);
+                        Resources resource = getResources();
+                        buttons[r][c].setBackground(new BitmapDrawable(resource, scaledBitmap));
+
+                        found++;
+                        TextView txtFound = findViewById(R.id.textViewFoundCount);
+                        txtFound.setText("" + found);
                     }
-//                    if(isButtonClickable && items.isItemThere(r, c)){
-//                        System.out.println("ha");
-//                    }
-//                    boolean isItemRevealed = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].getBackground", false);
-//                    System.out.println("buttons[" + r + "][" + c + "].getBackground = " + isItemRevealed);
-//                    if(isItemRevealed){
-//                        int newWidth = buttons[r][c].getWidth();
-//                        int newHeight = buttons[r][c].getHeight();
-//                        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
-//                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-//                        Resources resource = getResources();
-//                        buttons[r][c].setBackground(new BitmapDrawable(resource, scaledBitmap));
-//                    }
                 }
 
             }
         } else{
+            isGameSaved = false;
             items.fillArray();
+            setupButtonGrid();
         }
     }
 
@@ -356,6 +379,8 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt(EDITOR_BTN_ROWS, rows);
         editor.putInt(EDITOR_BTN_COLS, cols);
         editor.putInt(EDITOR_BTN_ITEMS, totalItems);
+        editor.putInt("width", buttons[0][0].getWidth());
+        editor.putInt("height", buttons[0][0].getHeight());
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){

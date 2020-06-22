@@ -28,7 +28,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GAME = 42;
     public static final int REQUEST_CODE_OPTIONS = 43;
-    boolean isGameSaved = false;
+    public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
 

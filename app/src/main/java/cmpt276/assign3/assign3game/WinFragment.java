@@ -37,6 +37,7 @@ public class WinFragment extends AppCompatDialogFragment {
             public void onClick(View v) {
                 btnOk.setBackground(WinFragment.this.getResources().getDrawable(R.drawable.button_border));
                 Intent intent = new Intent();
+                MainActivity.isGameSaved = false;
                 getActivity().setResult(GameActivity.RESULT_OK, intent);
                 getActivity().finish();
             }
