@@ -71,6 +71,7 @@ public class ItemsManager {
 
     public void fillArray(){
         items = new boolean[rows][cols];
+
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){
@@ -84,6 +85,7 @@ public class ItemsManager {
     }
 
     public int scanRowCol(int row, int col){
+        // return -1 if the position in the array has an item
         if(isItemThere(row, col)){
             return -1;
         }

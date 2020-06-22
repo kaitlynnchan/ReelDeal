@@ -1,6 +1,5 @@
 package cmpt276.assign3.assign3game;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,10 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.ItemsManager;
@@ -38,11 +33,15 @@ public class GameActivity extends AppCompatActivity {
 
     public static final String TAG_WIN_DIALOG = "Win dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
-    public static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
+    private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String EDITOR_GAMES_PLAYED = "games played";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
     public static final String EDITOR_BUTTON_ARRAY = "button array";
     public static final String EDITOR_IS_GAME_FINISHED = "is the game finished";
+    public static final String SHARED_PREFERENCES_BUTTONS = "shared preferences for buttons";
+    public static final String EDITOR_BTN_ROWS = "rows";
+    public static final String EDITOR_BTN_COLS = "cols";
+    public static final String EDITOR_BTN_ITEMS = "item total";
 
     private ItemsManager items = ItemsManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
@@ -55,10 +54,12 @@ public class GameActivity extends AppCompatActivity {
     private int scans = 0;
     private int found = 0;
     private int index;
-    private boolean isGameFinished; // getGameFinished(this)
+    private boolean isGameFinished = false; // getGameFinished(this)
+    private boolean[][] itemRevealed = new boolean[rows][cols];
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
+        intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
         return intent;
     }
 
@@ -70,81 +71,35 @@ public class GameActivity extends AppCompatActivity {
         // Setting parameters
         buttons = new Button[rows][cols];
         index = configs.getIndex(items);
-        isGameFinished = getGameFinished(this);
-//        items.fillArray();
 
         loadData();
-        gamesPlayed++;
-
         setupTextDisplay();
         setupButtonGrid();
+
+        Intent intent = getIntent();
+        boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
+        System.out.println("isGameSaved:" + isGameSaved);
+        if(isGameSaved){
+            loadSavedGame();
+        } else{
+            items.fillArray();
+        }
+
         saveData();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
-        if(!isGameFinished){
-//            Gson gson = new Gson();
-//            String jsonBtn = sharedPreferences.getString(EDITOR_BUTTON_ARRAY, null);
-//            Type type = new TypeToken<Button[][]>() {}.getType();
-//            Button[][] arrTemp = gson.fromJson(jsonBtn, type);
-//            if(arrTemp != null) {
-//                buttons = arrTemp;
-//            }
-//
-////            items = configs.get(index);
-////            rows = items.getRows();
-////            cols = items.getCols();
-////            totalItems = items.getTotalItems();
-////            highScore = items.getHighScore();
-//
-//            if(buttons.length == rows && buttons[0].length == cols){
-//                setSavedGame();
-//            }
-        }
+        gamesPlayed++;
     }
-
-//    private void setSavedGame() {
-//        for(int r = 0; r < buttons.length; r++){
-//            for(int c = 0; c < buttons[r].length; c++){
-//                if(!buttons[r][c].isClickable()){
-//                    updateButtons(r, c);
-//                    System.out.println("button");
-//                }
-//            }
-//        }
-//
-//    }
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
-        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(configs.getConfigs());
-        editor.putString(EDITOR_GAME_CONFIG, json);
-
-//        Gson gsonBtn = new Gson();
-//        String jsonBtn = gsonBtn.toJson(buttons);
-//        editor.putString(EDITOR_BUTTON_ARRAY, jsonBtn);
-        editor.apply();
-    }
-
-    static public boolean getGameFinished(Context c){
-        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
-    }
-
 
     private void setupTextDisplay() {
-        String strTotalItems = getString(R.string.items_total);
+        // Setup total items text
+        TextView txtTotalItems = findViewById(R.id.textViewTotalItems);
+        String strTotalItems = getString(R.string.total_items);
         strTotalItems += " " + totalItems;
-
-        TextView txtItemTotal = findViewById(R.id.textViewItemsTotal);
-        txtItemTotal.setText(strTotalItems);
+        txtTotalItems.setText(strTotalItems);
 
         // Setup high score
         TextView txtHighScore = findViewById(R.id.textViewHighScore);
@@ -202,26 +157,7 @@ public class GameActivity extends AppCompatActivity {
         Button button = buttons[row][col];
         int count = items.scanRowCol(row, col);
         if(count == -1){
-            items.setItemValue(row, col, false);
-
-            // Lock button size
-            lockButton();
-
-            // Set and scale image
-            int newWidth = button.getWidth();
-            int newHeight = button.getHeight();
-            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-            Resources resource = getResources();
-            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
-
-            // Update found count text
-            found++;
-            TextView txtFound = findViewById(R.id.textViewFoundCount);
-            txtFound.setText("" + found);
-
-            // Update already clicked buttons
-            updateButtonText(row, col);
+            setItemFound(row, col);
 
             // Game finished
             if(found == totalItems){
@@ -243,79 +179,61 @@ public class GameActivity extends AppCompatActivity {
                 WinFragment dialogWin = new WinFragment(scans);
                 dialogWin.show(manager, TAG_WIN_DIALOG);
             }
-
         } else{
 
             // Fix animations to move one at a time
-            Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
-            waveLeft.setDuration(500);
-            waveLeft.setRepeatCount(1);
-            waveLeft.setRepeatMode(Animation.REVERSE);
-
-            Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
-            waveRight.setDuration(500);
-            waveRight.setRepeatCount(1);
-            waveRight.setRepeatMode(Animation.REVERSE);
-
-            Animation waveAbove = new TranslateAnimation(0, 0, 0, -15);
-            waveAbove.setDuration(500);
-            waveAbove.setRepeatCount(1);
-            waveAbove.setRepeatMode(Animation.REVERSE);
-
-            Animation waveBelow = new TranslateAnimation(0, 0, 0, 15);
-            waveBelow.setDuration(500);
-            waveBelow.setRepeatCount(1);
-            waveBelow.setRepeatMode(Animation.REVERSE);
-
-            for(int rBelow = row + 1; rBelow < rows; rBelow++){
-                Button temp = buttons[rBelow][col];
-                temp.startAnimation(waveBelow);
-            }
-
-            for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-                Button temp = buttons[rAbove][col];
-                temp.startAnimation(waveAbove);
-            }
-
-            for(int cRight = col + 1; cRight < cols; cRight++){
-                Button temp = buttons[row][cRight];
-                temp.startAnimation(waveRight);
-            }
-
-            for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-                Button temp = buttons[row][cLeft];
-                temp.startAnimation(waveLeft);
-            }
+//            buttonAnimate(row, col);
 
             button.setPadding(0,0,0,0);
             button.setText(count + "");
+            button.setClickable(false);
 
             // Update scan count text
             scans++;
             TextView txtScans = findViewById(R.id.textViewScansCount);
             txtScans.setText("" + scans);
-
-            button.setClickable(false);
         }
     }
 
-    private void lockButton() {
+    private void setItemFound(int row, int col) {
+        Button button = buttons[row][col];
+
+        // Lets items know that the item has been revealed
+        items.setItemValue(row, col, false);
+        itemRevealed[row][col] = true;
+
+        // Lock button size
+//            lockButton();
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
-                Button button = buttons[r][c];
+                Button btnLock = buttons[r][c];
 
-                int width = button.getWidth();
-                button.setMinWidth(width);
-                button.setMaxWidth(width);
+                int width = btnLock.getWidth();
+                btnLock.setMinWidth(width);
+                btnLock.setMaxWidth(width);
 
-                int height = button.getHeight();
-                button.setMinHeight(height);
-                button.setMaxHeight(height);
+                int height = btnLock.getHeight();
+                btnLock.setMinHeight(height);
+                btnLock.setMaxHeight(height);
             }
         }
-    }
 
-    private void updateButtonText(int row, int col) {
+        // Set and scale image
+//        setButtonImage(row, col);
+        int newWidth = button.getWidth();
+        int newHeight = button.getHeight();
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+        Resources resource = getResources();
+        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+
+        // Update found count text
+        found++;
+        TextView txtFound = findViewById(R.id.textViewFoundCount);
+        txtFound.setText("" + found);
+
+        // Update already clicked buttons
+//        updateButtonText(row, col);
         for(int r = 0; r < rows; r++){
             Button temp = buttons[r][col];
             setButtonText(temp);
@@ -336,8 +254,130 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void buttonAnimate(int row, int col) {
+        Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
+        waveLeft.setDuration(500);
+        waveLeft.setRepeatCount(1);
+        waveLeft.setRepeatMode(Animation.REVERSE);
+
+        Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
+        waveRight.setDuration(500);
+        waveRight.setRepeatCount(1);
+        waveRight.setRepeatMode(Animation.REVERSE);
+
+        Animation waveAbove = new TranslateAnimation(0, 0, 0, -15);
+        waveAbove.setDuration(500);
+        waveAbove.setRepeatCount(1);
+        waveAbove.setRepeatMode(Animation.REVERSE);
+
+        Animation waveBelow = new TranslateAnimation(0, 0, 0, 15);
+        waveBelow.setDuration(500);
+        waveBelow.setRepeatCount(1);
+        waveBelow.setRepeatMode(Animation.REVERSE);
+
+        for(int rBelow = row + 1; rBelow < rows; rBelow++){
+            Button temp = buttons[rBelow][col];
+            temp.startAnimation(waveBelow);
+        }
+
+        for(int rAbove = row - 1; rAbove >= 0; rAbove--){
+            Button temp = buttons[rAbove][col];
+            temp.startAnimation(waveAbove);
+        }
+
+        for(int cRight = col + 1; cRight < cols; cRight++){
+            Button temp = buttons[row][cRight];
+            temp.startAnimation(waveRight);
+        }
+
+        for(int cLeft = col - 1; cLeft >= 0; cLeft--){
+            Button temp = buttons[row][cLeft];
+            temp.startAnimation(waveLeft);
+        }
+    }
+
+    private void loadSavedGame() {
+        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
+        if(preferencesBtns.getInt(EDITOR_BTN_ROWS, 0) == rows
+                && preferencesBtns.getInt(EDITOR_BTN_COLS, 0) == cols
+                && preferencesBtns.getInt(EDITOR_BTN_ITEMS, 0) == totalItems){
+            items.setItems(configs.get(index).getArray());
+
+            for(int r = 0; r < rows; r++){
+                for(int c = 0; c < cols; c++){
+                    boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
+                    if(!isButtonClickable){
+                        updateButtons(r, c);
+                    }
+                    boolean test = preferencesBtns.getBoolean("itemRevealed[" + r + "][" + c + "] value", false);
+                    if(test){
+//                        setItemFound(r, c);
+                    }
+//                    if(isButtonClickable && items.isItemThere(r, c)){
+//                        System.out.println("ha");
+//                    }
+//                    boolean isItemRevealed = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].getBackground", false);
+//                    System.out.println("buttons[" + r + "][" + c + "].getBackground = " + isItemRevealed);
+//                    if(isItemRevealed){
+//                        int newWidth = buttons[r][c].getWidth();
+//                        int newHeight = buttons[r][c].getHeight();
+//                        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
+//                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+//                        Resources resource = getResources();
+//                        buttons[r][c].setBackground(new BitmapDrawable(resource, scaledBitmap));
+//                    }
+                }
+
+            }
+        } else{
+            items.fillArray();
+        }
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
+        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
+        System.out.println("save isGameFinished:"+isGameFinished);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(configs.getConfigs());
+        editor.putString(EDITOR_GAME_CONFIG, json);
+        editor.apply();
+    }
+
+    private void saveButtonArray(){
+        configs.get(index).setItems(items.getArray());
+        saveData();
+
+        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencesBtns.edit();
+        editor.putInt(EDITOR_BTN_ROWS, rows);
+        editor.putInt(EDITOR_BTN_COLS, cols);
+        editor.putInt(EDITOR_BTN_ITEMS, totalItems);
+
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < cols; c++){
+                editor.putBoolean("buttons[" + r + "][" + c + "].isClickable", buttons[r][c].isClickable());
+                editor.putBoolean("itemRevealed[" + r + "][" + c + "] value", itemRevealed[r][c]);
+            }
+        }
+
+        editor.apply();
+    }
+
+    static public boolean getGameFinished(Context c){
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        System.out.println("load isGameFinished:"+sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false));
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
+    }
+
     @Override
     public void onBackPressed() {
+        if(!isGameFinished){
+            saveButtonArray();
+        }
         Intent intent = new Intent();
         setResult(GameActivity.RESULT_OK, intent);
         finish();

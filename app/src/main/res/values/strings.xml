@@ -14,7 +14,7 @@
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
     <string name="found_count">0</string>
-    <string name="items_total">Items Total:</string>
+    <string name="total_items">Items Total:</string>
     <string name="high_score">High Score:</string>
     <string name="games_played">Games Played:</string>
     <string name="game_name">GAME NAME</string>

@@ -28,6 +28,7 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GAME = 42;
     public static final int REQUEST_CODE_OPTIONS = 43;
+    boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
 
@@ -82,11 +83,17 @@ public class MainActivity extends AppCompatActivity {
 
         boolean isGameFinished = GameActivity.getGameFinished(this);
         if(!isGameFinished){
-            // set array filling to either saved state or fill new
-            items.setItems(config.get(index).getArray());
-        } else{
-            items.fillArray();
+            isGameSaved = true;
         }
+
+//        if(!isGameFinished){
+//            // set array filling to either saved state or fill new
+//            //check for button array size and number of items
+//            items.setItems(config.get(index).getArray());
+//        } else{
+//            items.fillArray();
+//        }
+//            items.fillArray();
 
     }
 
@@ -103,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                System.out.println("test:" + isGameSaved);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved);
                 startActivityForResult(intent, REQUEST_CODE_GAME);
             }
         });
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_CODE_OPTIONS:
                 createItemsManager();
+                isGameSaved = false;
                 break;
             default:
                 assert false;

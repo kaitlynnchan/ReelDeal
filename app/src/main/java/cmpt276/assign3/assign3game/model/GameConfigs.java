@@ -20,14 +20,12 @@ public class GameConfigs {
         return configs;
     }
 
-    public ItemsManager get(int index){
-        return configs.get(index);
-    }
-
     public int getIndex(ItemsManager manager){
+        // Returns -1 if manager does not exist in array
         if(configs == null){
             return -1;
         }
+
         for(int i = 0; i < configs.size(); i++){
             ItemsManager l = configs.get(i);
             if(l.getRows() == manager.getRows()
@@ -37,6 +35,10 @@ public class GameConfigs {
             }
         }
         return -1;
+    }
+
+    public ItemsManager get(int index){
+        return configs.get(index);
     }
 
     public void setConfigs(ArrayList<ItemsManager> configs) {
