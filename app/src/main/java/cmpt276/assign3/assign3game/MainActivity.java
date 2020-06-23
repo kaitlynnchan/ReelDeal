@@ -86,15 +86,6 @@ public class MainActivity extends AppCompatActivity {
             isGameSaved = true;
         }
 
-//        if(!isGameFinished){
-//            // set array filling to either saved state or fill new
-//            //check for button array size and number of items
-//            items.setItems(config.get(index).getArray());
-//        } else{
-//            items.fillArray();
-//        }
-//            items.fillArray();
-
     }
 
 
@@ -110,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                System.out.println("test:" + isGameSaved);
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved);
                 startActivityForResult(intent, REQUEST_CODE_GAME);
             }
