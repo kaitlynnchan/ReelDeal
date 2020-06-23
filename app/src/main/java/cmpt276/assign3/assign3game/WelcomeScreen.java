@@ -62,14 +62,14 @@ public class WelcomeScreen extends AppCompatActivity {
         // Game title animations
         TextView gameTitle = findViewById(R.id.textViewReelDeal);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
-                getString(R.string.transY),
+                "translationY",
                 (float) (heightScreen / 5) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(2000);
         moveY.start();
 
         ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
-                getString(R.string.transX),
+                "translationX",
                 (float) widthScreen / 5);
         moveX.setStartDelay(timer);
         moveX.setDuration(2000);
@@ -91,14 +91,14 @@ public class WelcomeScreen extends AppCompatActivity {
         // Game title <REEL DEAL> animations
         TextView reelDeal = findViewById(R.id.textViewReelDeal);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(reelDeal,
-                getString(R.string.transY),
+                "translationY",
                 (float) (heightScreen / 3) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
         ObjectAnimator moveX = ObjectAnimator.ofFloat(reelDeal,
-                getString(R.string.transX),
+                "translationX",
                 (float) widthScreen / 7);
         moveX.setStartDelay(timer);
         moveX.setDuration(1000);
@@ -112,7 +112,7 @@ public class WelcomeScreen extends AppCompatActivity {
         // Author animation
         TextView authors = findViewById(R.id.textViewAuthors);
         ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
-                getString(R.string.transX),
+                "translationX",
                 (float) (widthScreen / 3) * 2);
         moveAuthorX.setStartDelay(timer);
         moveAuthorX.setDuration(1000);

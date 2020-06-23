@@ -53,18 +53,7 @@
     <string name="EDITOR_FISHES">Fishes</string>
     <string name="EDITOR_ROWS">Rows</string>
     <string name="EDITOR_COLUMNS">Columns</string>
-    <string name="transY">translationY</string>
-    <string name="transX">translationX</string>
     <string name="total_fishes">Total Fishes:</string>
-    <string name="TAG_WIN_DIALOG">Win dialog</string>
-    <string name="SHARED_PREFERENCES">shared preferences</string>
-    <string name="SHARED_PREFERENCES_BUTTON">shared preferences for buttons</string>
-    <string name="EDITOR_GAMES_PLAYED">games played</string>
-    <string name="EDITOR_GAME_CONFIG">game configurations</string>
-    <string name="EDITOR_IS_GAME_FINISHED">is the game finished</string>
-    <string name="EDITOR_WIDTH">button width</string>
-    <string name="EDITOR_HEIGHT">button height</string>
-    <string name="EXTRA_IS_GAME_SAVED">is there a game saved</string>
     <string name="empty" />
 
 </resources>

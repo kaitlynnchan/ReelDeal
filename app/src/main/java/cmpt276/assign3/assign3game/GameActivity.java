@@ -32,7 +32,15 @@ import cmpt276.assign3.assign3game.model.FishesManager;
 public class GameActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES = "shared preferences";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
+    public static final String TAG_WIN_DIALOG ="Win dialog";
+    public static final String SHARED_PREFERENCES_BUTTON = "shared preferences for buttons";
+    public static final String EDITOR_GAMES_PLAYED = "games played";
+    public static final String EDITOR_IS_GAME_FINISHED = "is the game finished";
+    public static final String EDITOR_WIDTH = "button width";
+    public static final String EDITOR_HEIGHT = "button height";
+
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
+
     private FishesManager manager = FishesManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
     private Button[][] buttons;
@@ -68,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
         setupTextDisplay();
 
         Intent intent = getIntent();
-        boolean isGameSaved = intent.getBooleanExtra(getString(R.string.EXTRA_IS_GAME_SAVED), false);
+        boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
         if(isGameSaved){
             loadSavedGame();
         } else{
@@ -79,8 +87,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
-        gamesPlayed += sharedPreferences.getInt(getString(R.string.EDITOR_GAMES_PLAYED), 1);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
         gamesPlayed++;
     }
 
@@ -169,7 +177,7 @@ public class GameActivity extends AppCompatActivity {
                 // Display win screen
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 WinFragment dialogWin = new WinFragment(scans, highScore);
-                dialogWin.show(fragmentManager, getString(R.string.TAG_WIN_DIALOG));
+                dialogWin.show(fragmentManager, TAG_WIN_DIALOG);
             }
         } else{
 
@@ -231,7 +239,7 @@ public class GameActivity extends AppCompatActivity {
     private void updateFoundCountTxt() {
         found++;
         TextView txtFound = findViewById(R.id.textViewFoundCount);
-        txtFound.setText("" + found);
+        txtFound.setText(getString(R.string.empty) + found);
     }
 
     private void setButtonText(Button temp) {
@@ -289,22 +297,22 @@ public class GameActivity extends AppCompatActivity {
     private void setScan(int row, int col, int count) {
         Button button = buttons[row][col];
         button.setPadding(0,0,0,0);
-        button.setText(count + "");
+        button.setText(count + getString(R.string.empty));
         button.setClickable(false);
 
         // Update scan count text
         scans++;
         TextView txtScans = findViewById(R.id.textViewScansCount);
-        txtScans.setText("" + scans);
+        txtScans.setText(getString(R.string.empty) + scans);
     }
 
     private void loadSavedGame() {
-        SharedPreferences preferencesBtns = getSharedPreferences(getString(R.string.SHARED_PREFERENCES_BUTTON), MODE_PRIVATE);
+        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTON, MODE_PRIVATE);
         manager.setFishes(configs.get(index).getArray());
         setupButtonGrid();
 
-        int widthBtn = preferencesBtns.getInt(getString(R.string.EDITOR_WIDTH), 0);
-        int heightBtn = preferencesBtns.getInt(getString(R.string.EDITOR_HEIGHT), 0);
+        int widthBtn = preferencesBtns.getInt(EDITOR_WIDTH, 0);
+        int heightBtn = preferencesBtns.getInt(EDITOR_HEIGHT, 0);
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
@@ -327,14 +335,14 @@ public class GameActivity extends AppCompatActivity {
 
 // saveData() saves game configuration and number of games played
     private void saveData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(getString(R.string.EDITOR_GAMES_PLAYED), gamesPlayed);
-        editor.putBoolean(getString(R.string.EDITOR_IS_GAME_FINISHED), isGameFinished);
+        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
+        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
 
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
-        editor.putString(getString(R.string.EDITOR_GAME_CONFIG), json);
+        editor.putString(EDITOR_GAME_CONFIG, json);
         editor.apply();
     }
 
@@ -343,10 +351,10 @@ public class GameActivity extends AppCompatActivity {
         configs.get(index).setFishes(manager.getArray());
         saveData();
 
-        SharedPreferences preferencesBtns = this.getSharedPreferences(getString(R.string.SHARED_PREFERENCES_BUTTON), MODE_PRIVATE);
+        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTON, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencesBtns.edit();
-        editor.putInt(getString(R.string.EDITOR_WIDTH), buttons[0][0].getWidth());
-        editor.putInt(getString(R.string.EDITOR_HEIGHT), buttons[0][0].getHeight());
+        editor.putInt(EDITOR_WIDTH, buttons[0][0].getWidth());
+        editor.putInt(EDITOR_HEIGHT, buttons[0][0].getHeight());
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
@@ -359,8 +367,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     static public boolean getGameFinished(Context c){
-        SharedPreferences sharedPreferences = c.getSharedPreferences(c.getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
-        return sharedPreferences.getBoolean(c.getString(R.string.EDITOR_IS_GAME_FINISHED), false);
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
     }
 
     @Override
