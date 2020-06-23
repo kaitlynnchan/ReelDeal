@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -55,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
     private int index;
     private boolean isGameFinished = false;
     private boolean[][] itemRevealed = new boolean[rows][cols];
+    Vibrator vibrator;
 
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
@@ -136,11 +138,14 @@ public class GameActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f
                 ));
+                // Adding vibration to buttons
+                vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
+                        vibrator.vibrate(3000);
                     }
                 });
 
