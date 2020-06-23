@@ -11,28 +11,32 @@
         android:id="@+id/textViewTitleCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/lobster"
         android:text="GAME NAME"
-        android:textSize="50sp"
+        android:textColor="#3C454C"
+        android:textSize="80sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="PLAY"
-        android:textSize="24sp"
-        android:background="@drawable/button_shadow"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
         app:layout_constraintStart_toStartOf="@+id/textViewTitleCenter"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleCenter" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleCenter"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
 
     <Button
         android:id="@+id/buttonOptions"
@@ -53,22 +57,22 @@
         android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginLeft="75dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="HELP"
         android:textSize="18sp"
-        android:background="@drawable/button_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
+        app:layout_constraintStart_toStartOf="@+id/buttonPlay"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="88dp"
         android:rotation="-16"
         android:text="BETA"
         android:textSize="18sp"

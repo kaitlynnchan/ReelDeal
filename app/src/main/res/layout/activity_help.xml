@@ -55,6 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/about_authors_content"
+                android:textColorHighlight="@color/colorDarkBlue"
+                android:textColorLink="@color/colorBlue"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/textAbout"
                 app:layout_constraintTop_toBottomOf="@+id/textAbout" />
@@ -79,6 +81,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/how_to_play_content"
+                android:textColorHighlight="@color/colorDarkBlue"
+                android:textColorLink="@color/colorBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/citations_content"
+                android:textColorHighlight="@color/colorDarkBlue"
+                android:textColorLink="@color/colorBlue"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/textCitations"
                 app:layout_constraintTop_toBottomOf="@+id/textCitations" />
