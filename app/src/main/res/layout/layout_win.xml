@@ -81,4 +81,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textCongrats"
         app:layout_constraintTop_toBottomOf="@+id/textCongrats" />
+
+    <TextView
+        android:id="@+id/textViewBest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="BEST!!"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewScore"
+        app:layout_constraintStart_toEndOf="@+id/textViewScore"
+        app:layout_constraintTop_toTopOf="@+id/textViewScore" />
 </androidx.constraintlayout.widget.ConstraintLayout>

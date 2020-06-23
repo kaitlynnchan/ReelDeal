@@ -2,6 +2,7 @@ package cmpt276.assign3.assign3game;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+/**
+ * Win Dialog
+ */
 public class WinFragment extends AppCompatDialogFragment {
 
     private int score;
+    private int highscore;
 
-    public WinFragment(int scans) {
+    public WinFragment(int scans, int highscore) {
         this.score = scans;
+        this.highscore = highscore;
     }
 
     @NonNull
@@ -30,11 +36,19 @@ public class WinFragment extends AppCompatDialogFragment {
         strScore += "  " + score;
         txtScore.setText(strScore);
 
+        if(score < highscore || highscore == -1){
+            TextView txtBest = v.findViewById(R.id.textViewBest);
+            txtBest.setVisibility(View.VISIBLE);
+        }
+
         final Button btnOk = v.findViewById(R.id.buttonOK);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnOk.setBackground(WinFragment.this.getResources().getDrawable(R.drawable.button_border));
+                Intent intent = new Intent();
+                MainActivity.isGameSaved = false;
+                getActivity().setResult(GameActivity.RESULT_OK, intent);
                 getActivity().finish();
             }
         });

@@ -66,11 +66,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewFound" />
 
     <TextView
-        android:id="@+id/textViewItemsTotal"
+        android:id="@+id/textViewTotalItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/items_total"
+        android:text="@string/total_items"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/textView3"
@@ -112,7 +112,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewItemsTotal">
+        app:layout_constraintTop_toBottomOf="@+id/textViewTotalItems">
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

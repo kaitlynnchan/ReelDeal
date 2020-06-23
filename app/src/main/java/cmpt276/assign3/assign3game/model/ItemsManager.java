@@ -13,6 +13,7 @@ public class ItemsManager {
     private int rows;
     private int cols;
     private int totalItems;
+    private int highScore;
 
     // Singleton implementation of ItemsManager
     private static ItemsManager instance;
@@ -22,6 +23,10 @@ public class ItemsManager {
             instance = new ItemsManager();
         }
         return instance;
+    }
+
+    public boolean[][] getArray() {
+        return items;
     }
 
     public int getRows() {
@@ -36,6 +41,14 @@ public class ItemsManager {
         return totalItems;
     }
 
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setItems(boolean[][] items) {
+        this.items = items;
+    }
+
     public void setRows(int rows) {
         this.rows = rows;
     }
@@ -48,12 +61,17 @@ public class ItemsManager {
         this.totalItems = totalItems;
     }
 
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
     public void setItemValue(int row, int col, boolean value) {
         items[row][col] = value;
     }
 
     public void fillArray(){
         items = new boolean[rows][cols];
+
         // Randomly add itemTotal amount of items into array
         int tempTotalItems = totalItems;
         while(tempTotalItems > 0){
@@ -67,6 +85,7 @@ public class ItemsManager {
     }
 
     public int scanRowCol(int row, int col){
+        // return -1 if the position in the array has an item
         if(isItemThere(row, col)){
             return -1;
         }
@@ -88,4 +107,5 @@ public class ItemsManager {
     public boolean isItemThere(int row, int col){
         return items[row][col];
     }
+
 }
