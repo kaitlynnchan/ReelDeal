@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -23,7 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.gson.Gson;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
-import cmpt276.assign3.assign3game.model.ItemsManager;
+import cmpt276.assign3.assign3game.model.FishesManager;
 
 /**
  * Game Screen
@@ -31,33 +30,25 @@ import cmpt276.assign3.assign3game.model.ItemsManager;
  * Displays a grid of buttons
  */
 public class GameActivity extends AppCompatActivity {
-
-    public static final String TAG_WIN_DIALOG = "Win dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
-    public static final String EDITOR_GAMES_PLAYED = "games played";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
-    public static final String EDITOR_IS_GAME_FINISHED = "is the game finished";
-    public static final String SHARED_PREFERENCES_BUTTONS = "shared preferences for buttons";
-    public static final String EDITOR_WIDTH = "button width";
-    public static final String EDITOR_HEIGHT = "button height";
-
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
-
-    private ItemsManager items = ItemsManager.getInstance();
+    private FishesManager manager = FishesManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
     private Button[][] buttons;
-    private int rows = items.getRows();
-    private int cols = items.getCols();
-    private int totalItems = items.getTotalItems();
-    private int highScore = items.getHighScore();
+    private int rows = manager.getRows();
+    private int cols = manager.getCols();
+    private int totalFishes = manager.getTotalFishes();
+    private int highScore = manager.getHighScore();
     private int gamesPlayed;
     private int scans = 0;
     private int found = 0;
     private int index;
     private boolean isGameFinished = false;
-    private boolean[][] itemRevealed = new boolean[rows][cols];
+    private boolean[][] fishRevealed = new boolean[rows][cols];
    // Vibrator vibrator;
 
+   //removed static to accommodate getString(R.string.EXTRA_IS_GAME_SAVED)
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
         intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
@@ -71,34 +62,34 @@ public class GameActivity extends AppCompatActivity {
 
         // Setting parameters
         buttons = new Button[rows][cols];
-        index = configs.getIndex(items);
+        index = configs.getIndex(manager);
 
         loadData();
         setupTextDisplay();
 
         Intent intent = getIntent();
-        boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
+        boolean isGameSaved = intent.getBooleanExtra(getString(R.string.EXTRA_IS_GAME_SAVED), false);
         if(isGameSaved){
             loadSavedGame();
         } else{
-            items.fillArray();
+            manager.fillArray();
             setupButtonGrid();
         }
         saveData();
     }
 
     private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
+        gamesPlayed += sharedPreferences.getInt(getString(R.string.EDITOR_GAMES_PLAYED), 1);
         gamesPlayed++;
     }
 
     private void setupTextDisplay() {
-        // Setup total items text
-        TextView txtTotalItems = findViewById(R.id.textViewTotalItems);
-        String strTotalItems = getString(R.string.total_items);
-        strTotalItems += " " + totalItems;
-        txtTotalItems.setText(strTotalItems);
+        // Setup total Fishes text
+        TextView txtTotalFishes = findViewById(R.id.textViewTotalFishes);
+        String strTotalFishes = getString(R.string.total_fishes);
+        strTotalFishes += " " + totalFishes;
+        txtTotalFishes.setText(strTotalFishes);
 
         // Setup high score
         TextView txtHighScore = findViewById(R.id.textViewHighScore);
@@ -156,12 +147,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateButtons(int row, int col) {
-        int count = items.scanRowCol(row, col);
+        int count = manager.scanRowCol(row, col);
         if(count == -1){
-            setItemFound(row, col);
+            setFishesFound(row, col);
 
             // Game finished
-            if(found == totalItems){
+            if(found == totalFishes){
                 isGameFinished = true;
                 saveData();
 
@@ -176,9 +167,9 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 // Display win screen
-                FragmentManager manager = getSupportFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 WinFragment dialogWin = new WinFragment(scans, highScore);
-                dialogWin.show(manager, TAG_WIN_DIALOG);
+                dialogWin.show(fragmentManager, getString(R.string.TAG_WIN_DIALOG));
             }
         } else{
 
@@ -189,12 +180,12 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void setItemFound(int row, int col) {
+    private void setFishesFound(int row, int col) {
         Button button = buttons[row][col];
 
-        // Lets items know that the item has been revealed
-        items.setItemValue(row, col, false);
-        itemRevealed[row][col] = true;
+        // Lets manager know that the fish has been revealed
+        manager.setFishValue(row, col, false);
+        fishRevealed[row][col] = true;
 
         int width = button.getWidth();
         int height = button.getHeight();
@@ -230,6 +221,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setButtonImage(int row, int col, int newWidth, int newHeight) {
         Button button = buttons[row][col];
+        // change confetti to fish image
         Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
@@ -247,7 +239,7 @@ public class GameActivity extends AppCompatActivity {
             int count = Integer.parseInt(temp.getText().toString());
             if(count > 0){
                 count--;
-                temp.setText(count + "");
+                temp.setText(count + getString(R.string.empty));
             }
         }
     }
@@ -307,24 +299,24 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadSavedGame() {
-        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
-        items.setItems(configs.get(index).getArray());
+        SharedPreferences preferencesBtns = getSharedPreferences(getString(R.string.SHARED_PREFERENCES_BUTTON), MODE_PRIVATE);
+        manager.setFishes(configs.get(index).getArray());
         setupButtonGrid();
 
-        int widthBtn = preferencesBtns.getInt(EDITOR_WIDTH, 0);
-        int heightBtn = preferencesBtns.getInt(EDITOR_HEIGHT, 0);
+        int widthBtn = preferencesBtns.getInt(getString(R.string.EDITOR_WIDTH), 0);
+        int heightBtn = preferencesBtns.getInt(getString(R.string.EDITOR_HEIGHT), 0);
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
                 if(!isButtonClickable){
-                    int count = items.scanRowCol(r, c);
+                    int count = manager.scanRowCol(r, c);
                     setScan(r, c, count);
                 }
 
                 boolean test = preferencesBtns.getBoolean("itemRevealed[" + r + "][" + c + "] value", false);
                 if(test){
-                    itemRevealed[r][c] = true;
+                    fishRevealed[r][c] = true;
                     lockButton(widthBtn, heightBtn);
                     setButtonImage(r, c, widthBtn, heightBtn);
                     updateFoundCountTxt();
@@ -333,31 +325,33 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+// saveData() saves game configuration and number of games played
     private void saveData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
-        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
+        editor.putInt(getString(R.string.EDITOR_GAMES_PLAYED), gamesPlayed);
+        editor.putBoolean(getString(R.string.EDITOR_IS_GAME_FINISHED), isGameFinished);
 
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
-        editor.putString(EDITOR_GAME_CONFIG, json);
+        editor.putString(getString(R.string.EDITOR_GAME_CONFIG), json);
         editor.apply();
     }
 
+// saveButtonArray saves game state even if user has exited the app
     private void saveButtonArray(){
-        configs.get(index).setItems(items.getArray());
+        configs.get(index).setFishes(manager.getArray());
         saveData();
 
-        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
+        SharedPreferences preferencesBtns = this.getSharedPreferences(getString(R.string.SHARED_PREFERENCES_BUTTON), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencesBtns.edit();
-        editor.putInt(EDITOR_WIDTH, buttons[0][0].getWidth());
-        editor.putInt(EDITOR_HEIGHT, buttons[0][0].getHeight());
+        editor.putInt(getString(R.string.EDITOR_WIDTH), buttons[0][0].getWidth());
+        editor.putInt(getString(R.string.EDITOR_HEIGHT), buttons[0][0].getHeight());
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 editor.putBoolean("buttons[" + r + "][" + c + "].isClickable", buttons[r][c].isClickable());
-                editor.putBoolean("itemRevealed[" + r + "][" + c + "] value", itemRevealed[r][c]);
+                editor.putBoolean("fishRevealed[" + r + "][" + c + "] value", fishRevealed[r][c]);
             }
         }
 
@@ -365,8 +359,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     static public boolean getGameFinished(Context c){
-        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
+        SharedPreferences sharedPreferences = c.getSharedPreferences(c.getString(R.string.SHARED_PREFERENCES), MODE_PRIVATE);
+        return sharedPreferences.getBoolean(c.getString(R.string.EDITOR_IS_GAME_FINISHED), false);
     }
 
     @Override

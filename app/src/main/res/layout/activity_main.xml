@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textViewTitleCenter"
+        android:id="@+id/textReelDeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GAME NAME"
+        android:text="@string/reel_deal"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,12 +26,12 @@
         android:layout_marginTop="8dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="PLAY"
+        android:text="@string/play"
         android:textSize="24sp"
         android:background="@drawable/button_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitleCenter"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleCenter" />
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
+        app:layout_constraintTop_toBottomOf="@+id/textReelDeal" />
 
     <Button
         android:id="@+id/buttonOptions"
@@ -42,7 +42,7 @@
         android:layout_marginRight="24dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="OPTIONS"
+        android:text="@string/options"
         android:textSize="18sp"
         android:background="@drawable/button_shadow"
         app:layout_constraintEnd_toStartOf="@+id/buttonHelp"
@@ -57,21 +57,21 @@
         android:layout_marginRight="36dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="HELP"
+        android:text="@string/help"
         android:textSize="18sp"
         android:background="@drawable/button_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewBeta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:rotation="-16"
-        android:text="BETA"
+        android:text="@string/beta"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleCenter" />
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintStart_toEndOf="@+id/textReelDeal"
+        app:layout_constraintTop_toTopOf="@+id/textReelDeal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

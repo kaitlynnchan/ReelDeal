@@ -8,39 +8,39 @@
     tools:context=".OptionsActivity">
 
     <RadioGroup
-        android:id="@+id/radioGroupObjectTotal"
+        android:id="@+id/radioGroupTotalFishes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/settingsText"
-        app:layout_constraintStart_toStartOf="@+id/settingsText"
-        app:layout_constraintTop_toBottomOf="@+id/settingsText"
+        app:layout_constraintEnd_toEndOf="@+id/numFishesOptions"
+        app:layout_constraintStart_toStartOf="@+id/numFishesOptions"
+        app:layout_constraintTop_toBottomOf="@+id/numFishesOptions"
         app:layout_constraintVertical_bias="0.155"></RadioGroup>
 
     <TextView
-        android:id="@+id/settingsText"
+        android:id="@+id/numFishesOptions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="16dp"
-        android:text="Choose the Number of O you would like to play with:"
+        android:text="@string/num_fishes_options"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textOptions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textOptions" />
 
     <TextView
-        android:id="@+id/text_Size"
+        android:id="@+id/textGameSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose size of game: "
+        android:text="@string/game_size_options"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/settingsText"
+        app:layout_constraintBottom_toBottomOf="@+id/numFishesOptions"
         app:layout_constraintStart_toEndOf="@+id/textOptions"
-        app:layout_constraintTop_toTopOf="@+id/settingsText" />
+        app:layout_constraintTop_toTopOf="@+id/numFishesOptions" />
 
     <RadioGroup
         android:id="@+id/radioGroupSize"
@@ -51,15 +51,15 @@
         android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_Size"
-        app:layout_constraintTop_toTopOf="@+id/radioGroupObjectTotal"></RadioGroup>
+        app:layout_constraintStart_toStartOf="@+id/textGameSize"
+        app:layout_constraintTop_toTopOf="@+id/radioGroupTotalFishes"></RadioGroup>
 
     <TextView
         android:id="@+id/textOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="OPTIONS"
+        android:text="@string/options"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
