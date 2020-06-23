@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -18,14 +17,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.ItemsManager;
@@ -82,7 +76,6 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
-//        System.out.println("isGameSaved:" + isGameSaved);
         if(isGameSaved){
             loadSavedGame();
         } else{
@@ -340,7 +333,6 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
         editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
-//        System.out.println("save isGameFinished:"+isGameFinished);
 
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
@@ -369,7 +361,6 @@ public class GameActivity extends AppCompatActivity {
 
     static public boolean getGameFinished(Context c){
         SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-//        System.out.println("load isGameFinished:"+sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false));
         return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
     }
 
