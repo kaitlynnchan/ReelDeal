@@ -276,28 +276,28 @@ public class GameActivity extends AppCompatActivity {
         waveBelow.setRepeatMode(Animation.REVERSE);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            if(!itemRevealed[rBelow][col]){
+            if(!fishRevealed[rBelow][col]){
                 Button temp = buttons[rBelow][col];
                 temp.startAnimation(waveBelow);
             }
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            if(!itemRevealed[rAbove][col]){
+            if(!fishRevealed[rAbove][col]){
                 Button temp = buttons[rAbove][col];
                 temp.startAnimation(waveAbove);
             }
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            if(!itemRevealed[row][cRight]){
+            if(!fishRevealed[row][cRight]){
                 Button temp = buttons[row][cRight];
                 temp.startAnimation(waveRight);
             }
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            if(!itemRevealed[row][cLeft]){
+            if(!fishRevealed[row][cLeft]){
                 Button temp = buttons[row][cLeft];
                 temp.startAnimation(waveLeft);
             }
@@ -317,7 +317,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadSavedGame() {
-        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTON, MODE_PRIVATE);
+        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
         manager.setFishes(configs.get(index).getArray());
         setupButtonGrid();
 
@@ -332,7 +332,7 @@ public class GameActivity extends AppCompatActivity {
                     setScan(r, c, count);
                 }
 
-                boolean test = preferencesBtns.getBoolean("itemRevealed[" + r + "][" + c + "] value", false);
+                boolean test = preferencesBtns.getBoolean("fishRevealed[" + r + "][" + c + "] value", false);
                 if(test){
                     fishRevealed[r][c] = true;
                     lockButton(widthBtn, heightBtn);
@@ -343,7 +343,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-// saveData() saves game configuration and number of games played
+    // saveData() saves game configuration and number of games played
     private void saveData() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -356,7 +356,7 @@ public class GameActivity extends AppCompatActivity {
         editor.apply();
     }
 
-// saveButtonArray saves game state even if user has exited the app
+    // saveButtonArray saves game state even if user has exited the app
     private void saveButtonArray(){
         configs.get(index).setFishes(manager.getArray());
         saveData();

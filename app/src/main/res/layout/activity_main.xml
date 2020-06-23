@@ -43,8 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/button_shadow"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -70,15 +70,4 @@
         app:layout_constraintStart_toStartOf="@+id/buttonPlay"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
-    <TextView
-        android:id="@+id/textViewBeta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:rotation="-16"
-        android:text="@string/beta"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
-        app:layout_constraintStart_toEndOf="@+id/textReelDeal"
-        app:layout_constraintTop_toTopOf="@+id/textReelDeal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
