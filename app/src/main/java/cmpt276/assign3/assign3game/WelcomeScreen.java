@@ -39,7 +39,7 @@ public class WelcomeScreen extends AppCompatActivity {
         heightScreen = displayMetrics.heightPixels;
         widthScreen = displayMetrics.widthPixels;
 
-        fishingGameTitle();
+        reelDealWelcomeAnimation();
         setupSkipButton();
 
         handler.postDelayed(new Runnable() {
@@ -51,7 +51,7 @@ public class WelcomeScreen extends AppCompatActivity {
         }, timer);
     }
 
-    private void fishingGameTitle() {
+    private void reelDealWelcomeAnimation() {
         // Fishing pole animations
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
         Animation rotate = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_rotate);
@@ -60,7 +60,7 @@ public class WelcomeScreen extends AppCompatActivity {
         timer += 3000;
 
         // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewGameTitle);
+        TextView gameTitle = findViewById(R.id.textViewReelDeal);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
                 "translationY",
                 (float) (heightScreen / 5) * -1);
@@ -88,16 +88,16 @@ public class WelcomeScreen extends AppCompatActivity {
         fadeIn.setStartDelay(timer);
         fadeIn.setDuration(1000);
 
-        // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
+        // Game title <REEL DEAL> animations
+        TextView gameName = findViewById(R.id.textViewReelDeal);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName,
                 "translationX",
                 (float) widthScreen / 7);
         moveX.setStartDelay(timer);
@@ -107,7 +107,7 @@ public class WelcomeScreen extends AppCompatActivity {
         Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
         scale.setStartOffset(timer);
         scale.setFillAfter(true);
-        gameTitle.startAnimation(scale);
+        gameName.startAnimation(scale);
 
         // Author animation
         TextView authors = findViewById(R.id.textViewAuthors);

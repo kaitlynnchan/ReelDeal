@@ -53,13 +53,13 @@
       app:layout_constraintVertical_bias="0.0" />
 
   <TextView
-      android:id="@+id/textViewGameTitle"
+      android:id="@+id/textViewReelDeal"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="300dp"
       android:layout_marginRight="300dp"
+      android:text="@string/welcome_reel_deal"
       android:fontFamily="@font/lobster"
-      android:text="@string/welcome_game_name"
       android:textColor="@color/colorLightBlue"
       android:textSize="30sp"
       android:textStyle="bold"

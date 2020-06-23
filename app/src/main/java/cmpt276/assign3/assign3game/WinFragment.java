@@ -19,11 +19,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class WinFragment extends AppCompatDialogFragment {
 
     private int score;
-    private int highscore;
+    private int highScore;
 
     public WinFragment(int scans, int highscore) {
         this.score = scans;
-        this.highscore = highscore;
+        this.highScore = highscore;
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class WinFragment extends AppCompatDialogFragment {
         strScore += "  " + score;
         txtScore.setText(strScore);
 
-        if(score < highscore || highscore == -1){
+        if(score < highScore || highScore == -1){
             TextView txtBest = v.findViewById(R.id.textViewBest);
             txtBest.setVisibility(View.VISIBLE);
         }

@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
-import cmpt276.assign3.assign3game.model.ItemsManager;
+import cmpt276.assign3.assign3game.model.FishesManager;
 
 /**
  * Main menu
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadData();
-        createItemsManager();
+        createFishesManager();
         playWelcomeScreen();
         setupButtons();
         setupMainBackground();
@@ -53,32 +53,32 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(GameActivity.EDITOR_GAME_CONFIG, null);
-        Type type = new TypeToken<ArrayList<ItemsManager>>() {}.getType();
-        ArrayList<ItemsManager> arrTemp = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<FishesManager>>() {}.getType();
+        ArrayList<FishesManager> arrTemp = gson.fromJson(json, type);
         if(arrTemp != null) {
             config.setConfigs(arrTemp);
         }
 
     }
 
-    private void createItemsManager() {
-        ItemsManager items = ItemsManager.getInstance();
+    private void createFishesManager() {
+        FishesManager manager = FishesManager.getInstance();
 
-        int numObjects = OptionsActivity.getNumObjects(this);
-        items.setTotalItems(numObjects);
+        int numFishes = OptionsActivity.getNumFishes(this);
+        manager.setTotalFishes(numFishes);
         int rows = OptionsActivity.getNumRows(this);
-        items.setRows(rows);
+        manager.setRows(rows);
         int columns = OptionsActivity.getNumColumns(this);
-        items.setCols(columns);
+        manager.setCols(columns);
 
-        // Set highscore depending whether config exists or not
-        int index = config.getIndex(items);
+        // Set high score depending whether config exists or not
+        int index = config.getIndex(manager);
         if(index == -1){
-            items.setHighScore(-1);
-            config.add(items);
+            manager.setHighScore(-1);
+            config.add(manager);
         } else{
             int highScore = config.get(index).getHighScore();
-            items.setHighScore(highScore);
+            manager.setHighScore(highScore);
         }
 
         boolean isGameFinished = GameActivity.getGameFinished(this);
@@ -145,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode){
             case REQUEST_CODE_GAME:
-                createItemsManager();
+                createFishesManager();
                 break;
             case REQUEST_CODE_OPTIONS:
-                createItemsManager();
+                createFishesManager();
                 isGameSaved = false;
                 break;
             default:
