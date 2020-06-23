@@ -2,11 +2,15 @@ package cmpt276.assign3.assign3game.model;
 
 import java.util.ArrayList;
 
+/**
+ * Game Configurations
+ * stores a collection of itemsManager -> existing configurations
+ */
 public class GameConfigs {
 
     private ArrayList<ItemsManager> configs = new ArrayList<>();
 
-    // Singleton implementation of ItemsManager
+    // Singleton implementation of GameConfigs
     private static GameConfigs instance;
     private GameConfigs(){}
     public static GameConfigs getInstance(){

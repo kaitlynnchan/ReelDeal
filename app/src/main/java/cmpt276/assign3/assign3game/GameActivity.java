@@ -172,7 +172,7 @@ public class GameActivity extends AppCompatActivity {
 
                 // Display win screen
                 FragmentManager manager = getSupportFragmentManager();
-                WinFragment dialogWin = new WinFragment(scans);
+                WinFragment dialogWin = new WinFragment(scans, highScore);
                 dialogWin.show(manager, TAG_WIN_DIALOG);
             }
         } else{

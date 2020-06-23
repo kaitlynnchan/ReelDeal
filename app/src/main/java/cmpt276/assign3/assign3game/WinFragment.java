@@ -13,12 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+/**
+ * Win Dialog
+ */
 public class WinFragment extends AppCompatDialogFragment {
 
     private int score;
+    private int highscore;
 
-    public WinFragment(int scans) {
+    public WinFragment(int scans, int highscore) {
         this.score = scans;
+        this.highscore = highscore;
     }
 
     @NonNull
@@ -30,6 +35,11 @@ public class WinFragment extends AppCompatDialogFragment {
         String strScore = getString(R.string.score);
         strScore += "  " + score;
         txtScore.setText(strScore);
+
+        if(score < highscore || highscore == -1){
+            TextView txtBest = v.findViewById(R.id.textViewBest);
+            txtBest.setVisibility(View.VISIBLE);
+        }
 
         final Button btnOk = v.findViewById(R.id.buttonOK);
         btnOk.setOnClickListener(new View.OnClickListener() {
