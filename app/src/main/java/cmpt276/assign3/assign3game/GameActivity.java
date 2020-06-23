@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -141,6 +142,8 @@ public class GameActivity extends AppCompatActivity {
                 // Adding vibration to buttons
                 //vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
+                button.setBackgroundResource(R.drawable.button_corner);
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -230,7 +233,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setButtonImage(int row, int col, int newWidth, int newHeight) {
         Button button = buttons[row][col];
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.confetti);
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fish);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
         button.setBackground(new BitmapDrawable(resource, scaledBitmap));
@@ -274,23 +277,31 @@ public class GameActivity extends AppCompatActivity {
         waveBelow.setRepeatMode(Animation.REVERSE);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            Button temp = buttons[rBelow][col];
-            temp.startAnimation(waveBelow);
+            if(!itemRevealed[rBelow][col]){
+                Button temp = buttons[rBelow][col];
+                temp.startAnimation(waveBelow);
+            }
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            Button temp = buttons[rAbove][col];
-            temp.startAnimation(waveAbove);
+            if(!itemRevealed[rAbove][col]){
+                Button temp = buttons[rAbove][col];
+                temp.startAnimation(waveAbove);
+            }
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            Button temp = buttons[row][cRight];
-            temp.startAnimation(waveRight);
+            if(!itemRevealed[row][cRight]){
+                Button temp = buttons[row][cRight];
+                temp.startAnimation(waveRight);
+            }
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            Button temp = buttons[row][cLeft];
-            temp.startAnimation(waveLeft);
+            if(!itemRevealed[row][cLeft]){
+                Button temp = buttons[row][cLeft];
+                temp.startAnimation(waveLeft);
+            }
         }
     }
 

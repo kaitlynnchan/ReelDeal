@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OptionsActivity">
+    tools:context=".OptionsActivity"
+    android:background="@drawable/ocean_background" >
 
     <RadioGroup
         android:id="@+id/radioGroupObjectTotal"
@@ -17,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="@+id/settingsText"
         app:layout_constraintStart_toStartOf="@+id/settingsText"
         app:layout_constraintTop_toBottomOf="@+id/settingsText"
-        app:layout_constraintVertical_bias="0.155"></RadioGroup>
+        app:layout_constraintVertical_bias="0.155">
+    </RadioGroup>
 
     <TextView
         android:id="@+id/settingsText"
@@ -52,7 +54,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_Size"
-        app:layout_constraintTop_toTopOf="@+id/radioGroupObjectTotal"></RadioGroup>
+        app:layout_constraintTop_toTopOf="@+id/radioGroupObjectTotal">
+    </RadioGroup>
 
     <TextView
         android:id="@+id/textOptions"
