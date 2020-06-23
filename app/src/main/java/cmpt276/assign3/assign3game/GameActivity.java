@@ -56,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
     private int index;
     private boolean isGameFinished = false;
     private boolean[][] itemRevealed = new boolean[rows][cols];
-    Vibrator vibrator;
+   // Vibrator vibrator;
 
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
@@ -139,13 +139,13 @@ public class GameActivity extends AppCompatActivity {
                         1.0f
                 ));
                 // Adding vibration to buttons
-                vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+                //vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
-                        vibrator.vibrate(3000);
+                       // vibrator.vibrate(3000);
                     }
                 });
 
