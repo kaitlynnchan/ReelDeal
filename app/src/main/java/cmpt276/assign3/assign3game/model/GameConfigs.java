@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Game Configurations
- * stores a collection of fishesManager -> existing configurations
+ * Stores a collection of existing game configurations
+ *      fishesManager items in the list are distinct
  */
 public class GameConfigs {
 

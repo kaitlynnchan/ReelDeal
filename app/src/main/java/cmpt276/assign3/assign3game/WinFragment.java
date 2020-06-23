@@ -15,21 +15,22 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 /**
  * Win Dialog
+ * Displays congratulations message
  */
 public class WinFragment extends AppCompatDialogFragment {
 
     private int score;
     private int highScore;
 
-    public WinFragment(int scans, int highscore) {
+    public WinFragment(int scans, int highScore) {
         this.score = scans;
-        this.highScore = highscore;
+        this.highScore = highScore;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View v = LayoutInflater.from(getActivity()).inflate(R.layout.layout_win, null);
+        View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_win, null);
 
         TextView txtScore = v.findViewById(R.id.textViewScore);
         String strScore = getString(R.string.score);
@@ -47,7 +48,6 @@ public class WinFragment extends AppCompatDialogFragment {
             public void onClick(View v) {
                 btnOk.setBackground(WinFragment.this.getResources().getDrawable(R.drawable.button_border));
                 Intent intent = new Intent();
-                MainActivity.isGameSaved = false;
                 getActivity().setResult(GameActivity.RESULT_OK, intent);
                 getActivity().finish();
             }

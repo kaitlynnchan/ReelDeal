@@ -23,11 +23,12 @@ import cmpt276.assign3.assign3game.model.FishesManager;
 
 /**
  * Main menu
- * Displays play, options, and help buttons to navigate screens
+ * Displays: play, options, and help buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GAME = 42;
     public static final int REQUEST_CODE_OPTIONS = 43;
+    public static final int REQUEST_CODE_HELP = 44;
     public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadData();
-        createFishesManager();
-        playWelcomeScreen();
         setupButtons();
         setupMainBackground();
     }
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             config.setConfigs(arrTemp);
         }
 
+        createFishesManager();
     }
 
     private void createFishesManager() {
@@ -88,11 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    private void playWelcomeScreen() {
-        // Implement welcome screen
-    }
-
     private void setupButtons() {
         final Button btnPlay = findViewById(R.id.buttonPlay);
         btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
@@ -112,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Setup options screen
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
+
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
                 startActivityForResult(intent, REQUEST_CODE_OPTIONS);
             }
@@ -124,11 +119,10 @@ public class MainActivity extends AppCompatActivity {
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Setup to help screen
                 btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
                 Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, 42);
+                startActivityForResult(intent, REQUEST_CODE_HELP);
             }
         });
     }
@@ -157,8 +151,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        createFishesManager();
+//        isGameSaved = false;
+//    }
 
-        private void setupMainBackground() {
+    private void setupMainBackground() {
         // Implement background based on theme
     }
 }

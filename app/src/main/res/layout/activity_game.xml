@@ -8,12 +8,14 @@
     android:background="@drawable/ocean_background" >
 
     <TextView
-        android:id="@+id/reelDeal"
+        android:id="@+id/txtViewTitleGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lobster"
         android:text="@string/reel_deal"
-        android:textSize="24sp"
+        android:textColor="#000000"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/found"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textViewFoundCount"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +41,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="@string/found_count"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,6 +54,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/scans_used"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textViewScansCount"
         app:layout_constraintTop_toBottomOf="@+id/textViewFound" />
@@ -62,6 +67,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="@string/scans_count"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFound" />
@@ -72,10 +78,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/total_fishes"
+        android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/reelDeal"
-        app:layout_constraintStart_toStartOf="@+id/reelDeal"
-        app:layout_constraintTop_toBottomOf="@+id/reelDeal" />
+        app:layout_constraintEnd_toEndOf="@+id/txtViewTitleGame"
+        app:layout_constraintStart_toStartOf="@+id/txtViewTitleGame"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewTitleGame" />
 
     <TextView
         android:id="@+id/textViewHighScore"
@@ -85,6 +92,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/high_score"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -95,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/games_played"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textViewHighScore"
         app:layout_constraintTop_toBottomOf="@+id/textViewHighScore" />

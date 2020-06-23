@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/ocean_background" >
 
-  <!--  <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/logo" />
-        -->
-
   <ImageView
       android:id="@+id/imageFishingPole"
       android:layout_width="692dp"
@@ -53,12 +45,12 @@
       app:layout_constraintVertical_bias="0.0" />
 
   <TextView
-      android:id="@+id/textViewReelDeal"
+      android:id="@+id/textViewTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="300dp"
       android:layout_marginRight="300dp"
-      android:text="@string/welcome_reel_deal"
+      android:text="@string/welcome_title"
       android:fontFamily="@font/lobster"
       android:textColor="@color/colorLightBlue"
       android:textSize="30sp"

@@ -2,7 +2,7 @@ package cmpt276.assign3.assign3game.model;
 
 /**
  * FishesManager class
- * Stores a 2D array of booleans
+ * Stores a 2D array of booleans, total fishes, and high score
  * Basic logic:~
  *      Value of boolean legend:
  *          true = fish present
@@ -45,7 +45,7 @@ public class FishesManager {
         return highScore;
     }
 
-    public void setFishes(boolean[][] fishes) {
+    public void setArray(boolean[][] fishes) {
         this.fishes = fishes;
     }
 
@@ -65,7 +65,7 @@ public class FishesManager {
         this.highScore = highScore;
     }
 
-    public void setFishValue(int row, int col, boolean value) {
+    public void setArrayIndexValue(int row, int col, boolean value) {
         fishes[row][col] = value;
     }
 
@@ -85,7 +85,7 @@ public class FishesManager {
     }
 
     public int scanRowCol(int row, int col){
-        // return -1 if the position in the array has an item
+        // return -1 if the position in the array has a fish
         if(isFishThere(row, col)){
             return -1;
         }
@@ -104,7 +104,7 @@ public class FishesManager {
         return fishTracker;
     }
 
-    public boolean isFishThere(int row, int col){
+    private boolean isFishThere(int row, int col){
         return fishes[row][col];
     }
 

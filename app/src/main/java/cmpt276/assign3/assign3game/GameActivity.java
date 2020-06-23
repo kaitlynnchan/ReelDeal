@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -27,8 +26,13 @@ import cmpt276.assign3.assign3game.model.FishesManager;
 
 /**
  * Game Screen
- * Displays number of scans used, items found, total items, high score, and games played
- * Displays a grid of buttons
+ * Displays:
+ *      grid of buttons,
+ *      number of scans used,
+ *      fishes found,
+ *      total fishes,
+ *      high score,
+ *      and games played
  */
 public class GameActivity extends AppCompatActivity {
 
@@ -45,7 +49,6 @@ public class GameActivity extends AppCompatActivity {
 
     private FishesManager manager = FishesManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
-    private Button[][] buttons;
     private int rows = manager.getRows();
     private int cols = manager.getCols();
     private int totalFishes = manager.getTotalFishes();
@@ -53,8 +56,9 @@ public class GameActivity extends AppCompatActivity {
     private int gamesPlayed;
     private int scans = 0;
     private int found = 0;
-    private int index;
+    private int index= configs.getIndex(manager);
     private boolean isGameFinished = false;
+    private Button[][] buttons = new Button[rows][cols];
     private boolean[][] fishRevealed = new boolean[rows][cols];
    // Vibrator vibrator;
 
@@ -68,10 +72,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        // Setting parameters
-        buttons = new Button[rows][cols];
-        index = configs.getIndex(manager);
 
         loadData();
         setupTextDisplay();
@@ -88,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
         gamesPlayed++;
     }
@@ -165,6 +165,7 @@ public class GameActivity extends AppCompatActivity {
             // Game finished
             if(found == totalFishes){
                 isGameFinished = true;
+                MainActivity.isGameSaved = false;
                 saveData();
 
                 // Setup new high score
@@ -183,7 +184,6 @@ public class GameActivity extends AppCompatActivity {
                 dialogWin.show(fragmentManager, TAG_WIN_DIALOG);
             }
         } else{
-
             // Fix animations to move one at a time
             buttonAnimate(row, col);
 
@@ -195,7 +195,7 @@ public class GameActivity extends AppCompatActivity {
         Button button = buttons[row][col];
 
         // Lets manager know that the fish has been revealed
-        manager.setFishValue(row, col, false);
+        manager.setArrayIndexValue(row, col, false);
         fishRevealed[row][col] = true;
 
         int width = button.getWidth();
@@ -232,10 +232,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void setButtonImage(int row, int col, int newWidth, int newHeight) {
         Button button = buttons[row][col];
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fish);
+        Resources resources = this.getResources();
+        Bitmap originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.fish);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+        button.setBackground(new BitmapDrawable(resources, scaledBitmap));
     }
 
     private void updateFoundCountTxt() {
@@ -317,8 +317,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadSavedGame() {
-        SharedPreferences preferencesBtns = getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
-        manager.setFishes(configs.get(index).getArray());
+        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
+        manager.setArray(configs.get(index).getArray());
         setupButtonGrid();
 
         int widthBtn = preferencesBtns.getInt(EDITOR_WIDTH, 0);
@@ -343,7 +343,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // saveData() saves game configuration and number of games played
     private void saveData() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -356,9 +355,8 @@ public class GameActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    // saveButtonArray saves game state even if user has exited the app
-    private void saveButtonArray(){
-        configs.get(index).setFishes(manager.getArray());
+    private void saveGameState(){
+        configs.get(index).setArray(manager.getArray());
         saveData();
 
         SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
@@ -384,11 +382,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(!isGameFinished){
-            saveButtonArray();
+            saveGameState();
         }
         Intent intent = new Intent();
         setResult(GameActivity.RESULT_OK, intent);
         finish();
         super.onBackPressed();
     }
+
+
 }

@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+/**
+ * Options Screen
+ * Displays: radio buttons for number of fishes and size of game board
+ */
 public class OptionsActivity extends AppCompatActivity {
 
     public static final String PREFS = "prefs";
-    public static final String EDITOR_FISHES = "Fishes";
+    public static final String EDITOR_FISHES = "number of fishes";
     public static final String EDITOR_ROWS = "Rows";
     public static final String EDITOR_COLUMNS = "Columns";
     public int savedNumOfFishes;
@@ -29,16 +33,17 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+
         savedNumOfFishes = getNumFishes(this);
         savedRows = getNumRows(this);
         savedColumns = getNumColumns(this);
-        radioButtons();
 
+        radioButtons();
     }
 
     private void radioButtons() {
         RadioGroup radioGroupFish = findViewById(R.id.radioGroupTotalFishes);
-        int[] numFishes = getResources().getIntArray(R.array.fishNumber);
+        int[] numFishes = this.getResources().getIntArray(R.array.fish_number);
         for (int i = 0; i < numFishes.length; i++)
         {
             final int numFish = numFishes[i];
@@ -59,8 +64,8 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         RadioGroup radioGroupSize = findViewById(R.id.radioGroupSize);
-        int[] row = getResources().getIntArray(R.array.selectedRowSize);
-        int[] column = getResources().getIntArray(R.array.selectedColumnSize);
+        int[] row = this.getResources().getIntArray(R.array.selected_row_size);
+        int[] column = this.getResources().getIntArray(R.array.selected_column_size);
         for (int i = 0; i < row.length; i++)
         {
             final int numRow = row[i];
@@ -76,6 +81,7 @@ public class OptionsActivity extends AppCompatActivity {
                 }
             });
             radioGroupSize.addView(radioButtonSize);
+
             if(numRow == savedRows && numColumn == savedColumns){
                 radioButtonSize.setChecked(true);
             }
@@ -90,23 +96,26 @@ public class OptionsActivity extends AppCompatActivity {
         editor.putInt(EDITOR_ROWS, savedRows);
         editor.putInt(EDITOR_COLUMNS, savedColumns);
         editor.apply();
-
     }
 
     static public int getNumFishes(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        return preferences.getInt(EDITOR_FISHES, 6);
+        int defaultNumFishes = c.getResources().getInteger(R.integer.default_fish_num);
+        return preferences.getInt(EDITOR_FISHES, defaultNumFishes);
     }
 
     static public int getNumRows(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        return preferences.getInt(EDITOR_ROWS, 4);
+        int defaultRows = c.getResources().getInteger(R.integer.default_row_size);
+        return preferences.getInt(EDITOR_ROWS, defaultRows);
     }
 
     static public int getNumColumns(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        return preferences.getInt(EDITOR_COLUMNS, 6);
+        int defaultCols = c.getResources().getInteger(R.integer.default_column_size);
+        return preferences.getInt(EDITOR_COLUMNS, defaultCols);
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
