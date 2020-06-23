@@ -89,15 +89,15 @@ public class WelcomeScreen extends AppCompatActivity {
         fadeIn.setDuration(1000);
 
         // Game title <REEL DEAL> animations
-        TextView reelDeal = findViewById(R.id.textViewReelDeal);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(reelDeal,
+        TextView gameName = findViewById(R.id.textViewReelDeal);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(reelDeal,
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName,
                 "translationX",
                 (float) widthScreen / 7);
         moveX.setStartDelay(timer);
@@ -107,7 +107,7 @@ public class WelcomeScreen extends AppCompatActivity {
         Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
         scale.setStartOffset(timer);
         scale.setFillAfter(true);
-        reelDeal.startAnimation(scale);
+        gameName.startAnimation(scale);
 
         // Author animation
         TextView authors = findViewById(R.id.textViewAuthors);

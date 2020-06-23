@@ -247,7 +247,7 @@ public class GameActivity extends AppCompatActivity {
             int count = Integer.parseInt(temp.getText().toString());
             if(count > 0){
                 count--;
-                temp.setText(count + getString(R.string.empty));
+                temp.setText(count + "");
             }
         }
     }
@@ -297,13 +297,13 @@ public class GameActivity extends AppCompatActivity {
     private void setScan(int row, int col, int count) {
         Button button = buttons[row][col];
         button.setPadding(0,0,0,0);
-        button.setText(count + getString(R.string.empty));
+        button.setText(count + "");
         button.setClickable(false);
 
         // Update scan count text
         scans++;
         TextView txtScans = findViewById(R.id.textViewScansCount);
-        txtScans.setText(getString(R.string.empty) + scans);
+        txtScans.setText("" + scans);
     }
 
     private void loadSavedGame() {

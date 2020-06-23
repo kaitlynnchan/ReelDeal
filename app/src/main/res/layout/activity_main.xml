@@ -38,13 +38,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="@string/options"
         android:textSize="18sp"
-        android:background="@drawable/button_shadow"
         app:layout_constraintEnd_toStartOf="@+id/buttonHelp"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
@@ -53,13 +53,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/help"
         android:textSize="18sp"
-        android:background="@drawable/button_shadow"
         app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 

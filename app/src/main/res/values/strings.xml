@@ -49,10 +49,6 @@
     <string name="rows_and"><![CDATA[ \u0020 rows & \u0020 ]]></string>
     <string name="columns">  \u0020 columns</string>
     <string name="fishes"> \u0020 Fishes</string>
-    <string name="PREFS">prefs</string>
-    <string name="EDITOR_FISHES">Fishes</string>
-    <string name="EDITOR_ROWS">Rows</string>
-    <string name="EDITOR_COLUMNS">Columns</string>
     <string name="total_fishes">Total Fishes:</string>
     <string name="empty" />
 

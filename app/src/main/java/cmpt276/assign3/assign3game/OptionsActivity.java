@@ -12,6 +12,10 @@ import android.widget.RadioGroup;
 
 public class OptionsActivity extends AppCompatActivity {
 
+    public static final String PREFS = "prefs";
+    public static final String EDITOR_FISHES = "Fishes";
+    public static final String EDITOR_ROWS = "Rows";
+    public static final String EDITOR_COLUMNS = "Columns";
     public int savedNumOfFishes;
     public int savedRows;
     public int savedColumns;
@@ -80,28 +84,28 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void savePreferences() {
-        SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFS), MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(getString(R.string.EDITOR_FISHES), savedNumOfFishes);
-        editor.putInt(getString(R.string.EDITOR_ROWS), savedRows);
-        editor.putInt(getString(R.string.EDITOR_COLUMNS), savedColumns);
+        editor.putInt(EDITOR_FISHES, savedNumOfFishes);
+        editor.putInt(EDITOR_ROWS, savedRows);
+        editor.putInt(EDITOR_COLUMNS, savedColumns);
         editor.apply();
 
     }
 
     static public int getNumFishes(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(c.getString(R.string.PREFS), MODE_PRIVATE);
-        return preferences.getInt(c.getString(R.string.EDITOR_FISHES), 6);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_FISHES, 6);
     }
 
     static public int getNumRows(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(c.getString(R.string.PREFS), MODE_PRIVATE);
-        return preferences.getInt(c.getString(R.string.EDITOR_ROWS), 4);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_ROWS, 4);
     }
 
     static public int getNumColumns(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(c.getString(R.string.PREFS), MODE_PRIVATE);
-        return preferences.getInt(c.getString(R.string.EDITOR_COLUMNS), 6);
+        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
+        return preferences.getInt(EDITOR_COLUMNS, 6);
     }
     @Override
     public void onBackPressed() {
