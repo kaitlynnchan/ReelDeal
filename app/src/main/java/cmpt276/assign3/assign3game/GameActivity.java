@@ -7,7 +7,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -38,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
 
     public static final String TAG_WIN_DIALOG = "Win dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
-    public static final String EDITOR_GAMES_PLAYED = "games played";
+    public static final String EDITOR_GAMES_STARTED = "games started";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
     public static final String EDITOR_IS_GAME_FINISHED = "is the game finished";
     public static final String SHARED_PREFERENCES_BUTTONS = "shared preferences for buttons";
@@ -53,14 +55,14 @@ public class GameActivity extends AppCompatActivity {
     private int cols = manager.getCols();
     private int totalFishes = manager.getTotalFishes();
     private int highScore = manager.getHighScore();
-    private int gamesPlayed;
+    private int gamesStarted;
     private int scans = 0;
     private int found = 0;
     private int index= configs.getIndex(manager);
     private boolean isGameFinished = false;
     private Button[][] buttons = new Button[rows][cols];
     private boolean[][] fishRevealed = new boolean[rows][cols];
-   // Vibrator vibrator;
+    Vibrator vibrator;
 
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, GameActivity.class);
@@ -73,7 +75,10 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        loadData();
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        gamesStarted = sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
+        gamesStarted++;
+
         setupTextDisplay();
 
         Intent intent = getIntent();
@@ -87,34 +92,28 @@ public class GameActivity extends AppCompatActivity {
         saveData();
     }
 
-    private void loadData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        gamesPlayed += sharedPreferences.getInt(EDITOR_GAMES_PLAYED, 1);
-        gamesPlayed++;
-    }
-
     private void setupTextDisplay() {
         // Setup total Fishes text
         TextView txtTotalFishes = findViewById(R.id.textViewTotalFishes);
         String strTotalFishes = getString(R.string.total_fishes);
-        strTotalFishes += " " + totalFishes;
+        strTotalFishes += "" + totalFishes;
         txtTotalFishes.setText(strTotalFishes);
 
         // Setup high score
         TextView txtHighScore = findViewById(R.id.textViewHighScore);
         String strHighScore = getString(R.string.high_score);
         if(highScore == -1){
-            strHighScore += "  " + 0;
+            strHighScore += getString(R.string.no_answer);
         } else{
-            strHighScore += "  " + highScore;
+            strHighScore += "" + highScore;
         }
         txtHighScore.setText(strHighScore);
 
-        // Setup games played
-        TextView txtGamesPlayed = findViewById(R.id.textViewGamesPlayed);
-        String strGamesPlayed = getString(R.string.games_played);
-        strGamesPlayed += "  " + gamesPlayed;
-        txtGamesPlayed.setText(strGamesPlayed);
+        // Setup games started
+        TextView txtGamesStarted = findViewById(R.id.textViewGamesPlayed);
+        String strGamesStarted = getString(R.string.games_started);
+        strGamesStarted += "" + gamesStarted;
+        txtGamesStarted.setText(strGamesStarted);
     }
 
     private void setupButtonGrid() {
@@ -138,16 +137,15 @@ public class GameActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f
                 ));
-                // Adding vibration to buttons
-                //vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
+//                button.setBackground(this.getResources().getDrawable(R.drawable.button_corner));
                 button.setBackgroundResource(R.drawable.button_corner);
-
+                //final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
-                       // vibrator.vibrate(3000);
+               //         media.start();
                     }
                 });
 
@@ -159,14 +157,17 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateButtons(int row, int col) {
         int count = manager.scanRowCol(row, col);
+        // Adding vibration to buttons
+        vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        //Adding sounds to button click in game
+        final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
+        final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
         if(count == -1){
             setFishesFound(row, col);
-
+            fishFoundMedia.start();
+            vibrator.vibrate(4000);
             // Game finished
             if(found == totalFishes){
-                isGameFinished = true;
-                MainActivity.isGameSaved = false;
-                saveData();
 
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
@@ -178,6 +179,10 @@ public class GameActivity extends AppCompatActivity {
                     txtHighScore.setText(strHighScore);
                 }
 
+                isGameFinished = true;
+                MainActivity.isGameSaved = false;
+                saveData();
+
                 // Display win screen
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 WinFragment dialogWin = new WinFragment(scans, highScore);
@@ -186,7 +191,8 @@ public class GameActivity extends AppCompatActivity {
         } else{
             // Fix animations to move one at a time
             buttonAnimate(row, col);
-
+            media.start();
+            vibrator.vibrate(2500);
             setScan(row, col, count);
         }
     }
@@ -346,7 +352,7 @@ public class GameActivity extends AppCompatActivity {
     private void saveData() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_PLAYED, gamesPlayed);
+        editor.putInt(EDITOR_GAMES_STARTED, gamesStarted);
         editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
 
         Gson gson = new Gson();
