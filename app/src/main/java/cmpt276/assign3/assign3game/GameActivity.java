@@ -137,18 +137,15 @@ public class GameActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f
                 ));
-                // Adding vibration to buttons
-                vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
 //                button.setBackground(this.getResources().getDrawable(R.drawable.button_corner));
                 button.setBackgroundResource(R.drawable.button_corner);
-                final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
+                //final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
-                        vibrator.vibrate(3000);
-                        media.start();
+               //         media.start();
                     }
                 });
 
@@ -160,9 +157,15 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateButtons(int row, int col) {
         int count = manager.scanRowCol(row, col);
+        // Adding vibration to buttons
+        vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        //Adding sounds to button click in game
+        final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
+        final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
         if(count == -1){
             setFishesFound(row, col);
-
+            fishFoundMedia.start();
+            vibrator.vibrate(4000);
             // Game finished
             if(found == totalFishes){
 
@@ -188,7 +191,8 @@ public class GameActivity extends AppCompatActivity {
         } else{
             // Fix animations to move one at a time
             buttonAnimate(row, col);
-
+            media.start();
+            vibrator.vibrate(2500);
             setScan(row, col, count);
         }
     }
