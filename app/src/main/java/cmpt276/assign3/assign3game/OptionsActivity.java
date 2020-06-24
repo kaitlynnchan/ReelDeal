@@ -51,8 +51,8 @@ public class OptionsActivity extends AppCompatActivity {
 
         radioButtons();
 //        setupHighScoreText();
-//        setupGamesStartedText();
-//        setupResetButtons();
+        setupGamesStartedText();
+        setupResetButtons();
     }
 
     private void setupHighScoreText() {
@@ -75,7 +75,6 @@ public class OptionsActivity extends AppCompatActivity {
         String strGamesPlayed = getString(R.string.games_started);
         strGamesPlayed += "" + gamesPlayed;
         txtGamesPlayed.setText(strGamesPlayed);
-
     }
 
     private void setFishesManager(){
@@ -92,27 +91,24 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupResetButtons() {
-        final Button btnResetScore = findViewById(R.id.buttonResetScore);
-        btnResetScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnResetScore.setBackground(OptionsActivity.this.getResources().getDrawable(R.drawable.button_border));
+//        Button btnResetScore = findViewById(R.id.buttonResetScore);
+//        btnResetScore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(index != -1){
+//                    highScore = -1;
+//                    configs.get(index).setHighScore(highScore);
+//                    saveData();
+//                    setupHighScoreText();
+//                }
+//            }
+//        });
 
-                if(index != -1){
-                    highScore = -1;
-                    configs.get(index).setHighScore(highScore);
-                    saveData();
-                    setupHighScoreText();
-                }
-            }
-        });
+        Button btnResetGames = findViewById(R.id.buttonResetGamesNum);
 
-        final Button btnResetGames = findViewById(R.id.buttonResetGamesNum);
         btnResetGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnResetGames.setBackground(OptionsActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 SharedPreferences prefs = OptionsActivity.this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
                 prefs.edit().clear().apply();
 

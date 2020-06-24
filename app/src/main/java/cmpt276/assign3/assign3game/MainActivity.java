@@ -84,38 +84,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        final Button btnPlay = findViewById(R.id.buttonPlay);
-        btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnPlay = findViewById(R.id.buttonPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
                 startActivity(intent);
             }
         });
 
 
-        final Button btnOptions = findViewById(R.id.buttonOptions);
-        btnOptions.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnOptions = findViewById(R.id.buttonOptions);
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
 
-        final Button btnHelp = findViewById(R.id.buttonHelp);
-        btnHelp.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnHelp = findViewById(R.id.buttonHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
@@ -125,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         createFishesManager();
-        setupButtons();
         super.onResume();
     }
 

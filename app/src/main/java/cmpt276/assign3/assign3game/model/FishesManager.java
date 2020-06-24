@@ -15,17 +15,6 @@ public class FishesManager {
     private int totalFishes;
     private int highScore;
 
-    // Singleton implementation of FishesManager
-//    private static FishesManager instance;
-//    private FishesManager(){/*to prevent others from instantiating*/}
-//    public static FishesManager getInstance(){
-//        if(instance == null){
-//            instance = new FishesManager();
-//        }
-//        return instance;
-//    }
-
-
     public FishesManager(int rows, int cols, int totalFishes, int highScore) {
         this.rows = rows;
         this.cols = cols;
@@ -79,8 +68,6 @@ public class FishesManager {
     }
 
     public void fillArray(){
-//        fishes = new boolean[rows][cols];
-
         // Randomly add fishTotal i.e. amount of fishes into array
         int tempTotalFishes = totalFishes;
         while(tempTotalFishes > 0){

@@ -128,12 +128,10 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupSkipButton() {
-        final Button btnSkip = findViewById(R.id.buttonSkip);
-        btnSkip.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnSkip = findViewById(R.id.buttonSkip);
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSkip.setBackground(WelcomeActivity.this.getResources().getDrawable(R.drawable.button_border));
                 handler.removeCallbacksAndMessages(null);
 
                 Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
