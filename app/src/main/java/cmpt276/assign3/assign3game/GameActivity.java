@@ -318,6 +318,7 @@ public class GameActivity extends AppCompatActivity {
         Button button = buttons[row][col];
         button.setPadding(0,0,0,0);
         button.setText(count + "");
+        button.setTextSize(16);
         button.setClickable(false);
 
         // Update scan count text
@@ -405,6 +406,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         isGameFinished = true;
+        MainActivity.isGameSaved = false;
         saveData();
         finish();
         super.onBackPressed();
