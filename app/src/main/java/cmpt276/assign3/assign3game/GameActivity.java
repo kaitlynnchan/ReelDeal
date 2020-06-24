@@ -390,9 +390,9 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!isGameFinished){
-            saveGameState();
-        }
+//        if(!isGameFinished){
+//            saveGameState();
+//        }
         Intent intent = new Intent();
         setResult(GameActivity.RESULT_OK, intent);
         finish();

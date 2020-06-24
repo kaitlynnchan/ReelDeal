@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
             index = config.getIndex(manager);
         }
 
-        boolean isGameFinished = GameActivity.getGameFinished(this);
-        if(!isGameFinished){
-            isGameSaved = true;
-        }
+//        boolean isGameFinished = GameActivity.getGameFinished(this);
+//        if(!isGameFinished){
+//            isGameSaved = true;
+//        }
     }
 
     private void setupButtons() {
