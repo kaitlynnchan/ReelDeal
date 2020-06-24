@@ -42,13 +42,10 @@ public class WinFragment extends AppCompatDialogFragment {
             txtBest.setVisibility(View.VISIBLE);
         }
 
-        final Button btnOk = v.findViewById(R.id.buttonOK);
+        Button btnOk = v.findViewById(R.id.buttonOK);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnOk.setBackground(WinFragment.this.getResources().getDrawable(R.drawable.button_border));
-                Intent intent = new Intent();
-                getActivity().setResult(GameActivity.RESULT_OK, intent);
                 getActivity().finish();
             }
         });

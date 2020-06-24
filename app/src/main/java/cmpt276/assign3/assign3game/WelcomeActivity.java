@@ -42,11 +42,19 @@ public class WelcomeActivity extends AppCompatActivity {
 
         handler.postDelayed(new Runnable() {
             @Override public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
                 startActivity(intent);
                 finish();
             }
         }, timer);
+
+        boolean isGameFinished = GameActivity.getGameFinished(this);
+        if(!isGameFinished){
+            Intent intent = MainActivity.makeLaunchIntent(this, !isGameFinished);
+            handler.removeCallbacksAndMessages(null);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void titleWelcomeAnimation() {
@@ -120,15 +128,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupSkipButton() {
-        final Button btnSkip = findViewById(R.id.buttonSkip);
-        btnSkip.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnSkip = findViewById(R.id.buttonSkip);
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSkip.setBackground(WelcomeActivity.this.getResources().getDrawable(R.drawable.button_border));
                 handler.removeCallbacksAndMessages(null);
 
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
                 startActivity(intent);
                 finish();
             }

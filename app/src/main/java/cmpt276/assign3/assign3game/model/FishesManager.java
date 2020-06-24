@@ -15,14 +15,11 @@ public class FishesManager {
     private int totalFishes;
     private int highScore;
 
-    // Singleton implementation of FishesManager
-    private static FishesManager instance;
-    private FishesManager(){/*to prevent others from instantiating*/}
-    public static FishesManager getInstance(){
-        if(instance == null){
-            instance = new FishesManager();
-        }
-        return instance;
+    public FishesManager(int rows, int cols, int totalFishes, int highScore) {
+        this.rows = rows;
+        this.cols = cols;
+        this.totalFishes = totalFishes;
+        this.highScore = highScore;
     }
 
     public boolean[][] getArray() {
@@ -47,18 +44,6 @@ public class FishesManager {
 
     public void setArray(boolean[][] fishes) {
         this.fishes = fishes;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public void setCols(int cols) {
-        this.cols = cols;
-    }
-
-    public void setTotalFishes(int totalFishes) {
-        this.totalFishes = totalFishes;
     }
 
     public void setHighScore(int highScore) {

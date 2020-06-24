@@ -48,25 +48,27 @@ public class GameActivity extends AppCompatActivity {
     public static final String EDITOR_HEIGHT = "button height";
 
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
+    public static final String EXTRA_CONFIGURATION_INDEX = "configuration index";
 
-    private FishesManager manager = FishesManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
-    private int rows = manager.getRows();
-    private int cols = manager.getCols();
-    private int totalFishes = manager.getTotalFishes();
-    private int highScore = manager.getHighScore();
+    private FishesManager manager;
+    private int rows;
+    private int cols;
+    private int totalFishes;
+    private int highScore;
     private int gamesStarted;
     private int scans = 0;
     private int found = 0;
-    private int index= configs.getIndex(manager);
+    private int index;
     private boolean isGameFinished = false;
-    private Button[][] buttons = new Button[rows][cols];
-    private boolean[][] fishRevealed = new boolean[rows][cols];
-    Vibrator vibrator;
+    private Button[][] buttons;
+    private boolean[][] fishRevealed ;
+    private Vibrator vibrator;
 
-    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved, int index){
         Intent intent = new Intent(context, GameActivity.class);
         intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
+        intent.putExtra(EXTRA_CONFIGURATION_INDEX, index);
         return intent;
     }
 
@@ -75,20 +77,29 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        gamesStarted = sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
-        gamesStarted++;
-
-        setupTextDisplay();
+        gamesStarted = getGamesStarted(this);
 
         Intent intent = getIntent();
+        index = intent.getIntExtra(EXTRA_CONFIGURATION_INDEX, -1);
+        manager = configs.get(index);
+        rows = manager.getRows();
+        cols = manager.getCols();
+        totalFishes = manager.getTotalFishes();
+        highScore = manager.getHighScore();
+        buttons = new Button[rows][cols];
+        fishRevealed = new boolean[rows][cols];
+
+
         boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
         if(isGameSaved){
             loadSavedGame();
         } else{
+            gamesStarted++;
             manager.fillArray();
             setupButtonGrid();
         }
+
+        setupTextDisplay();
         saveData();
     }
 
@@ -110,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
         txtHighScore.setText(strHighScore);
 
         // Setup games started
-        TextView txtGamesStarted = findViewById(R.id.textViewGamesPlayed);
+        TextView txtGamesStarted = findViewById(R.id.textViewGamesStarted);
         String strGamesStarted = getString(R.string.games_started);
         strGamesStarted += "" + gamesStarted;
         txtGamesStarted.setText(strGamesStarted);
@@ -138,7 +149,6 @@ public class GameActivity extends AppCompatActivity {
                         1.0f
                 ));
 
-//                button.setBackground(this.getResources().getDrawable(R.drawable.button_corner));
                 button.setBackgroundResource(R.drawable.button_corner);
                 //final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
                 button.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +178,6 @@ public class GameActivity extends AppCompatActivity {
             vibrator.vibrate(4000);
             // Game finished
             if(found == totalFishes){
-
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
                     configs.get(index).setHighScore(scans);
@@ -234,7 +243,6 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private void setButtonImage(int row, int col, int newWidth, int newHeight) {
         Button button = buttons[row][col];
@@ -314,6 +322,7 @@ public class GameActivity extends AppCompatActivity {
         Button button = buttons[row][col];
         button.setPadding(0,0,0,0);
         button.setText(count + "");
+        button.setTextSize(16);
         button.setClickable(false);
 
         // Update scan count text
@@ -385,13 +394,24 @@ public class GameActivity extends AppCompatActivity {
         return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
     }
 
+    static public int getGamesStarted(Context c){
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
+    }
+
     @Override
-    public void onBackPressed() {
+    protected void onUserLeaveHint() {
         if(!isGameFinished){
             saveGameState();
         }
-        Intent intent = new Intent();
-        setResult(GameActivity.RESULT_OK, intent);
+        super.onUserLeaveHint();
+    }
+
+    @Override
+    public void onBackPressed() {
+        isGameFinished = true;
+        MainActivity.isGameSaved = false;
+        saveData();
         finish();
         super.onBackPressed();
     }

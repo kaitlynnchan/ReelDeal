@@ -26,15 +26,15 @@ import cmpt276.assign3.assign3game.model.FishesManager;
  * Displays: play, options, and help buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUEST_CODE_GAME = 42;
-    public static final int REQUEST_CODE_OPTIONS = 43;
-    public static final int REQUEST_CODE_HELP = 44;
+    public static final String EXTRA_SAVED_GAME = "is there a saved game";
     public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
+    int index;
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(EXTRA_SAVED_GAME, isGameSaved);
         return intent;
     }
 
@@ -44,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadData();
+
+        Intent intent = getIntent();
+        isGameSaved = intent.getBooleanExtra(EXTRA_SAVED_GAME, false);
+        if(isGameSaved){
+            createFishesManager();
+            Intent intentGame = GameActivity.makeLaunchIntent(this, isGameSaved, index);
+            startActivity(intentGame);
+        }
+
         setupButtons();
         setupMainBackground();
     }
@@ -57,106 +66,58 @@ public class MainActivity extends AppCompatActivity {
         if(arrTemp != null) {
             config.setConfigs(arrTemp);
         }
-
-        createFishesManager();
     }
 
     private void createFishesManager() {
-        FishesManager manager = FishesManager.getInstance();
-
         int numFishes = OptionsActivity.getNumFishes(this);
-        manager.setTotalFishes(numFishes);
         int rows = OptionsActivity.getNumRows(this);
-        manager.setRows(rows);
         int columns = OptionsActivity.getNumColumns(this);
-        manager.setCols(columns);
+        FishesManager manager = new FishesManager(rows, columns, numFishes, -1);
 
         // Set high score depending whether config exists or not
-        int index = config.getIndex(manager);
+        index = config.getIndex(manager);
         if(index == -1){
-            manager.setHighScore(-1);
             config.add(manager);
-        } else{
-            int highScore = config.get(index).getHighScore();
-            manager.setHighScore(highScore);
-        }
-
-        boolean isGameFinished = GameActivity.getGameFinished(this);
-        if(!isGameFinished){
-            isGameSaved = true;
+            index = config.getIndex(manager);
         }
 
     }
 
     private void setupButtons() {
-        final Button btnPlay = findViewById(R.id.buttonPlay);
-        btnPlay.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnPlay = findViewById(R.id.buttonPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved);
-                startActivityForResult(intent, REQUEST_CODE_GAME);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
+                startActivity(intent);
             }
         });
 
 
-        final Button btnOptions = findViewById(R.id.buttonOptions);
-        btnOptions.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnOptions = findViewById(R.id.buttonOptions);
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, REQUEST_CODE_OPTIONS);
+                startActivity(intent);
             }
         });
 
-        final Button btnHelp = findViewById(R.id.buttonHelp);
-        btnHelp.setBackground(this.getResources().getDrawable(R.drawable.button_shadow));
+        Button btnHelp = findViewById(R.id.buttonHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
-
                 Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, REQUEST_CODE_HELP);
+                startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        setupButtons();
-
-        if(resultCode == Activity.RESULT_CANCELED){
-            return;
-        }
-
-        switch (requestCode){
-            case REQUEST_CODE_GAME:
-                createFishesManager();
-                break;
-            case REQUEST_CODE_OPTIONS:
-                createFishesManager();
-                isGameSaved = false;
-                break;
-            default:
-                assert false;
-
-        }
+    protected void onResume() {
+        createFishesManager();
+        super.onResume();
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        createFishesManager();
-//        isGameSaved = false;
-//    }
 
     private void setupMainBackground() {
         // Implement background based on theme

@@ -27,12 +27,4 @@ public class HelpActivity extends AppCompatActivity {
         TextView aboutContent = findViewById(R.id.textAboutContent);
         aboutContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(HelpActivity.RESULT_CANCELED, intent);
-        finish();
-        super.onBackPressed();
-    }
 }
