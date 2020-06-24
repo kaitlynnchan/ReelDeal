@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import cmpt276.assign3.assign3game.model.FishesManager;
 import cmpt276.assign3.assign3game.model.GameConfigs;
 
@@ -31,7 +33,6 @@ public class OptionsActivity extends AppCompatActivity {
     private int savedColumns;
     private GameConfigs configs = GameConfigs.getInstance();
     private int highScore;
-//    private FishesManager manager = FishesManager.getInstance();
     private int index;
 
     public static Intent makeLaunchIntent(Context context){
@@ -79,20 +80,15 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setFishesManager(){
-        FishesManager manager = FishesManager.getInstance();
-        manager.setRows(savedRows);
-        manager.setCols(savedColumns);
-        manager.setTotalFishes(savedNumOfFishes);
+        FishesManager manager = new FishesManager(savedRows, savedColumns, savedNumOfFishes, -1);
 
         // Set high score depending whether config exists or not
         index = configs.getIndex(manager);
         if(index == -1){
             highScore = -1;
-            manager.setHighScore(highScore);
             configs.add(manager);
         } else{
             highScore = configs.get(index).getHighScore();
-            manager.setHighScore(highScore);
         }
     }
 
@@ -106,7 +102,7 @@ public class OptionsActivity extends AppCompatActivity {
                 if(index != -1){
                     highScore = -1;
                     configs.get(index).setHighScore(highScore);
-//                    saveData();
+                    saveData();
                     setupHighScoreText();
                 }
             }
@@ -185,14 +181,14 @@ public class OptionsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-//    private void saveData() {
-//        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        Gson gson = new Gson();
-//        String json = gson.toJson(configs.getConfigs());
-//        editor.putString(GameActivity.EDITOR_GAME_CONFIG, json);
-//        editor.apply();
-//    }
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(configs.getConfigs());
+        editor.putString(GameActivity.EDITOR_GAME_CONFIG, json);
+        editor.apply();
+    }
 
     static public int getNumFishes(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);

@@ -47,24 +47,25 @@ public class GameActivity extends AppCompatActivity {
 
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
 
-    private FishesManager manager = FishesManager.getInstance();
     private GameConfigs configs = GameConfigs.getInstance();
-    private int rows = manager.getRows();
-    private int cols = manager.getCols();
-    private int totalFishes = manager.getTotalFishes();
-    private int highScore = manager.getHighScore();
+    private FishesManager manager;
+    private int rows;
+    private int cols;
+    private int totalFishes;
+    private int highScore;
     private int gamesStarted;
     private int scans = 0;
     private int found = 0;
-    private int index= configs.getIndex(manager);
+    private int index;
     private boolean isGameFinished = false;
-    private Button[][] buttons = new Button[rows][cols];
-    private boolean[][] fishRevealed = new boolean[rows][cols];
+    private Button[][] buttons;
+    private boolean[][] fishRevealed ;
     // Vibrator vibrator;
 
-    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved, int index){
         Intent intent = new Intent(context, GameActivity.class);
         intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
+        intent.putExtra("configuration index", index);
         return intent;
     }
 
@@ -77,9 +78,18 @@ public class GameActivity extends AppCompatActivity {
         gamesStarted = sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
         gamesStarted++;
 
+        Intent intent = getIntent();
+        index = intent.getIntExtra("configuration index", -1);
+        manager = configs.get(index);
+        rows = manager.getRows();
+        cols = manager.getCols();
+        totalFishes = manager.getTotalFishes();
+        highScore = manager.getHighScore();
+        buttons = new Button[rows][cols];
+        fishRevealed = new boolean[rows][cols];
+
         setupTextDisplay();
 
-        Intent intent = getIntent();
         boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
         if(isGameSaved){
             loadSavedGame();

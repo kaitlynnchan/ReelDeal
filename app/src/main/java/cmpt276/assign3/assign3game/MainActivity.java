@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
+    int index;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, MainActivity.class);
@@ -62,23 +63,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createFishesManager() {
-        FishesManager manager = FishesManager.getInstance();
-
         int numFishes = OptionsActivity.getNumFishes(this);
-        manager.setTotalFishes(numFishes);
         int rows = OptionsActivity.getNumRows(this);
-        manager.setRows(rows);
         int columns = OptionsActivity.getNumColumns(this);
-        manager.setCols(columns);
+        FishesManager manager = new FishesManager(rows, columns, numFishes, -1);
 
         // Set high score depending whether config exists or not
-        int index = config.getIndex(manager);
+        index = config.getIndex(manager);
         if(index == -1){
-            manager.setHighScore(-1);
             config.add(manager);
-        } else{
-            int highScore = config.get(index).getHighScore();
-            manager.setHighScore(highScore);
+            index = config.getIndex(manager);
         }
 
         boolean isGameFinished = GameActivity.getGameFinished(this);
@@ -95,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
                 startActivityForResult(intent, REQUEST_CODE_GAME);
             }
         });
@@ -141,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 createFishesManager();
                 break;
             case REQUEST_CODE_OPTIONS:
-//                createFishesManager();
+                createFishesManager();
                 isGameSaved = false;
                 break;
             default:
