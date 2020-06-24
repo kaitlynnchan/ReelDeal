@@ -20,7 +20,6 @@ public class FishesManager {
         this.cols = cols;
         this.totalFishes = totalFishes;
         this.highScore = highScore;
-        this.fishes = new boolean[rows][cols];
     }
 
     public boolean[][] getArray() {
@@ -47,18 +46,6 @@ public class FishesManager {
         this.fishes = fishes;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public void setCols(int cols) {
-        this.cols = cols;
-    }
-
-    public void setTotalFishes(int totalFishes) {
-        this.totalFishes = totalFishes;
-    }
-
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
@@ -68,6 +55,8 @@ public class FishesManager {
     }
 
     public void fillArray(){
+        fishes = new boolean[rows][cols];
+
         // Randomly add fishTotal i.e. amount of fishes into array
         int tempTotalFishes = totalFishes;
         while(tempTotalFishes > 0){

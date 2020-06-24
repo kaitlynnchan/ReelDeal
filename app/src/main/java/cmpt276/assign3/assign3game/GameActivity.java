@@ -173,7 +173,6 @@ public class GameActivity extends AppCompatActivity {
 
             // Game finished
             if(found == totalFishes){
-
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
                     configs.get(index).setHighScore(scans);
@@ -238,7 +237,6 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private void setButtonImage(int row, int col, int newWidth, int newHeight) {
         Button button = buttons[row][col];

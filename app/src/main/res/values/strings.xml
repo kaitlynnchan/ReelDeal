@@ -50,5 +50,6 @@
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">Main Activity</string>
     <string name="no_answer">N/A</string>
+    <string name="reset">RESET</string>
 
 </resources>

@@ -50,7 +50,7 @@ public class OptionsActivity extends AppCompatActivity {
         savedColumns = getNumColumns(this);
 
         radioButtons();
-//        setupHighScoreText();
+        setupHighScoreText();
         setupGamesStartedText();
         setupResetButtons();
     }
@@ -70,7 +70,6 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void setupGamesStartedText(){
         int gamesPlayed = GameActivity.getGamesStarted(this);
-
         TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
         String strGamesPlayed = getString(R.string.games_started);
         strGamesPlayed += "" + gamesPlayed;
@@ -91,27 +90,25 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupResetButtons() {
-//        Button btnResetScore = findViewById(R.id.buttonResetScore);
-//        btnResetScore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(index != -1){
-//                    highScore = -1;
-//                    configs.get(index).setHighScore(highScore);
-//                    saveData();
-//                    setupHighScoreText();
-//                }
-//            }
-//        });
+        Button btnResetScore = findViewById(R.id.buttonResetScore);
+        btnResetScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(index != -1){
+                    highScore = -1;
+                    configs.get(index).setHighScore(highScore);
+                    saveData();
+                    setupHighScoreText();
+                }
+            }
+        });
 
         Button btnResetGames = findViewById(R.id.buttonResetGamesNum);
-
         btnResetGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences prefs = OptionsActivity.this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
                 prefs.edit().clear().apply();
-
                 setupGamesStartedText();
             }
         });
@@ -130,7 +127,7 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     savedNumOfFishes = numFish;
                     savePreferences();
-//                    setupHighScoreText();
+                    setupHighScoreText();
                 }
             });
             radioGroupFish.addView(radioButtonFish);
@@ -155,7 +152,7 @@ public class OptionsActivity extends AppCompatActivity {
                     savedRows = numRow;
                     savedColumns = numColumn;
                     savePreferences();
-//                    setupHighScoreText();
+                    setupHighScoreText();
                 }
             });
             radioGroupSize.addView(radioButtonSize);
