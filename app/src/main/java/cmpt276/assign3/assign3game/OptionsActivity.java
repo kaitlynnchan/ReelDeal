@@ -206,12 +206,4 @@ public class OptionsActivity extends AppCompatActivity {
         int defaultCols = c.getResources().getInteger(R.integer.default_column_size);
         return preferences.getInt(EDITOR_COLUMNS, defaultCols);
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(OptionsActivity.RESULT_OK, intent);
-        finish();
-        super.onBackPressed();
-    }
 }

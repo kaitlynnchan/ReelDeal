@@ -46,6 +46,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String EDITOR_HEIGHT = "button height";
 
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
+    public static final String EXTRA_CONFIGURATION_INDEX = "configuration index";
 
     private GameConfigs configs = GameConfigs.getInstance();
     private FishesManager manager;
@@ -65,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved, int index){
         Intent intent = new Intent(context, GameActivity.class);
         intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
-        intent.putExtra("configuration index", index);
+        intent.putExtra(EXTRA_CONFIGURATION_INDEX, index);
         return intent;
     }
 
@@ -75,10 +76,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gamesStarted = getGamesStarted(this);
-        gamesStarted++;
 
         Intent intent = getIntent();
-        index = intent.getIntExtra("configuration index", -1);
+        index = intent.getIntExtra(EXTRA_CONFIGURATION_INDEX, -1);
         manager = configs.get(index);
         rows = manager.getRows();
         cols = manager.getCols();
@@ -87,15 +87,17 @@ public class GameActivity extends AppCompatActivity {
         buttons = new Button[rows][cols];
         fishRevealed = new boolean[rows][cols];
 
-        setupTextDisplay();
 
         boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
         if(isGameSaved){
             loadSavedGame();
         } else{
+            gamesStarted++;
             manager.fillArray();
             setupButtonGrid();
         }
+
+        setupTextDisplay();
         saveData();
     }
 
@@ -393,12 +395,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onUserLeaveHint() {
+        if(!isGameFinished){
+            saveGameState();
+        }
+        super.onUserLeaveHint();
+    }
+
+    @Override
     public void onBackPressed() {
-//        if(!isGameFinished){
-//            saveGameState();
-//        }
-        Intent intent = new Intent();
-        setResult(GameActivity.RESULT_OK, intent);
+        isGameFinished = true;
+        saveData();
         finish();
         super.onBackPressed();
     }

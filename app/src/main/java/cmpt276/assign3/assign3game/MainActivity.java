@@ -26,16 +26,15 @@ import cmpt276.assign3.assign3game.model.FishesManager;
  * Displays: play, options, and help buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
-    public static final int REQUEST_CODE_GAME = 42;
-    public static final int REQUEST_CODE_OPTIONS = 43;
-    public static final int REQUEST_CODE_HELP = 44;
+    public static final String EXTRA_SAVED_GAME = "is there a saved game";
     public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
     int index;
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(EXTRA_SAVED_GAME, isGameSaved);
         return intent;
     }
 
@@ -45,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadData();
+
+        Intent intent = getIntent();
+        isGameSaved = intent.getBooleanExtra(EXTRA_SAVED_GAME, false);
+        if(isGameSaved){
+            createFishesManager();
+            Intent intentGame = GameActivity.makeLaunchIntent(this, isGameSaved, index);
+            startActivity(intentGame);
+        }
+
         setupButtons();
         setupMainBackground();
     }
@@ -73,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
             index = config.getIndex(manager);
         }
 
-//        boolean isGameFinished = GameActivity.getGameFinished(this);
-//        if(!isGameFinished){
-//            isGameSaved = true;
-//        }
     }
 
     private void setupButtons() {
@@ -87,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
-                createFishesManager();
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
-                startActivityForResult(intent, REQUEST_CODE_GAME);
+                startActivity(intent);
             }
         });
 
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 btnOptions.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, REQUEST_CODE_OPTIONS);
+                startActivity(intent);
             }
         });
 
@@ -114,41 +117,17 @@ public class MainActivity extends AppCompatActivity {
                 btnHelp.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
                 Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
-                startActivityForResult(intent, REQUEST_CODE_HELP);
+                startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    protected void onResume() {
+        createFishesManager();
         setupButtons();
-
-        if(resultCode == Activity.RESULT_CANCELED){
-            return;
-        }
-
-        switch (requestCode){
-            case REQUEST_CODE_GAME:
-//                createFishesManager();
-                break;
-            case REQUEST_CODE_OPTIONS:
-//                createFishesManager();
-                isGameSaved = false;
-                break;
-            default:
-                assert false;
-
-        }
+        super.onResume();
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        createFishesManager();
-//        isGameSaved = false;
-//    }
 
     private void setupMainBackground() {
         // Implement background based on theme
