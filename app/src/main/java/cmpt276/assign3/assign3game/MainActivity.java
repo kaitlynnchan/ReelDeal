@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         if(arrTemp != null) {
             config.setConfigs(arrTemp);
         }
-
-        createFishesManager();
     }
 
     private void createFishesManager() {
@@ -89,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnPlay.setBackground(MainActivity.this.getResources().getDrawable(R.drawable.button_border));
 
+                createFishesManager();
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
                 startActivityForResult(intent, REQUEST_CODE_GAME);
             }
@@ -132,10 +131,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode){
             case REQUEST_CODE_GAME:
-                createFishesManager();
+//                createFishesManager();
                 break;
             case REQUEST_CODE_OPTIONS:
-                createFishesManager();
+//                createFishesManager();
                 isGameSaved = false;
                 break;
             default:

@@ -74,8 +74,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        gamesStarted = sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
+        gamesStarted = getGamesStarted(this);
         gamesStarted++;
 
         Intent intent = getIntent();
@@ -386,6 +385,11 @@ public class GameActivity extends AppCompatActivity {
     static public boolean getGameFinished(Context c){
         SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
         return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
+    }
+
+    static public int getGamesStarted(Context c){
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
     }
 
     @Override

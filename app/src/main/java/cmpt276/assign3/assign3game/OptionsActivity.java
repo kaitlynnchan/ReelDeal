@@ -50,9 +50,9 @@ public class OptionsActivity extends AppCompatActivity {
         savedColumns = getNumColumns(this);
 
         radioButtons();
-        setupHighScoreText();
-        setupGamesStartedText();
-        setupResetButtons();
+//        setupHighScoreText();
+//        setupGamesStartedText();
+//        setupResetButtons();
     }
 
     private void setupHighScoreText() {
@@ -69,8 +69,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupGamesStartedText(){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-        int gamesPlayed = sharedPreferences.getInt(GameActivity.EDITOR_GAMES_STARTED, 0);
+        int gamesPlayed = GameActivity.getGamesStarted(this);
 
         TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
         String strGamesPlayed = getString(R.string.games_started);
@@ -135,7 +134,7 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     savedNumOfFishes = numFish;
                     savePreferences();
-                    setupHighScoreText();
+//                    setupHighScoreText();
                 }
             });
             radioGroupFish.addView(radioButtonFish);
@@ -160,7 +159,7 @@ public class OptionsActivity extends AppCompatActivity {
                     savedRows = numRow;
                     savedColumns = numColumn;
                     savePreferences();
-                    setupHighScoreText();
+//                    setupHighScoreText();
                 }
             });
             radioGroupSize.addView(radioButtonSize);
