@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 /**
  * Game Configurations
- * stores a collection of itemsManager -> existing configurations
+ * Stores a collection of existing game configurations
+ *      fishesManager items in the list are distinct
  */
 public class GameConfigs {
 
-    private ArrayList<ItemsManager> configs = new ArrayList<>();
+    private ArrayList<FishesManager> configs = new ArrayList<>();
 
     // Singleton implementation of GameConfigs
     private static GameConfigs instance;
@@ -20,36 +21,36 @@ public class GameConfigs {
         return instance;
     }
 
-    public ArrayList<ItemsManager> getConfigs() {
+    public ArrayList<FishesManager> getConfigs() {
         return configs;
     }
 
-    public int getIndex(ItemsManager manager){
+    public int getIndex(FishesManager manager){
         // Returns -1 if manager does not exist in array
         if(configs == null){
             return -1;
         }
 
         for(int i = 0; i < configs.size(); i++){
-            ItemsManager l = configs.get(i);
+            FishesManager l = configs.get(i);
             if(l.getRows() == manager.getRows()
                     && l.getCols() == manager.getCols()
-                    && l.getTotalItems() == manager.getTotalItems()){
+                    && l.getTotalFishes() == manager.getTotalFishes()){
                 return i;
             }
         }
         return -1;
     }
 
-    public ItemsManager get(int index){
+    public FishesManager get(int index){
         return configs.get(index);
     }
 
-    public void setConfigs(ArrayList<ItemsManager> configs) {
+    public void setConfigs(ArrayList<FishesManager> configs) {
         this.configs = configs;
     }
 
-    public void add(ItemsManager manager){
+    public void add(FishesManager manager){
         configs.add(manager);
     }
 

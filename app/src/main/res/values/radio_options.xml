@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="objectNumber">
+    <integer-array name="fish_number">
         <item>6</item>
         <item>10</item>
         <item>15</item>
         <item>20</item>
     </integer-array>
-    <integer-array name="objectSizeRow">
+
+    <integer name="default_fish_num">6</integer>
+
+    <integer-array name="selected_row_size">
         <item>4</item>
         <item>5</item>
         <item>6</item>
     </integer-array>
-    <integer-array name="objectSizeColumn">
+    <integer-array name="selected_column_size">
         <item>6</item>
         <item>10</item>
         <item>15</item>
     </integer-array>
+
+    <integer name="default_row_size">4</integer>
+    <integer name="default_column_size">6</integer>
 </resources>

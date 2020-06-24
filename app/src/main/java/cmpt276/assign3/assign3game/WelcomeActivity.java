@@ -17,11 +17,10 @@ import android.widget.TextView;
 
 /**
  * Welcome Screen
- * Plays a fishing animation
- * Allows users to be able to skip the welcome
- * animation and go to main menu
+ * Plays animation and allows users to be able to
+ * skip the welcome animation and go to main menu
  */
-public class WelcomeScreen extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
     private int heightScreen;
@@ -35,32 +34,31 @@ public class WelcomeScreen extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
         heightScreen = displayMetrics.heightPixels;
         widthScreen = displayMetrics.widthPixels;
 
-        fishingGameTitle();
+        titleWelcomeAnimation();
         setupSkipButton();
 
         handler.postDelayed(new Runnable() {
             @Override public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         }, timer);
     }
 
-    private void fishingGameTitle() {
+    private void titleWelcomeAnimation() {
         // Fishing pole animations
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
-        Animation rotate = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_rotate);
+        Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
 
         timer += 3000;
 
         // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewGameTitle);
+        TextView gameTitle = findViewById(R.id.textViewTitle);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
                 "translationY",
                 (float) (heightScreen / 5) * -1);
@@ -89,25 +87,25 @@ public class WelcomeScreen extends AppCompatActivity {
         fadeIn.setDuration(1000);
 
         // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewGameTitle);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
+        TextView gameName = findViewById(R.id.textViewTitle);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName,
                 "translationX",
                 (float) widthScreen / 7);
         moveX.setStartDelay(timer);
         moveX.setDuration(1000);
         moveX.start();
 
-        Animation scale = AnimationUtils.loadAnimation(WelcomeScreen.this, R.anim.anim_zoom);
-        scale.setStartOffset(timer);
-        scale.setFillAfter(true);
-        gameTitle.startAnimation(scale);
+        Animation scaleZoom = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_zoom);
+        scaleZoom.setStartOffset(timer);
+        scaleZoom.setFillAfter(true);
+        gameName.startAnimation(scaleZoom);
 
         // Author animation
         TextView authors = findViewById(R.id.textViewAuthors);
@@ -127,13 +125,20 @@ public class WelcomeScreen extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSkip.setBackground(WelcomeScreen.this.getResources().getDrawable(R.drawable.button_border));
+                btnSkip.setBackground(WelcomeActivity.this.getResources().getDrawable(R.drawable.button_border));
                 handler.removeCallbacksAndMessages(null);
 
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeScreen.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        handler.removeCallbacksAndMessages(null);
+        finish();
+        super.onBackPressed();
     }
 }

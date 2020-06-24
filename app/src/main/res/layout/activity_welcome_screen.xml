@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/ocean_background" >
 
-  <!--  <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/logo" />
-        -->
-
   <ImageView
       android:id="@+id/imageFishingPole"
       android:layout_width="692dp"
@@ -53,13 +45,14 @@
       app:layout_constraintVertical_bias="0.0" />
 
   <TextView
-      android:id="@+id/textViewGameTitle"
+      android:id="@+id/textViewTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="300dp"
       android:layout_marginRight="300dp"
-      android:text="@string/welcome_game_name"
-      android:textColor="#FFFFFF"
+      android:text="@string/welcome_title"
+      android:fontFamily="@font/lobster"
+      android:textColor="@color/colorLightBlue"
       android:textSize="30sp"
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="@+id/imageFishingPole"
@@ -71,7 +64,7 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="115dp"
       android:text="@string/welcome_authors"
-      android:textColor="#FFFFFF"
+      android:textColor="@color/colorLightBlue"
       android:textSize="18sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="parent" />

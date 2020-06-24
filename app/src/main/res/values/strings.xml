@@ -1,30 +1,23 @@
 <resources>
-    <string name="app_name">Assign 3 Game</string>
+    <string name="app_name">REEL DEAL</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
     <string name="found_count">0</string>
-    <string name="total_items">Items Total:</string>
     <string name="high_score">High Score:</string>
     <string name="games_played">Games Played:</string>
-    <string name="game_name">GAME NAME</string>
     <string name="welcome_skip">SKIP</string>
-    <string name="welcome_game_name">GAME\n\t\t\t\tNAME</string>
+    <string name="welcome_title">REEL\n\t\t\t\tDEAL </string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="about_authors"><u>About Authors</u></string>
-    <string name="about_authors_content">Creators include Kaitlynn Chan and Sunayani Sarkar. \n
-        <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">Website</a></string>
+    <string name="about_authors_content">Creators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
+        \n<a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">Website</a></string>
     <string name="how_to_play"><u>How to play</u></string>
     <string name="how_to_play_content"><b>Setting the game</b>
         \n\tTo set the game go into OPTIONS and select the game size and number of items to find.
@@ -40,5 +33,21 @@
     <string name="win_title">You Win!!</string>
     <string name="score">Score:</string>
     <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu</string>
+    <string name="help">HELP</string>
+    <string name="best">BEST!!</string>
+    <string name="reel_deal">REEL DEAL </string>
+    <string name="play">PLAY</string>
+    <string name="beta">BETA</string>
+    <string name="num_fishes_options">Choose the Number of Fishes:</string>
+    <string name="options">OPTIONS</string>
+    <string name="game_size_options">Choose size of game:</string>
+    <string name="rows_and"><![CDATA[ \u0020 rows & \u0020 ]]></string>
+    <string name="columns">  \u0020 columns</string>
+    <string name="fishes"> \u0020 Fishes</string>
+    <string name="total_fishes">Total Fishes:</string>
+    <string name="empty" />
+    <string name="title_activity_options">OptionsActivity</string>
+    <string name="title_activity_welcome">WelcomeScreen</string>
+    <string name="title_activity_main">Main Activity</string>
 
 </resources>

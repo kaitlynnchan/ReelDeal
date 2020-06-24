@@ -4,34 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/ocean_background" >
 
     <TextView
-        android:id="@+id/textViewTitleCenter"
+        android:id="@+id/textReelDeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GAME NAME"
-        android:textSize="50sp"
+        android:fontFamily="@font/lobster"
+        android:text="@string/reel_deal"
+        android:textColor="#E83C454C"
+        android:textSize="80sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="PLAY"
-        android:textSize="24sp"
-        android:background="@drawable/button_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitleCenter"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleCenter" />
+        android:text="@string/play"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
+        app:layout_constraintTop_toBottomOf="@+id/textReelDeal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
 
     <Button
         android:id="@+id/buttonOptions"
@@ -40,11 +45,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
+        android:background="@drawable/button_shadow"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="OPTIONS"
+        android:text="@string/options"
         android:textSize="18sp"
-        android:background="@drawable/button_shadow"
         app:layout_constraintEnd_toStartOf="@+id/buttonHelp"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
@@ -52,26 +57,17 @@
         android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginLeft="75dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="HELP"
+        android:text="@string/help"
         android:textSize="18sp"
         android:background="@drawable/button_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
+        app:layout_constraintStart_toStartOf="@+id/buttonPlay"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:rotation="-16"
-        android:text="BETA"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleCenter"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleCenter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
