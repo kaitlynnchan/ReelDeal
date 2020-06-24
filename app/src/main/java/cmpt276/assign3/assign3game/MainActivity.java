@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         if(!isGameFinished){
             isGameSaved = true;
         }
-
     }
 
     private void setupButtons() {
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 createFishesManager();
                 break;
             case REQUEST_CODE_OPTIONS:
-                createFishesManager();
+//                createFishesManager();
                 isGameSaved = false;
                 break;
             default:

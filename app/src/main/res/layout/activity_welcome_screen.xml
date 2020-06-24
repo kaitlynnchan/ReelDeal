@@ -27,6 +27,7 @@
       android:layout_marginBottom="16dp"
       android:background="@drawable/button_shadow"
       android:text="@string/welcome_skip"
+      android:textSize="18sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 

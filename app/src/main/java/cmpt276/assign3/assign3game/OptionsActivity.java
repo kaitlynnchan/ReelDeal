@@ -7,8 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import cmpt276.assign3.assign3game.model.FishesManager;
+import cmpt276.assign3.assign3game.model.GameConfigs;
 
 /**
  * Options Screen
@@ -20,9 +25,14 @@ public class OptionsActivity extends AppCompatActivity {
     public static final String EDITOR_FISHES = "number of fishes";
     public static final String EDITOR_ROWS = "Rows";
     public static final String EDITOR_COLUMNS = "Columns";
-    public int savedNumOfFishes;
-    public int savedRows;
-    public int savedColumns;
+
+    private int savedNumOfFishes;
+    private int savedRows;
+    private int savedColumns;
+    private GameConfigs configs = GameConfigs.getInstance();
+    private int highScore;
+    private FishesManager manager = FishesManager.getInstance();
+    private int index;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, OptionsActivity.class);
@@ -39,6 +49,77 @@ public class OptionsActivity extends AppCompatActivity {
         savedColumns = getNumColumns(this);
 
         radioButtons();
+        setupText();
+        setupResetButtons();
+    }
+
+    private void setupText() {
+        setFishesManager();
+
+        TextView txtHighScore = findViewById(R.id.textHighScore);
+        String strHighScore = getString(R.string.high_score);
+        if(highScore == -1){
+            strHighScore += "  N/A";
+        } else{
+            strHighScore += "  " + highScore;
+        }
+        txtHighScore.setText(strHighScore);
+
+        // Setup games started
+        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+        int gamesPlayed = sharedPreferences.getInt(GameActivity.EDITOR_GAMES_STARTED, 0);
+
+        TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
+        String strGamesPlayed = getString(R.string.games_started);
+        strGamesPlayed += "  " + gamesPlayed;
+        txtGamesPlayed.setText(strGamesPlayed);
+
+    }
+
+    private void setFishesManager(){
+        manager.setRows(savedRows);
+        manager.setCols(savedColumns);
+        manager.setTotalFishes(savedNumOfFishes);
+
+        // Set high score depending whether config exists or not
+        index = configs.getIndex(manager);
+        if(index == -1){
+            highScore = -1;
+            manager.setHighScore(highScore);
+            configs.add(manager);
+        } else{
+            highScore = configs.get(index).getHighScore();
+            manager.setHighScore(highScore);
+        }
+    }
+
+    private void setupResetButtons() {
+        final Button btnResetScore = findViewById(R.id.buttonResetScore);
+        btnResetScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnResetScore.setBackground(OptionsActivity.this.getResources().getDrawable(R.drawable.button_border));
+
+                if(index != -1){
+                    highScore = -1;
+                    configs.get(index).setHighScore(highScore);
+                    setupText();
+                }
+            }
+        });
+
+        final Button btnResetGames = findViewById(R.id.buttonResetGamesNum);
+        btnResetGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnResetGames.setBackground(OptionsActivity.this.getResources().getDrawable(R.drawable.button_border));
+
+                SharedPreferences prefs = OptionsActivity.this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+                prefs.edit().clear().apply();
+
+                setupText();
+            }
+        });
     }
 
     private void radioButtons() {
@@ -54,6 +135,7 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     savedNumOfFishes = numFish;
                     savePreferences();
+                    setupText();
                 }
             });
             radioGroupFish.addView(radioButtonFish);
@@ -78,6 +160,7 @@ public class OptionsActivity extends AppCompatActivity {
                     savedRows = numRow;
                     savedColumns = numColumn;
                     savePreferences();
+                    setupText();
                 }
             });
             radioGroupSize.addView(radioButtonSize);

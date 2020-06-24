@@ -10,7 +10,7 @@
     <string name="found">Found:</string>
     <string name="found_count">0</string>
     <string name="high_score">High Score:</string>
-    <string name="games_played">Games Played:</string>
+    <string name="games_started">Games Started:</string>
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_title">REEL\n\t\t\t\tDEAL </string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
@@ -49,5 +49,6 @@
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">Main Activity</string>
+    <string name="no_answer">  N/A</string>
 
 </resources>
