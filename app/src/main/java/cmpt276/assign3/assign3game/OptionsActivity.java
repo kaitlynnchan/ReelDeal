@@ -31,7 +31,7 @@ public class OptionsActivity extends AppCompatActivity {
     private int savedColumns;
     private GameConfigs configs = GameConfigs.getInstance();
     private int highScore;
-    private FishesManager manager = FishesManager.getInstance();
+//    private FishesManager manager = FishesManager.getInstance();
     private int index;
 
     public static Intent makeLaunchIntent(Context context){
@@ -49,34 +49,37 @@ public class OptionsActivity extends AppCompatActivity {
         savedColumns = getNumColumns(this);
 
         radioButtons();
-        setupText();
+        setupHighScoreText();
+        setupGamesStartedText();
         setupResetButtons();
     }
 
-    private void setupText() {
+    private void setupHighScoreText() {
         setFishesManager();
 
         TextView txtHighScore = findViewById(R.id.textHighScore);
         String strHighScore = getString(R.string.high_score);
-        if(highScore == -1){
-            strHighScore += "  N/A";
-        } else{
-            strHighScore += "  " + highScore;
+        if (highScore == -1) {
+            strHighScore += getString(R.string.no_answer);
+        } else {
+            strHighScore += "" + highScore;
         }
         txtHighScore.setText(strHighScore);
+    }
 
-        // Setup games started
+    private void setupGamesStartedText(){
         SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
         int gamesPlayed = sharedPreferences.getInt(GameActivity.EDITOR_GAMES_STARTED, 0);
 
         TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
         String strGamesPlayed = getString(R.string.games_started);
-        strGamesPlayed += "  " + gamesPlayed;
+        strGamesPlayed += "" + gamesPlayed;
         txtGamesPlayed.setText(strGamesPlayed);
 
     }
 
     private void setFishesManager(){
+        FishesManager manager = FishesManager.getInstance();
         manager.setRows(savedRows);
         manager.setCols(savedColumns);
         manager.setTotalFishes(savedNumOfFishes);
@@ -103,7 +106,8 @@ public class OptionsActivity extends AppCompatActivity {
                 if(index != -1){
                     highScore = -1;
                     configs.get(index).setHighScore(highScore);
-                    setupText();
+//                    saveData();
+                    setupHighScoreText();
                 }
             }
         });
@@ -117,7 +121,7 @@ public class OptionsActivity extends AppCompatActivity {
                 SharedPreferences prefs = OptionsActivity.this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
                 prefs.edit().clear().apply();
 
-                setupText();
+                setupGamesStartedText();
             }
         });
     }
@@ -135,7 +139,7 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     savedNumOfFishes = numFish;
                     savePreferences();
-                    setupText();
+                    setupHighScoreText();
                 }
             });
             radioGroupFish.addView(radioButtonFish);
@@ -160,7 +164,7 @@ public class OptionsActivity extends AppCompatActivity {
                     savedRows = numRow;
                     savedColumns = numColumn;
                     savePreferences();
-                    setupText();
+                    setupHighScoreText();
                 }
             });
             radioGroupSize.addView(radioButtonSize);
@@ -180,6 +184,15 @@ public class OptionsActivity extends AppCompatActivity {
         editor.putInt(EDITOR_COLUMNS, savedColumns);
         editor.apply();
     }
+
+//    private void saveData() {
+//        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Gson gson = new Gson();
+//        String json = gson.toJson(configs.getConfigs());
+//        editor.putString(GameActivity.EDITOR_GAME_CONFIG, json);
+//        editor.apply();
+//    }
 
     static public int getNumFishes(Context c){
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);

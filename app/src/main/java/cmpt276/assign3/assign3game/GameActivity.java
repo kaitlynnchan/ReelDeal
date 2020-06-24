@@ -94,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
         // Setup total Fishes text
         TextView txtTotalFishes = findViewById(R.id.textViewTotalFishes);
         String strTotalFishes = getString(R.string.total_fishes);
-        strTotalFishes += " " + totalFishes;
+        strTotalFishes += "" + totalFishes;
         txtTotalFishes.setText(strTotalFishes);
 
         // Setup high score
@@ -103,14 +103,14 @@ public class GameActivity extends AppCompatActivity {
         if(highScore == -1){
             strHighScore += getString(R.string.no_answer);
         } else{
-            strHighScore += "  " + highScore;
+            strHighScore += "" + highScore;
         }
         txtHighScore.setText(strHighScore);
 
         // Setup games started
         TextView txtGamesStarted = findViewById(R.id.textViewGamesStarted);
         String strGamesStarted = getString(R.string.games_started);
-        strGamesStarted += "  " + gamesStarted;
+        strGamesStarted += "" + gamesStarted;
         txtGamesStarted.setText(strGamesStarted);
     }
 
@@ -162,6 +162,7 @@ public class GameActivity extends AppCompatActivity {
 
             // Game finished
             if(found == totalFishes){
+
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
                     configs.get(index).setHighScore(scans);
