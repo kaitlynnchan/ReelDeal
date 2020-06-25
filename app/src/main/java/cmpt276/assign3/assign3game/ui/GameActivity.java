@@ -36,6 +36,7 @@ import cmpt276.assign3.assign3game.model.FishesManager;
  *      total fishes,
  *      high score,
  *      and games played
+ * Allows users to play the game according to game logic
  */
 public class GameActivity extends AppCompatActivity {
 

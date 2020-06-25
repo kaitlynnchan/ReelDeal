@@ -20,7 +20,13 @@ import cmpt276.assign3.assign3game.model.GameConfigs;
 
 /**
  * Options Screen
- * Displays: radio buttons for number of fishes and size of game board
+ * Displays:
+ *      radio buttons for number of fishes,
+ *      size of game,
+ *      configuration high score,
+ *      games played
+ * Allows user to select options displayed and
+ *  to reset saved information
  */
 public class OptionsActivity extends AppCompatActivity {
 

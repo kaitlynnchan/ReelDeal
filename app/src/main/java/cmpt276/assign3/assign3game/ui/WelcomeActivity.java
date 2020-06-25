@@ -20,7 +20,7 @@ import cmpt276.assign3.assign3game.R;
 /**
  * Welcome Screen
  * Plays animation and allows users to be able to
- * skip the welcome animation and go to main menu
+ *  skip the welcome animation and go to main menu
  */
 public class WelcomeActivity extends AppCompatActivity {
 
