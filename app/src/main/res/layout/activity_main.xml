@@ -7,30 +7,68 @@
     tools:context=".MainActivity"
     android:background="@drawable/ocean_background" >
 
+    <ImageView
+        android:id="@+id/imageFishLeft1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/fish"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="181dp" />
+
+    <ImageView
+        android:id="@+id/imageFishLeft2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:rotation="20"
+        app:srcCompat="@drawable/fish"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="315dp" />
+
+    <ImageView
+        android:id="@+id/imageFishRight1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:rotation="-10"
+        android:scaleX="-1"
+        app:srcCompat="@drawable/fish"
+        tools:layout_editor_absoluteX="635dp"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <ImageView
+        android:id="@+id/imageFishRight2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:rotation="-30"
+        android:scaleX="-1"
+        app:srcCompat="@drawable/fish"
+        tools:layout_editor_absoluteX="615dp"
+        tools:layout_editor_absoluteY="251dp" />
+
     <TextView
         android:id="@+id/textReelDeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/lobster"
+        android:outlineSpotShadowColor="@color/colorBlue"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
         android:shadowColor="#000000"
         android:shadowDx="4"
         android:shadowDy="3.5"
-        android:shadowRadius="6"
-        android:fontFamily="@font/lobster"
+        android:shadowRadius="9"
         android:text="@string/reel_deal"
         android:textColor="#FFf8a43a"
         android:textSize="80sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonPlay"
+        app:layout_constraintEnd_toEndOf="@+id/buttonPlay"
+        app:layout_constraintStart_toStartOf="@+id/buttonPlay" />
 
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:background="@drawable/button_image"
         android:paddingLeft="20dp"
         android:paddingTop="5dp"
@@ -38,9 +76,11 @@
         android:paddingBottom="7dp"
         android:text="@string/play"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
-        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
-        app:layout_constraintTop_toBottomOf="@+id/textReelDeal" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003" />
 
     <Button
         android:id="@+id/buttonOptions"

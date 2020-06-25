@@ -31,8 +31,8 @@
     <string name="citations"><u>Citations</u></string>
     <string name="citations_content">blah blah</string>
     <string name="win_title">You Win!!</string>
-    <string name="score">Score:</string>
-    <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu</string>
+    <string name="score">Your Score:</string>
+    <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu\n</string>
     <string name="help">HELP</string>
     <string name="best">BEST!!</string>
     <string name="reel_deal">REEL DEAL\u0020\u0020</string>

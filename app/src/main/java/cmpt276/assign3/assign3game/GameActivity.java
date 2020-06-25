@@ -150,12 +150,10 @@ public class GameActivity extends AppCompatActivity {
                 ));
 
                 button.setBackgroundResource(R.drawable.button_corner);
-                //final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
-               //         media.start();
                     }
                 });
 
@@ -166,12 +164,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateButtons(int row, int col) {
-        int count = manager.scanRowCol(row, col);
         // Adding vibration to buttons
         vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
         //Adding sounds to button click in game
         final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
         final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
+
+        int count = manager.scanRowCol(row, col);
         if(count == -1){
             setFishesFound(row, col);
             fishFoundMedia.start();
@@ -290,30 +289,30 @@ public class GameActivity extends AppCompatActivity {
         waveBelow.setRepeatMode(Animation.REVERSE);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            if(!fishRevealed[rBelow][col]){
-                Button temp = buttons[rBelow][col];
-                temp.startAnimation(waveBelow);
+            Button btnBelow = buttons[rBelow][col];
+            if(!fishRevealed[rBelow][col] && btnBelow.isClickable()){
+                btnBelow.startAnimation(waveBelow);
             }
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            if(!fishRevealed[rAbove][col]){
-                Button temp = buttons[rAbove][col];
-                temp.startAnimation(waveAbove);
+            Button btnAbove = buttons[rAbove][col];
+            if(!fishRevealed[rAbove][col] && btnAbove.isClickable()){
+                btnAbove.startAnimation(waveAbove);
             }
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            if(!fishRevealed[row][cRight]){
-                Button temp = buttons[row][cRight];
-                temp.startAnimation(waveRight);
+            Button btnRight = buttons[row][cRight];
+            if(!fishRevealed[row][cRight] && btnRight.isClickable()){
+                btnRight.startAnimation(waveRight);
             }
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            if(!fishRevealed[row][cLeft]){
-                Button temp = buttons[row][cLeft];
-                temp.startAnimation(waveLeft);
+            Button btnLeft = buttons[row][cLeft];
+            if(!fishRevealed[row][cLeft] && btnLeft.isClickable()){
+                btnLeft.startAnimation(waveLeft);
             }
         }
     }

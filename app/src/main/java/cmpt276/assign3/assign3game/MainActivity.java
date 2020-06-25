@@ -1,22 +1,25 @@
 package cmpt276.assign3.assign3game;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.FishesManager;
@@ -30,7 +33,21 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isGameSaved = false;
 
     private GameConfigs config = GameConfigs.getInstance();
-    int index;
+    private int index;
+    private int widthScreen;
+    private int heightScreen;
+
+    private Handler handler = new Handler();
+    private Timer timer = new Timer();
+    private ImageView fishLeft1;
+    private ImageView fishLeft2;
+    private ImageView fishRight1;
+    private ImageView fishRight2;
+    private float fishLeft1X;
+    private float fishLeft2X;
+    private float fishRight1X;
+    private float fishRight2X;
+    private float fishWidth;
 
     public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
         Intent intent = new Intent(context, MainActivity.class);
@@ -42,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        heightScreen = displayMetrics.heightPixels;
+        widthScreen = displayMetrics.widthPixels;
 
         loadData();
 
@@ -120,6 +142,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupMainBackground() {
-        // Implement background based on theme
+        fishLeft1 = findViewById(R.id.imageFishLeft1);
+        fishLeft2 = findViewById(R.id.imageFishLeft2);
+        fishRight1 = findViewById(R.id.imageFishRight2);
+        fishRight2 = findViewById(R.id.imageFishRight1);
+        fishWidth = fishLeft1.getWidth();
+
+        fishLeft1.setX(-fishWidth);
+        fishLeft1.setY(heightScreen / 2.0f);
+
+        fishLeft2.setX(-fishWidth);
+        fishLeft2.setY((heightScreen / 5.0f) * 2);
+
+        fishRight1.setX(widthScreen + fishWidth);
+        fishRight1.setY(heightScreen / 3.0f);
+
+        fishRight2.setX(widthScreen + fishWidth);
+        fishRight2.setY((heightScreen / 3.0f) * 2);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        moveFishes();
+                    }
+                });
+            }
+        }, 0, 25);
+
+    }
+
+    private void moveFishes() {
+        fishLeft1X += 5;
+        if(fishLeft1X > widthScreen + fishWidth){
+            fishLeft1X = -200f;
+        }
+        fishLeft1.setX(fishLeft1X);
+
+        fishLeft2X += 2;
+        if(fishLeft2X > widthScreen + fishWidth){
+            fishLeft2X = -200f;
+        }
+        fishLeft2.setX(fishLeft2X);
+
+        fishRight1X -= 4f;
+        if(fishRight1X < -200f){
+            fishRight1X = widthScreen + 200f;
+        }
+        fishRight1.setX(fishRight1X);
+
+        fishRight2X -= 3f;
+        if(fishRight2X < -200f){
+            fishRight2X = widthScreen + 200f;
+        }
+        fishRight2.setX(fishRight2X);
     }
 }
