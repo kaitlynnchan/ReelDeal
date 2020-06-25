@@ -5,7 +5,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 
-    android:background="@drawable/bucket_and_dock">
+    android:background="@drawable/dock">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textCongrats"
+        app:srcCompat="@drawable/bucket" />
 
     <ImageView
         android:id="@+id/imageLeft"
@@ -34,7 +45,7 @@
         android:id="@+id/textViewWin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/win_title"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -50,10 +61,10 @@
         android:layout_marginLeft="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:background="#87FFFFFF"
+        android:background="#B5FFFFFF"
         android:gravity="center"
         android:paddingLeft="8dp"
-        android:paddingTop="5dp"
+        android:paddingTop="8dp"
         android:paddingRight="8dp"
         android:paddingBottom="8dp"
         android:text="@string/congrats_message"
@@ -62,21 +73,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59000003" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/score"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonOK"
-        app:layout_constraintStart_toStartOf="@+id/textCongrats"
-        app:layout_constraintTop_toTopOf="@+id/buttonOK" />
+        app:layout_constraintBottom_toBottomOf="@+id/textCongrats"
+        app:layout_constraintEnd_toEndOf="@+id/textCongrats"
+        app:layout_constraintStart_toStartOf="@+id/textCongrats" />
 
     <Button
         android:id="@+id/buttonOK"
@@ -104,4 +113,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewScore"
         app:layout_constraintStart_toEndOf="@+id/textViewScore"
         app:layout_constraintTop_toTopOf="@+id/textViewScore" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

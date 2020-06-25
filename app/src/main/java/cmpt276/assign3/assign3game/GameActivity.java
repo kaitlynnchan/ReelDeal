@@ -290,30 +290,30 @@ public class GameActivity extends AppCompatActivity {
         waveBelow.setRepeatMode(Animation.REVERSE);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            if(!fishRevealed[rBelow][col]){
-                Button temp = buttons[rBelow][col];
-                temp.startAnimation(waveBelow);
+            Button btnBelow = buttons[rBelow][col];
+            if(!fishRevealed[rBelow][col] && btnBelow.isClickable()){
+                btnBelow.startAnimation(waveBelow);
             }
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            if(!fishRevealed[rAbove][col]){
-                Button temp = buttons[rAbove][col];
-                temp.startAnimation(waveAbove);
+            Button btnAbove = buttons[rAbove][col];
+            if(!fishRevealed[rAbove][col] && btnAbove.isClickable()){
+                btnAbove.startAnimation(waveAbove);
             }
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            if(!fishRevealed[row][cRight]){
-                Button temp = buttons[row][cRight];
-                temp.startAnimation(waveRight);
+            Button btnRight = buttons[row][cRight];
+            if(!fishRevealed[row][cRight] && btnRight.isClickable()){
+                btnRight.startAnimation(waveRight);
             }
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            if(!fishRevealed[row][cLeft]){
-                Button temp = buttons[row][cLeft];
-                temp.startAnimation(waveLeft);
+            Button btnLeft = buttons[row][cLeft];
+            if(!fishRevealed[row][cLeft] && btnLeft.isClickable()){
+                btnLeft.startAnimation(waveLeft);
             }
         }
     }
