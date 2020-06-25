@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package cmpt276.assign3.assign3game.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
+
+import cmpt276.assign3.assign3game.R;
 
 /**
  * Help Screen

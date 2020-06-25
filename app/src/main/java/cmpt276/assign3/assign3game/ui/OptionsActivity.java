@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package cmpt276.assign3.assign3game.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import cmpt276.assign3.assign3game.R;
 import cmpt276.assign3.assign3game.model.FishesManager;
 import cmpt276.assign3.assign3game.model.GameConfigs;
 

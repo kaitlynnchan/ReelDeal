@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package cmpt276.assign3.assign3game.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import cmpt276.assign3.assign3game.R;
 
 /**
  * Win Dialog

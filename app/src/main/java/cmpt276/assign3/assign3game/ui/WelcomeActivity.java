@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package cmpt276.assign3.assign3game.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import cmpt276.assign3.assign3game.R;
 
 /**
  * Welcome Screen

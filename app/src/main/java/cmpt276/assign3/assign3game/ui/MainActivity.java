@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package cmpt276.assign3.assign3game.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cmpt276.assign3.assign3game.R;
 import cmpt276.assign3.assign3game.model.GameConfigs;
 import cmpt276.assign3.assign3game.model.FishesManager;
 
