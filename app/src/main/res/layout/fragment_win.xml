@@ -13,10 +13,10 @@
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textCongrats"
-        app:srcCompat="@drawable/bucket" />
+        app:srcCompat="@drawable/bucket_with_fish" />
 
     <ImageView
         android:id="@+id/imageLeft"

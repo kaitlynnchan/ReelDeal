@@ -150,12 +150,10 @@ public class GameActivity extends AppCompatActivity {
                 ));
 
                 button.setBackgroundResource(R.drawable.button_corner);
-                //final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtons(FINAL_ROW, FINAL_COL);
-               //         media.start();
                     }
                 });
 
@@ -166,12 +164,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateButtons(int row, int col) {
-        int count = manager.scanRowCol(row, col);
         // Adding vibration to buttons
         vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
         //Adding sounds to button click in game
         final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
         final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
+
+        int count = manager.scanRowCol(row, col);
         if(count == -1){
             setFishesFound(row, col);
             fishFoundMedia.start();
