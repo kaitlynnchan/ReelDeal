@@ -13,7 +13,8 @@
         android:layout_height="100dp"
         app:srcCompat="@drawable/fish"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="181dp" />
+        tools:layout_editor_absoluteY="181dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageFishLeft2"
@@ -22,7 +23,8 @@
         android:rotation="20"
         app:srcCompat="@drawable/fish"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="315dp" />
+        tools:layout_editor_absoluteY="315dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageFishRight1"
@@ -32,7 +34,8 @@
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
         tools:layout_editor_absoluteX="635dp"
-        tools:layout_editor_absoluteY="134dp" />
+        tools:layout_editor_absoluteY="134dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageFishRight2"
@@ -42,7 +45,8 @@
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
         tools:layout_editor_absoluteX="615dp"
-        tools:layout_editor_absoluteY="251dp" />
+        tools:layout_editor_absoluteY="251dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textReelDeal"
