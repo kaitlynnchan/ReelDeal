@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+/**
+ * Help Screen
+ * Includes about authors, how to play, and citations
+ */
 public class HelpActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context context){
@@ -26,5 +30,8 @@ public class HelpActivity extends AppCompatActivity {
     private void setText() {
         TextView aboutContent = findViewById(R.id.textAboutContent);
         aboutContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView citationContent = findViewById(R.id.textCitationContent);
+        citationContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

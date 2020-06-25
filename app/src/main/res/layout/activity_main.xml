@@ -63,7 +63,7 @@
         android:shadowDy="3.5"
         android:shadowRadius="9"
         android:text="@string/reel_deal"
-        android:textColor="#FFf8a43a"
+        android:textColor="@color/colorOrange"
         android:textSize="80sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonPlay"
         app:layout_constraintEnd_toEndOf="@+id/buttonPlay"

@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveFishes() {
+        // Move fish left
         fishLeft1X += 5;
         if(fishLeft1X > widthScreen + fishWidth){
             fishLeft1X = -200f;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         }
         fishLeft2.setX(fishLeft2X);
 
+        // Move fish right
         fishRight1X -= 4f;
         if(fishRight1X < -200f){
             fishRight1X = widthScreen + 200f;

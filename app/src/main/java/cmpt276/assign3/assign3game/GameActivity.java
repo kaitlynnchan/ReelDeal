@@ -390,7 +390,7 @@ public class GameActivity extends AppCompatActivity {
 
     static public boolean getGameFinished(Context c){
         SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, false);
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
     }
 
     static public int getGamesStarted(Context c){
