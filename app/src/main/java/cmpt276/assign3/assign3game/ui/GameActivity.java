@@ -1,5 +1,6 @@
 package cmpt276.assign3.assign3game.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -104,6 +106,7 @@ public class GameActivity extends AppCompatActivity {
         setupTextDisplay();
         saveData();
         setupBackButton();
+        setupPauseButton();
     }
 
     private void setupTextDisplay() {
@@ -407,6 +410,30 @@ public class GameActivity extends AppCompatActivity {
             saveGameState();
         }
         super.onUserLeaveHint();
+    }
+
+    private void setupPauseButton() {
+        Button buttonPause = findViewById(R.id.buttonPause);
+        buttonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PauseActivity.makeLaunchIntent(GameActivity.this);
+                startActivityForResult(intent, 50);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_CANCELED){
+            return;
+        }
+
+        if(requestCode == 50){
+            onBackPressed();
+        }
     }
 
     @Override

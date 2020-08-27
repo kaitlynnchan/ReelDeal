@@ -5,6 +5,11 @@
     <string name="previous">Previous</string>
 
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_options">OptionsActivity</string>
+    <string name="title_activity_welcome">WelcomeScreen</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_pause">PauseActivity</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
@@ -14,7 +19,6 @@
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
-    <string name="title_activity_help">HelpActivity</string>
     <string name="about_authors_content"><u>About Authors</u>
         \nCreators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
         \nBrought to you by: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276 - SUMMER 2020</a></string>
@@ -69,9 +73,6 @@
     <string name="fishes"> \u0020 Fishes</string>
     <string name="total_fishes">Total Fishes:\u0020\u0020</string>
     <string name="empty" />
-    <string name="title_activity_options">OptionsActivity</string>
-    <string name="title_activity_welcome">WelcomeScreen</string>
-    <string name="title_activity_main">Main Activity</string>
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
 
