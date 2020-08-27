@@ -103,6 +103,7 @@ public class GameActivity extends AppCompatActivity {
 
         setupTextDisplay();
         saveData();
+        setupBackButton();
     }
 
     private void setupTextDisplay() {
@@ -417,5 +418,16 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
+    private void setupBackButton() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isGameFinished = true;
+                MainActivity.isGameSaved = false;
+                saveData();
+                finish();
+            }
+        });
+    }
 }

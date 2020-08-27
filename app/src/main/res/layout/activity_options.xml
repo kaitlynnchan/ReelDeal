@@ -8,6 +8,19 @@
     tools:context=".ui.OptionsActivity"
     android:background="@drawable/ocean_background" >
 
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_back"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textOptions"
         android:layout_width="wrap_content"
@@ -15,22 +28,21 @@
         android:layout_marginTop="16dp"
         android:text="@string/options"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/numFishesOptions"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="16dp"
         android:text="@string/num_fishes_options"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textOptions"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textOptions" />
 
@@ -40,22 +52,23 @@
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonResetScore"
         app:layout_constraintEnd_toEndOf="@+id/numFishesOptions"
         app:layout_constraintStart_toStartOf="@+id/numFishesOptions"
-        app:layout_constraintTop_toBottomOf="@+id/numFishesOptions"
-        app:layout_constraintVertical_bias="0.155" />
+        app:layout_constraintTop_toBottomOf="@+id/numFishesOptions" />
 
     <TextView
         android:id="@+id/textGameSize"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/game_size_options"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/numFishesOptions"
-        app:layout_constraintStart_toEndOf="@+id/textOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/numFishesOptions" />
 
     <RadioGroup
@@ -63,65 +76,73 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonResetGamesNum"
+        app:layout_constraintEnd_toEndOf="@+id/textGameSize"
         app:layout_constraintStart_toStartOf="@+id/textGameSize"
-        app:layout_constraintTop_toTopOf="@+id/radioGroupTotalFishes" />
+        app:layout_constraintTop_toBottomOf="@+id/textGameSize" />
 
 
     <TextView
         android:id="@+id/textHighScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         android:text="@string/high_score"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonResetScore"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.329"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonResetScore" />
+        app:layout_constraintTop_toTopOf="@+id/buttonResetScore"
+        app:layout_constraintVertical_bias="0.48" />
 
     <Button
         android:id="@+id/buttonResetScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/button_image"
+        android:background="@drawable/button_background"
         android:text="@string/reset"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textHighScore" />
+        app:layout_constraintStart_toEndOf="@+id/textHighScore"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
 
     <TextView
         android:id="@+id/textGamesStarted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:text="@string/games_started"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonResetGamesNum"
-        app:layout_constraintEnd_toStartOf="@+id/buttonResetGamesNum"
-        app:layout_constraintTop_toTopOf="@+id/buttonResetGamesNum" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/buttonResetGamesNum"
+        app:layout_constraintVertical_bias="0.48" />
 
     <Button
         android:id="@+id/buttonResetGamesNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/button_image"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/button_background"
         android:text="@string/reset"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textGamesStarted"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
