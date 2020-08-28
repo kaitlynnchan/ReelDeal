@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/ocean_background"
     android:backgroundTint="#7A000000"
     android:backgroundTintMode="src_over"
@@ -13,25 +13,27 @@
         android:id="@+id/textPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PAUSE"
+        android:text="@string/pause"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002" />
+        app:layout_constraintVertical_bias="0.35000002" />
 
     <Button
         android:id="@+id/buttonResume"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button_background"
-        android:contentDescription="Resume"
+        android:contentDescription="@string/resume"
         android:foreground="@drawable/ic_play_arrow"
         android:foregroundGravity="center"
         android:foregroundTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textPause"
         app:layout_constraintTop_toBottomOf="@+id/textPause" />
 
@@ -40,11 +42,13 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button_background"
-        android:contentDescription="stop"
+        android:contentDescription="@string/stop"
         android:foreground="@drawable/ic_stop"
         android:foregroundGravity="center"
         android:foregroundTint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textPause"
         app:layout_constraintTop_toBottomOf="@+id/textPause" />
 </androidx.constraintlayout.widget.ConstraintLayout>

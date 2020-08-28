@@ -74,5 +74,8 @@
     <string name="empty" />
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
+    <string name="pause">PAUSE</string>
+    <string name="resume">Resume</string>
+    <string name="stop">stop</string>
 
 </resources>
