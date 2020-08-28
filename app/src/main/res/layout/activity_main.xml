@@ -11,42 +11,46 @@
         android:id="@+id/imageFishLeft1"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/fish"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="181dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="181dp" />
 
     <ImageView
         android:id="@+id/imageFishLeft2"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/fish"
         android:rotation="20"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="315dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="315dp" />
 
     <ImageView
         android:id="@+id/imageFishRight1"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/fish"
         android:rotation="-10"
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="635dp"
-        tools:layout_editor_absoluteY="134dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="134dp" />
 
     <ImageView
         android:id="@+id/imageFishRight2"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/fish"
         android:rotation="-30"
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="615dp"
-        tools:layout_editor_absoluteY="251dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="251dp" />
 
     <TextView
         android:id="@+id/textReelDeal"
@@ -73,8 +77,8 @@
         android:id="@+id/buttonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_image"
-        android:paddingLeft="20dp"
+        android:background="@drawable/button_background"
+        android:paddingLeft="22dp"
         android:paddingTop="5dp"
         android:paddingRight="20dp"
         android:paddingBottom="7dp"
@@ -91,31 +95,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:background="@drawable/button_image"
+        android:background="@drawable/button_background"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="@string/options"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonHelp"
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <Button
         android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginLeft="75dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:background="@drawable/button_background"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/help"
         android:textSize="18sp"
-        android:background="@drawable/button_image"
-        app:layout_constraintStart_toStartOf="@+id/buttonPlay"
+        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintHorizontal_bias="0.74"
+        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

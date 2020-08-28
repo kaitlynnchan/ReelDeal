@@ -14,8 +14,22 @@
         android:layout_marginTop="16dp"
         android:text="@string/help"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/back"
+        android:foreground="@drawable/ic_arrow_back"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +38,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
@@ -39,51 +53,28 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textAbout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/about_authors"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/textAboutContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="@string/about_authors_content"
                 android:textColor="#000000"
                 android:textColorHighlight="@color/colorDarkBlue"
                 android:textColorLink="@color/colorBlue"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/textAbout"
-                app:layout_constraintTop_toBottomOf="@+id/textAbout" />
-
-            <TextView
-                android:id="@+id/textHowtoPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/how_to_play"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/textAboutContent"
-                app:layout_constraintTop_toBottomOf="@+id/textAboutContent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textHowtoPlayContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="@string/how_to_play_content"
                 android:textColor="#000000"
                 android:textColorHighlight="@color/colorDarkBlue"
@@ -91,31 +82,24 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHowtoPlay" />
-
-            <TextView
-                android:id="@+id/textCitations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/citations"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/textHowtoPlayContent"
-                app:layout_constraintTop_toBottomOf="@+id/textHowtoPlayContent" />
+                app:layout_constraintTop_toBottomOf="@+id/textAboutContent" />
 
             <TextView
                 android:id="@+id/textCitationContent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="@string/citations_content"
                 android:textColor="#000000"
                 android:textColorHighlight="@color/colorDarkBlue"
                 android:textColorLink="@color/colorBlue"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/textCitations"
-                app:layout_constraintTop_toBottomOf="@+id/textCitations" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textHowtoPlayContent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -5,6 +5,10 @@
     <string name="previous">Previous</string>
 
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_options">OptionsActivity</string>
+    <string name="title_activity_welcome">WelcomeScreen</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
@@ -14,50 +18,48 @@
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
-    <string name="title_activity_help">HelpActivity</string>
-    <string name="about_authors"><u>About Authors</u></string>
-    <string name="about_authors_content">Creators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
+    <string name="about_authors_content"><u>About Authors</u>
+        \nCreators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
         \nBrought to you by: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276 - SUMMER 2020</a></string>
-    <string name="how_to_play"><u>How to play</u></string>
-    <string name="how_to_play_content">
-        <b>Objective</b>
-        \n\tCatch all the fish with performing the least amount of sonar scans.
+    <string name="how_to_play_content"><u>How to play</u>
+        \n<b>Objective</b>
+        \nCatch all the fish with performing the least amount of sonar scans.
         \n\n<b>Changing Settings</b>
-        \n\tTo change settings go into OPTIONS, from there you can select the game size and number
+        \nTo change settings go into OPTIONS, from there you can select the game size and number
         of fishes you must fish. You can also reset the high score for any of the game configurations
         and reset the number of times the game has been started.
         \n\n<b>Playing the game</b>
-        \n\tTo play the game click PLAY on the main menu, then it will take you to the game board.
-        \n\tTo catch the fishes click on the buttons. If you find a fish an image of a fish will appear,
+        \n1 . To play the game click PLAY on the main menu, then it will take you to the game board.
+        \n2 . To catch the fishes click on the buttons. If you find a fish an image of a fish will appear,
         otherwise a sonar scan will be performed and a number will appear on the button. This number
         indicates how many fishes are left in that row and column.
-        \n\tClicking a button that has already been clicked has no effect,
+        \n3 . Clicking a button that has already been clicked has no effect,
         however you are allowed to click on a fish to perform a scan.
-        \n\tOnce you catch all the fishes you win the game!
+        \n4 . Once you catch all the fishes you win the game!
     </string>
-    <string name="citations"><u>Citations</u></string>
-    <string name="citations_content">
-        <b>Help</b>
-        \n<a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/assignments">Brian Fraser\'s videos</a>
-        \n<a href="https://www.youtube.com/watch?v=UxbJKNjQWD8">Moving objects</a>
-        \n<a href="https://stackoverflow.com/questions/42687007/set-animation-rotation-repeat-back-for-layout">Animations</a>
-        \n<a href="https://www.youtube.com/watch?v=IW2xr5QHDpE">Adding settings to an app</a>
-        \n<a href="https://blog.mindorks.com/implementing-preferences-settings-screen-in-android">Preference settings</a>
-        \n<a href="https://stackoverflow.com/questions/15333529/how-to-provide-shadow-to-button">Visual appearance of buttons</a>
-        \n<a href="https://stackoverflow.com/questions/3182393/android-textview-outline-text">Visual appearance of text</a>
-        \n<a href="https://www.youtube.com/watch?v=yDIbV-1cov4">Vibrations</a>
+    <string name="citations_content"><u>Citations</u>
+        \n<b>Help</b>
+        \n<a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/assignments">Brian Fraser\'s videos</a>,
+        <a href="https://www.youtube.com/watch?v=UxbJKNjQWD8">moving objects</a>,
+        <a href="https://stackoverflow.com/questions/42687007/set-animation-rotation-repeat-back-for-layout">animations</a>,
+        <a href="https://www.youtube.com/watch?v=IW2xr5QHDpE">adding settings to an app</a>,
+        <a href="https://blog.mindorks.com/implementing-preferences-settings-screen-in-android">preference settings</a>,
+        <a href="https://stackoverflow.com/questions/15333529/how-to-provide-shadow-to-button">visual appearance of buttons</a>,
+        <a href="https://stackoverflow.com/questions/3182393/android-textview-outline-text">visual appearance of text</a>,
+        <a href="https://www.youtube.com/watch?v=yDIbV-1cov4">vibrations</a>,
+        <a href="https://stackoverflow.com/questions/10905312/receive-result-from-dialogfragment">fragment</a>
         \n\n<b>Images</b>
-        \n<a href="https://www.vectorstock.com/royalty-free-vector/fishing-rod-cartoon-icon-vector-7321528">Fishing pole</a>
-        \n<a href="https://www.colourbox.com/vector/underwater-seamless-landscape-cartoon-background-for-game-design-vector-17687138">Ocean background</a>
-        \n<a href="https://www.kindpng.com/imgv/xRmbb_confetti-emoji-png-vector-clipart-psd-transparent-background/">Confetti</a>
-        \n<a href="https://www.pngitem.com/middle/bioTmw_transparent-cartoon-basket-png-clipart-bucket-png-download/">Bucket</a>
-        \n<a href="https://www.vectorstock.com/royalty-free-vector/cartoon-river-dock-vector-1182384">Dock background</a>
+        \n<a href="https://www.vectorstock.com/royalty-free-vector/fishing-rod-cartoon-icon-vector-7321528">Fishing pole</a>,
+        <a href="https://www.colourbox.com/vector/underwater-seamless-landscape-cartoon-background-for-game-design-vector-17687138">ocean background</a>,
+        <a href="https://www.kindpng.com/imgv/xRmbb_confetti-emoji-png-vector-clipart-psd-transparent-background/">confetti</a>,
+        <a href="https://www.pngitem.com/middle/bioTmw_transparent-cartoon-basket-png-clipart-bucket-png-download/">bucket</a>,
+        <a href="https://www.vectorstock.com/royalty-free-vector/cartoon-river-dock-vector-1182384">dock background</a>
         \n\n<b>Sounds</b>
         \n<a href="https://www.youtube.com/watch?v=ZzbGjJwJe80">Sonar sounds</a>
     </string>
     <string name="win_title">You Win!!</string>
     <string name="score">Your Score:</string>
-    <string name="congrats_message">Congratulations on winning the game!\nClick the ok button to go back to the main menu\n</string>
+    <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n</string>
     <string name="help">HELP</string>
     <string name="best">BEST!!</string>
     <string name="reel_deal">REEL DEAL\u0020\u0020</string>
@@ -71,10 +73,12 @@
     <string name="fishes"> \u0020 Fishes</string>
     <string name="total_fishes">Total Fishes:\u0020\u0020</string>
     <string name="empty" />
-    <string name="title_activity_options">OptionsActivity</string>
-    <string name="title_activity_welcome">WelcomeScreen</string>
-    <string name="title_activity_main">Main Activity</string>
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
+    <string name="pause">PAUSE</string>
+    <string name="resume">Resume</string>
+    <string name="stop">stop</string>
+    <string name="back">back</string>
+    <string name="fish">fish</string>
 
 </resources>

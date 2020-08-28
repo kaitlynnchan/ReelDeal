@@ -60,6 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
         setupHighScoreText();
         setupGamesStartedText();
         setupResetButtons();
+        setupBackButton();
     }
 
     private void setupHighScoreText() {
@@ -205,5 +206,15 @@ public class OptionsActivity extends AppCompatActivity {
         SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
         int defaultCols = c.getResources().getInteger(R.integer.default_column_size);
         return preferences.getInt(EDITOR_COLUMNS, defaultCols);
+    }
+
+    private void setupBackButton() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

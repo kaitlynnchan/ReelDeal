@@ -8,7 +8,7 @@
     android:background="@drawable/dock">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageBucket"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/win_title"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/textCongrats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -95,7 +95,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/button_image"
+        android:background="@drawable/button_background"
         android:text="@android:string/ok"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

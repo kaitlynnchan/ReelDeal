@@ -1,5 +1,6 @@
 package cmpt276.assign3.assign3game.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -41,6 +43,7 @@ import cmpt276.assign3.assign3game.model.FishesManager;
 public class GameActivity extends AppCompatActivity {
 
     public static final String TAG_WIN_DIALOG = "Win dialog";
+    public static final String TAG_PAUSE_DIALOG = "Pause dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
     public static final String EDITOR_GAMES_STARTED = "games started";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
@@ -48,6 +51,8 @@ public class GameActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES_BUTTONS = "shared preferences for buttons";
     public static final String EDITOR_WIDTH = "button width";
     public static final String EDITOR_HEIGHT = "button height";
+    public static final int REQUEST_CODE_RESUME = 50;
+    public static final int REQUEST_CODE_STOP = 51;
 
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String EXTRA_CONFIGURATION_INDEX = "configuration index";
@@ -103,6 +108,8 @@ public class GameActivity extends AppCompatActivity {
 
         setupTextDisplay();
         saveData();
+        setupBackButton();
+        setupPauseButton();
     }
 
     private void setupTextDisplay() {
@@ -131,6 +138,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupButtonGrid() {
         TableLayout table = findViewById(R.id.tableLayoutButtonGrid);
+        table.removeAllViews();
 
         for(int r = 0; r < rows; r++){
             TableRow tableRow = new TableRow(this);
@@ -340,6 +348,9 @@ public class GameActivity extends AppCompatActivity {
         int widthBtn = preferencesBtns.getInt(EDITOR_WIDTH, 0);
         int heightBtn = preferencesBtns.getInt(EDITOR_HEIGHT, 0);
 
+        scans = 0;
+        found = 0;
+
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
@@ -408,6 +419,39 @@ public class GameActivity extends AppCompatActivity {
         super.onUserLeaveHint();
     }
 
+    private void setupPauseButton() {
+        Button buttonPause = findViewById(R.id.buttonPause);
+        buttonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUserLeaveHint();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                PauseDialog dialogPause = new PauseDialog();
+                dialogPause.interfaceCommunicator = new PauseDialog.InterfaceCommunicator() {
+                    @Override
+                    public void sendRequestCode(int code) {
+                        if(code == REQUEST_CODE_STOP){
+                            onBackPressed();
+                        } else if(code == REQUEST_CODE_RESUME){
+                            loadSavedGame();
+                        }
+                    }
+                };
+                createBlankGame();
+                dialogPause.show(fragmentManager, TAG_PAUSE_DIALOG);
+            }
+        });
+    }
+
+    private void createBlankGame(){
+        for(int r = 0; r < buttons.length; r++){
+            for(int c = 0; c < buttons[r].length; c++){
+                buttons[r][c].setBackgroundResource(R.drawable.button_corner);
+                buttons[r][c].setText(null);
+            }
+        }
+    }
+
     @Override
     public void onBackPressed() {
         isGameFinished = true;
@@ -417,5 +461,16 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
+    private void setupBackButton() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isGameFinished = true;
+                MainActivity.isGameSaved = false;
+                saveData();
+                finish();
+            }
+        });
+    }
 }
