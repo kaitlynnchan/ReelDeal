@@ -27,6 +27,10 @@ public class FishesManager {
         return fishes;
     }
 
+    public void setArray(boolean[][] fishes) {
+        this.fishes = fishes;
+    }
+
     public int getRows() {
         return rows;
     }
@@ -41,10 +45,6 @@ public class FishesManager {
 
     public int getHighScore() {
         return highScore;
-    }
-
-    public void setArray(boolean[][] fishes) {
-        this.fishes = fishes;
     }
 
     public void setHighScore(int highScore) {

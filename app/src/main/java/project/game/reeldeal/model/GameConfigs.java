@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class GameConfigs {
 
     private ArrayList<FishesManager> configs = new ArrayList<>();
+    private int currentGameIndex;
+    private int gamesStarted;
 
     // Singleton implementation of GameConfigs
     private static GameConfigs instance;
@@ -23,6 +25,26 @@ public class GameConfigs {
 
     public ArrayList<FishesManager> getConfigs() {
         return configs;
+    }
+
+    public void setConfigs(ArrayList<FishesManager> configs) {
+        this.configs = configs;
+    }
+
+    public void setCurrentGameIndex(int currentGameIndex) {
+        this.currentGameIndex = currentGameIndex;
+    }
+
+    public int getGamesStarted() {
+        return gamesStarted;
+    }
+
+    public void setGamesStarted(int gamesStarted) {
+        this.gamesStarted = gamesStarted;
+    }
+
+    public void incrementGamesStarted() {
+        this.gamesStarted++;
     }
 
     public int getIndex(FishesManager manager){
@@ -46,8 +68,8 @@ public class GameConfigs {
         return configs.get(index);
     }
 
-    public void setConfigs(ArrayList<FishesManager> configs) {
-        this.configs = configs;
+    public FishesManager getCurrentGame(){
+        return configs.get(currentGameIndex);
     }
 
     public void add(FishesManager manager){

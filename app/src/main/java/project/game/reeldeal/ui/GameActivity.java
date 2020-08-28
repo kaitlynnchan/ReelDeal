@@ -21,8 +21,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.gson.Gson;
-
 import project.game.reeldeal.R;
 import project.game.reeldeal.model.GameConfigs;
 import project.game.reeldeal.model.FishesManager;
@@ -40,40 +38,28 @@ import project.game.reeldeal.model.FishesManager;
  */
 public class GameActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFERENCES = "shared_preferences";
-    public static final String EDITOR_GAME_CONFIG = "editor_game_config";
     public static final int REQUEST_CODE_RESUME = 50;
     public static final int REQUEST_CODE_STOP = 51;
 
     private static final String TAG_WIN_DIALOG = "tag_win_dialog";
     private static final String TAG_PAUSE_DIALOG = "tag_pause_dialog";
-    private static final String EDITOR_GAMES_STARTED = "editor_games_started";
-    private static final String EDITOR_IS_GAME_FINISHED = "editor_is_game_finished";
-    private static final String SHARED_PREFERENCES_BUTTONS = "shared_preferences_buttons";
-    private static final String EDITOR_BUTTON_WIDTH = "editor_button_width";
-    private static final String EDITOR_BUTTON_HEIGHT = "editor_button_height";
-    private static final String EXTRA_IS_GAME_SAVED = "extra_is_game_saved";
-    private static final String EXTRA_CONFIGURATION_INDEX = "extra_configuration_index";
+    private static final String SHARED_PREFS_GAME_STATE = "shared_prefs_game_state";
+    private static final String EDITOR_IS_GAME_SAVED = "editor_is_game_saved";
+    private static final String EDITOR_BUTTON_SIZE = "editor_button_size";
 
-    private GameConfigs configs = GameConfigs.getInstance();
+    private GameConfigs configs;
     private FishesManager manager;
     private int rows;
     private int cols;
     private int totalFishes;
     private int highScore;
-    private int gamesStarted;
     private int scans = 0;
     private int found = 0;
-    private int index;
-    private boolean isGameFinished = false;
     private Button[][] buttons;
-    private boolean[][] fishRevealed ;
+    private boolean[][] fishRevealed;
 
-    public static Intent makeLaunchIntent(Context context, boolean isGameSaved, int index){
-        Intent intent = new Intent(context, GameActivity.class);
-        intent.putExtra(EXTRA_IS_GAME_SAVED, isGameSaved);
-        intent.putExtra(EXTRA_CONFIGURATION_INDEX, index);
-        return intent;
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, GameActivity.class);
     }
 
     @Override
@@ -81,29 +67,26 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        gamesStarted = getGamesStarted(this);
-
-        Intent intent = getIntent();
-        index = intent.getIntExtra(EXTRA_CONFIGURATION_INDEX, -1);
-        manager = configs.get(index);
+        configs = GameConfigs.getInstance();
+        manager = configs.getCurrentGame();
         rows = manager.getRows();
         cols = manager.getCols();
         totalFishes = manager.getTotalFishes();
         highScore = manager.getHighScore();
+
         buttons = new Button[rows][cols];
         fishRevealed = new boolean[rows][cols];
 
-        boolean isGameSaved = intent.getBooleanExtra(EXTRA_IS_GAME_SAVED, false);
+        boolean isGameSaved = getIsGameSaved(this);
         if(isGameSaved){
-            loadSavedGame();
+            loadSavedGameState();
         } else{
-            gamesStarted++;
+            configs.incrementGamesStarted();
             manager.fillArray();
             setupButtonGrid();
         }
 
         setupTextDisplay();
-        saveData();
         setupBackButton();
         setupPauseButton();
     }
@@ -128,8 +111,42 @@ public class GameActivity extends AppCompatActivity {
         // Setup games started
         TextView txtGamesStarted = findViewById(R.id.textViewGamesStarted);
         String strGamesStarted = getString(R.string.games_started);
-        strGamesStarted += "" + gamesStarted;
+        strGamesStarted += "" + configs.getGamesStarted();
         txtGamesStarted.setText(strGamesStarted);
+    }
+
+    private void loadSavedGameState() {
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
+        manager.setArray(configs.getCurrentGame().getArray());
+        setupButtonGrid();
+
+        String buttonSize = sharedPreferences.getString(EDITOR_BUTTON_SIZE, "0,0");
+        assert buttonSize != null;
+        String[] split = buttonSize.split(",");
+        int widthBtn = Integer.parseInt(split[0]);
+        int heightBtn = Integer.parseInt(split[1]);
+
+        scans = 0;
+        found = 0;
+
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < cols; c++){
+                boolean isButtonClickable = sharedPreferences.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
+                if(!isButtonClickable){
+                    int count = manager.scanRowCol(r, c);
+                    setScan(r, c, count);
+                }
+
+                boolean test = sharedPreferences.getBoolean("fishRevealed[" + r + "][" + c + "] value", false);
+                if(test){
+                    fishRevealed[r][c] = true;
+                    lockButton(widthBtn, heightBtn);
+                    setButtonImage(r, c, widthBtn, heightBtn);
+                    updateFoundCountTxt();
+                }
+            }
+        }
     }
 
     private void setupButtonGrid() {
@@ -185,7 +202,7 @@ public class GameActivity extends AppCompatActivity {
             if(found == totalFishes){
                 // Setup new high score
                 if(highScore == -1 || scans < highScore){
-                    configs.get(index).setHighScore(scans);
+                    configs.getCurrentGame().setHighScore(scans);
 
                     TextView txtHighScore = findViewById(R.id.textViewHighScore);
                     String strHighScore = getString(R.string.high_score);
@@ -271,15 +288,13 @@ public class GameActivity extends AppCompatActivity {
 
     private void buttonAnimate(int row, int col) {
         Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
-        animateWave(waveLeft);
-
         Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
-        animateWave(waveRight);
-
         Animation waveAbove = new TranslateAnimation(0, 0, 0, -15);
-        animateWave(waveAbove);
-
         Animation waveBelow = new TranslateAnimation(0, 0, 0, 15);
+
+        animateWave(waveLeft);
+        animateWave(waveRight);
+        animateWave(waveAbove);
         animateWave(waveBelow);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
@@ -325,56 +340,16 @@ public class GameActivity extends AppCompatActivity {
         txtScans.setText("" + scans);
     }
 
-    private void loadSavedGame() {
-        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
-        manager.setArray(configs.get(index).getArray());
-        setupButtonGrid();
-
-        int widthBtn = preferencesBtns.getInt(EDITOR_BUTTON_WIDTH, 0);
-        int heightBtn = preferencesBtns.getInt(EDITOR_BUTTON_HEIGHT, 0);
-
-        scans = 0;
-        found = 0;
-
-        for(int r = 0; r < rows; r++){
-            for(int c = 0; c < cols; c++){
-                boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
-                if(!isButtonClickable){
-                    int count = manager.scanRowCol(r, c);
-                    setScan(r, c, count);
-                }
-
-                boolean test = preferencesBtns.getBoolean("fishRevealed[" + r + "][" + c + "] value", false);
-                if(test){
-                    fishRevealed[r][c] = true;
-                    lockButton(widthBtn, heightBtn);
-                    setButtonImage(r, c, widthBtn, heightBtn);
-                    updateFoundCountTxt();
-                }
-            }
-        }
-    }
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_STARTED, gamesStarted);
-        editor.putBoolean(EDITOR_IS_GAME_FINISHED, isGameFinished);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(configs.getConfigs());
-        editor.putString(EDITOR_GAME_CONFIG, json);
-        editor.apply();
-    }
-
     private void saveGameState(){
-        configs.get(index).setArray(manager.getArray());
-        saveData();
+        configs.getCurrentGame().setArray(manager.getArray());
+        saveIsGameSaved(true);
 
-        SharedPreferences preferencesBtns = this.getSharedPreferences(SHARED_PREFERENCES_BUTTONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencesBtns.edit();
-        editor.putInt(EDITOR_BUTTON_WIDTH, buttons[0][0].getWidth());
-        editor.putInt(EDITOR_BUTTON_HEIGHT, buttons[0][0].getHeight());
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String buttonSize = buttons[0][0].getWidth() + "," + buttons[0][0].getHeight();
+        editor.putString(EDITOR_BUTTON_SIZE, buttonSize);
 
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
@@ -386,22 +361,19 @@ public class GameActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    static public boolean getGameFinished(Context c){
-        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(EDITOR_IS_GAME_FINISHED, true);
+    private void saveIsGameSaved(boolean isGameSaved) {
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
+        editor.apply();
+        MainActivity.saveGameConfigs(this, configs);
     }
 
-    static public int getGamesStarted(Context c){
-        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
-    }
-
-    @Override
-    protected void onUserLeaveHint() {
-        super.onUserLeaveHint();
-        if(!isGameFinished){
-            saveGameState();
-        }
+    public static boolean getIsGameSaved(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_SAVED, false);
     }
 
     private void setupPauseButton() {
@@ -410,6 +382,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onUserLeaveHint();
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 PauseDialog dialogPause = new PauseDialog();
                 dialogPause.interfaceCommunicator = new PauseDialog.InterfaceCommunicator() {
@@ -418,7 +391,7 @@ public class GameActivity extends AppCompatActivity {
                         if(code == REQUEST_CODE_STOP){
                             onBackPressed();
                         } else if(code == REQUEST_CODE_RESUME){
-                            loadSavedGame();
+                            loadSavedGameState();
                         }
                     }
                 };
@@ -438,11 +411,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        isGameFinished = true;
-        MainActivity.isGameSaved = false;
-        saveData();
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        saveGameState();
     }
 
     private void setupBackButton() {
@@ -453,5 +424,11 @@ public class GameActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveIsGameSaved(false);
     }
 }

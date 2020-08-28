@@ -31,13 +31,10 @@ import project.game.reeldeal.model.FishesManager;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static boolean isGameSaved = false;
-
-    private static final String EXTRA_SAVED_GAME = "extra_saved_game";
-    private GameConfigs config = GameConfigs.getInstance();
-    private int index;
-    private int widthScreen;
-    private int heightScreen;
+    private static final String SHARED_PREFS_GAMES = "shared_prefs_games";
+    private static final String EDITOR_GAME_CONFIGS = "editor_game_configs";
+    private static final String EDITOR_GAMES_STARTED = "editor_games_started";
+    private GameConfigs configs;
 
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -51,10 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private float fishRight2X;
     private float fishWidth;
 
-    public static Intent makeLaunchIntent(Context context, boolean isGameSaved){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(EXTRA_SAVED_GAME, isGameSaved);
-        return intent;
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -62,49 +57,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        heightScreen = displayMetrics.heightPixels;
-        widthScreen = displayMetrics.widthPixels;
+        configs = GameConfigs.getInstance();
+        setupButtons();
+        loadGameConfigs();
 
-        loadData();
-
-        Intent intent = getIntent();
-        isGameSaved = intent.getBooleanExtra(EXTRA_SAVED_GAME, false);
+        boolean isGameSaved = GameActivity.getIsGameSaved(this);
         if(isGameSaved){
             createFishesManager();
-            Intent intentGame = GameActivity.makeLaunchIntent(this, isGameSaved, index);
+            Intent intentGame = GameActivity.makeLaunchIntent(this);
             startActivity(intentGame);
         }
 
-        setupButtons();
-        setupMainBackground();
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(GameActivity.EDITOR_GAME_CONFIG, null);
-        Type type = new TypeToken<ArrayList<FishesManager>>() {}.getType();
-        ArrayList<FishesManager> arrTemp = gson.fromJson(json, type);
-        if(arrTemp != null) {
-            config.setConfigs(arrTemp);
-        }
-    }
-
-    private void createFishesManager() {
-        int numFishes = OptionsActivity.getNumFishes(this);
-        int rows = OptionsActivity.getNumRows(this);
-        int columns = OptionsActivity.getNumColumns(this);
-        FishesManager manager = new FishesManager(rows, columns, numFishes, -1);
-
-        // Set high score depending whether config exists or not
-        index = config.getIndex(manager);
-        if(index == -1){
-            config.add(manager);
-            index = config.getIndex(manager);
-        }
-
+        setupBackgroundAnimation();
     }
 
     private void setupButtons() {
@@ -112,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this, isGameSaved, index);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -136,13 +100,61 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadGameConfigs() {
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(EDITOR_GAME_CONFIGS, null);
+        Type type = new TypeToken<ArrayList<FishesManager>>() {}.getType();
+        ArrayList<FishesManager> arrTemp = gson.fromJson(json, type);
+        if(arrTemp != null) {
+            configs.setConfigs(arrTemp);
+        }
+
+        int gamesStarted = sharedPreferences.getInt(EDITOR_GAMES_STARTED, 0);
+        configs.setGamesStarted(gamesStarted);
+    }
+
+    public static void saveGameConfigs(Context context, GameConfigs configs) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
+
+        Gson gson = new Gson();
+        String json = gson.toJson(configs.getConfigs());
+        editor.putString(EDITOR_GAME_CONFIGS, json);
+
+        editor.apply();
+    }
+
+    private void createFishesManager() {
+        int numFishes = OptionsActivity.getNumFishes(this);
+        int rows = OptionsActivity.getNumRows(this);
+        int columns = OptionsActivity.getNumColumns(this);
+        FishesManager manager = new FishesManager(rows, columns, numFishes, -1);
+
+        // Set high score depending whether config exists or not
+        int index = configs.getIndex(manager);
+        if(index == -1){
+            configs.add(manager);
+            index = configs.getIndex(manager);
+        }
+        configs.setCurrentGameIndex(index);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         createFishesManager();
     }
 
-    private void setupMainBackground() {
+    private void setupBackgroundAnimation() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int heightScreen = displayMetrics.heightPixels;
+        final int widthScreen = displayMetrics.widthPixels;
+
         fishLeft1 = findViewById(R.id.imageFishLeft1);
         fishLeft2 = findViewById(R.id.imageFishLeft2);
         fishRight1 = findViewById(R.id.imageFishRight2);
@@ -167,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        moveFishes();
+                        moveFishes(widthScreen);
                     }
                 });
             }
@@ -175,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void moveFishes() {
+    private void moveFishes(int widthScreen) {
         // Move fish left
         fishLeft1X += 5;
         if(fishLeft1X > widthScreen + fishWidth){

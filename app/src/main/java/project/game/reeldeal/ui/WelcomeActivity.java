@@ -44,16 +44,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         handler.postDelayed(new Runnable() {
             @Override public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         }, timer);
 
-        boolean isGameFinished = GameActivity.getGameFinished(this);
-        if(!isGameFinished){
-            Intent intent = MainActivity.makeLaunchIntent(this, !isGameFinished);
+        boolean isGameSaved = GameActivity.getIsGameSaved(this);
+        if(isGameSaved){
             handler.removeCallbacksAndMessages(null);
+
+            Intent intent = MainActivity.makeLaunchIntent(this);
             startActivity(intent);
             finish();
         }
@@ -62,7 +63,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private void titleWelcomeAnimation() {
         // Fishing pole animations
         ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
-        Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_rotate);
+        Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this,
+                R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
 
         timer += 3000;
@@ -84,10 +86,10 @@ public class WelcomeActivity extends AppCompatActivity {
         moveX.start();
 
         timer += 2000 + 500;
-        moveAfterFishing();
+        animateAfterFishing();
     }
 
-    private void moveAfterFishing() {
+    private void animateAfterFishing() {
         // Black overlay animation
         View overlay = findViewById(R.id.viewOverlay);
         overlay.setVisibility(View.VISIBLE);
@@ -112,7 +114,8 @@ public class WelcomeActivity extends AppCompatActivity {
         moveX.setDuration(1000);
         moveX.start();
 
-        Animation scaleZoom = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_zoom);
+        Animation scaleZoom = AnimationUtils.loadAnimation(WelcomeActivity.this,
+                R.anim.anim_zoom);
         scaleZoom.setStartOffset(timer);
         scaleZoom.setFillAfter(true);
         gameName.startAnimation(scaleZoom);
@@ -136,7 +139,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
 
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }

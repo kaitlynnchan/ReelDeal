@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import project.game.reeldeal.R;
 import project.game.reeldeal.model.FishesManager;
 import project.game.reeldeal.model.GameConfigs;
@@ -30,14 +28,14 @@ import project.game.reeldeal.model.GameConfigs;
  */
 public class OptionsActivity extends AppCompatActivity {
 
-    private static final String PREFS = "prefs";
-    private static final String EDITOR_FISHES = "editor_fishes";
-    private static final String EDITOR_ROWS = "editor_rows";
-    private static final String EDITOR_COLUMNS = "editor_columns";
+    private static final String SHARED_PREFS_OPTIONS = "shared_prefs_options";
+    private static final String EDITOR_NUM_FISHES = "editor_num_fishes";
+    private static final String EDITOR_NUM_ROWS = "editor_num_rows";
+    private static final String EDITOR_NUM_COLUMNS = "editor_num_columns";
 
-    private int savedNumOfFishes;
-    private int savedRows;
-    private int savedColumns;
+    private int numFishes;
+    private int numRows;
+    private int numColumns;
     private GameConfigs configs = GameConfigs.getInstance();
     private int highScore;
     private int index;
@@ -51,40 +49,67 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        savedNumOfFishes = getNumFishes(this);
-        savedRows = getNumRows(this);
-        savedColumns = getNumColumns(this);
+        numFishes = getNumFishes(this);
+        numRows = getNumRows(this);
+        numColumns = getNumColumns(this);
 
-        radioButtons();
+        setupRadioButtons();
         setupHighScoreText();
         setupGamesStartedText();
         setupResetButtons();
         setupBackButton();
     }
 
-    private void setupHighScoreText() {
-        setFishesManager();
+    private void setupRadioButtons() {
+        RadioGroup radioGroupFish = findViewById(R.id.radioGroupTotalFishes);
+        int[] numFishesArray = this.getResources().getIntArray(R.array.num_fishes_array);
+        for (int i = 0; i < numFishesArray.length; i++) {
+            final int buttonNumFishes = numFishesArray[i];
+            RadioButton radioButtonFish = new RadioButton(this);
+            radioButtonFish.setText(buttonNumFishes + getString(R.string.fishes));
+            radioButtonFish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numFishes = buttonNumFishes;
+                    saveOptions();
+                    setupHighScoreText();
+                }
+            });
+            radioGroupFish.addView(radioButtonFish);
 
-        TextView txtHighScore = findViewById(R.id.textHighScore);
-        String strHighScore = getString(R.string.high_score);
-        if (highScore == -1) {
-            strHighScore += getString(R.string.no_answer);
-        } else {
-            strHighScore += "" + highScore;
+            if(buttonNumFishes == numFishes){
+                radioButtonFish.setChecked(true);
+            }
         }
-        txtHighScore.setText(strHighScore);
-    }
 
-    private void setupGamesStartedText(){
-        int gamesPlayed = GameActivity.getGamesStarted(this);
-        TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
-        String strGamesPlayed = getString(R.string.games_started);
-        strGamesPlayed += "" + gamesPlayed;
-        txtGamesPlayed.setText(strGamesPlayed);
+        RadioGroup radioGroupSize = findViewById(R.id.radioGroupSize);
+        int[] numRowArray = this.getResources().getIntArray(R.array.num_rows_array);
+        int[] numColumnArray = this.getResources().getIntArray(R.array.num_columns_array);
+        for (int i = 0; i < numRowArray.length; i++) {
+            final int buttonNumRow = numRowArray[i];
+            final int buttonNumColumn = numColumnArray[i];
+            RadioButton radioButtonSize = new RadioButton(this);
+            radioButtonSize.setText(buttonNumRow + getString(R.string.rows_and) + buttonNumColumn + getString(R.string.columns));
+            radioButtonSize.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numRows = buttonNumRow;
+                    numColumns = buttonNumColumn;
+                    saveOptions();
+                    setupHighScoreText();
+                }
+            });
+            radioGroupSize.addView(radioButtonSize);
+
+            if(buttonNumRow == numRows && buttonNumColumn == numColumns){
+                radioButtonSize.setChecked(true);
+            }
+        }
+        setFishesManager();
     }
 
     private void setFishesManager(){
-        FishesManager manager = new FishesManager(savedRows, savedColumns, savedNumOfFishes, -1);
+        FishesManager manager = new FishesManager(numRows, numColumns, numFishes, -1);
 
         // Set high score depending whether config exists or not
         index = configs.getIndex(manager);
@@ -96,6 +121,24 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    private void setupHighScoreText() {
+        TextView txtHighScore = findViewById(R.id.textHighScore);
+        String strHighScore = getString(R.string.high_score);
+        if (highScore == -1) {
+            strHighScore += getString(R.string.no_answer);
+        } else {
+            strHighScore += "" + highScore;
+        }
+        txtHighScore.setText(strHighScore);
+    }
+
+    private void setupGamesStartedText(){
+        TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
+        String strGamesPlayed = getString(R.string.games_started);
+        strGamesPlayed += "" + configs.getGamesStarted();
+        txtGamesPlayed.setText(strGamesPlayed);
+    }
+
     private void setupResetButtons() {
         Button btnResetScore = findViewById(R.id.buttonResetScore);
         btnResetScore.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +147,7 @@ public class OptionsActivity extends AppCompatActivity {
                 if(index != -1){
                     highScore = -1;
                     configs.get(index).setHighScore(highScore);
-                    saveData();
+                    MainActivity.saveGameConfigs(OptionsActivity.this, configs);
                     setupHighScoreText();
                 }
             }
@@ -114,97 +157,42 @@ public class OptionsActivity extends AppCompatActivity {
         btnResetGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = OptionsActivity.this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-                prefs.edit().clear().apply();
+                configs.setGamesStarted(0);
                 setupGamesStartedText();
+                MainActivity.saveGameConfigs(OptionsActivity.this, configs);
             }
         });
     }
 
-    private void radioButtons() {
-        RadioGroup radioGroupFish = findViewById(R.id.radioGroupTotalFishes);
-        int[] numFishes = this.getResources().getIntArray(R.array.fish_number);
-        for (int i = 0; i < numFishes.length; i++)
-        {
-            final int numFish = numFishes[i];
-            RadioButton radioButtonFish = new RadioButton(this);
-            radioButtonFish.setText(numFish + getString(R.string.fishes));
-            radioButtonFish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    savedNumOfFishes = numFish;
-                    savePreferences();
-                    setupHighScoreText();
-                }
-            });
-            radioGroupFish.addView(radioButtonFish);
-
-            if(numFish == savedNumOfFishes){
-                radioButtonFish.setChecked(true);
-            }
-        }
-
-        RadioGroup radioGroupSize = findViewById(R.id.radioGroupSize);
-        int[] row = this.getResources().getIntArray(R.array.selected_row_size);
-        int[] column = this.getResources().getIntArray(R.array.selected_column_size);
-        for (int i = 0; i < row.length; i++)
-        {
-            final int numRow = row[i];
-            final int numColumn = column[i];
-            RadioButton radioButtonSize = new RadioButton(this);
-            radioButtonSize.setText(numRow + getString(R.string.rows_and) + numColumn + getString(R.string.columns));
-            radioButtonSize.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    savedRows = numRow;
-                    savedColumns = numColumn;
-                    savePreferences();
-                    setupHighScoreText();
-                }
-            });
-            radioGroupSize.addView(radioButtonSize);
-
-            if(numRow == savedRows && numColumn == savedColumns){
-                radioButtonSize.setChecked(true);
-            }
-        }
-
-    }
-
-    private void savePreferences() {
-        SharedPreferences preferences = this.getSharedPreferences(PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(EDITOR_FISHES, savedNumOfFishes);
-        editor.putInt(EDITOR_ROWS, savedRows);
-        editor.putInt(EDITOR_COLUMNS, savedColumns);
-        editor.apply();
-    }
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(GameActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+    private void saveOptions() {
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(configs.getConfigs());
-        editor.putString(GameActivity.EDITOR_GAME_CONFIG, json);
+        editor.putInt(EDITOR_NUM_FISHES, numFishes);
+        editor.putInt(EDITOR_NUM_ROWS, numRows);
+        editor.putInt(EDITOR_NUM_COLUMNS, numColumns);
         editor.apply();
     }
 
-    static public int getNumFishes(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        int defaultNumFishes = c.getResources().getInteger(R.integer.default_fish_num);
-        return preferences.getInt(EDITOR_FISHES, defaultNumFishes);
+    public static int getNumFishes(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        int defaultNumFishes = context.getResources().getInteger(R.integer.default_num_fishes);
+        return sharedPreferences.getInt(EDITOR_NUM_FISHES, defaultNumFishes);
     }
 
-    static public int getNumRows(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        int defaultRows = c.getResources().getInteger(R.integer.default_row_size);
-        return preferences.getInt(EDITOR_ROWS, defaultRows);
+    public static int getNumRows(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        int defaultNumRows = context.getResources().getInteger(R.integer.default_num_rows);
+        return sharedPreferences.getInt(EDITOR_NUM_ROWS, defaultNumRows);
     }
 
-    static public int getNumColumns(Context c){
-        SharedPreferences preferences = c.getSharedPreferences(PREFS, MODE_PRIVATE);
-        int defaultCols = c.getResources().getInteger(R.integer.default_column_size);
-        return preferences.getInt(EDITOR_COLUMNS, defaultCols);
+    public static int getNumColumns(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        int defaultNumColumns = context.getResources().getInteger(R.integer.default_num_columns);
+        return sharedPreferences.getInt(EDITOR_NUM_COLUMNS, defaultNumColumns);
     }
 
     private void setupBackButton() {
