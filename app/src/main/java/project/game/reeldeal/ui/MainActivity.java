@@ -23,11 +23,11 @@ import java.util.TimerTask;
 
 import project.game.reeldeal.R;
 import project.game.reeldeal.model.GameConfigs;
-import project.game.reeldeal.model.FishesManager;
+import project.game.reeldeal.model.Game;
 
 /**
  * Main menu
- * Displays: play, options, and help buttons to navigate screens
+ * Displays buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean isGameSaved = GameActivity.getIsGameSaved(this);
         if(isGameSaved){
-            createFishesManager();
+            createGame();
             Intent intentGame = GameActivity.makeLaunchIntent(this);
             startActivity(intentGame);
         }
@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 this.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(EDITOR_GAME_CONFIGS, null);
-        Type type = new TypeToken<ArrayList<FishesManager>>() {}.getType();
-        ArrayList<FishesManager> arrTemp = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Game>>() {}.getType();
+        ArrayList<Game> arrTemp = gson.fromJson(json, type);
         if(arrTemp != null) {
             configs.setConfigs(arrTemp);
         }
@@ -128,17 +128,17 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void createFishesManager() {
+    private void createGame() {
         int numFishes = OptionsActivity.getNumFishes(this);
         int rows = OptionsActivity.getNumRows(this);
         int columns = OptionsActivity.getNumColumns(this);
-        FishesManager manager = new FishesManager(rows, columns, numFishes, -1);
+        Game game = new Game(rows, columns, numFishes, -1);
 
         // Set high score depending whether config exists or not
-        int index = configs.getIndex(manager);
+        int index = configs.getIndex(game);
         if(index == -1){
-            configs.add(manager);
-            index = configs.getIndex(manager);
+            configs.add(game);
+            index = configs.getIndex(game);
         }
         configs.setCurrentGameIndex(index);
     }
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        createFishesManager();
+        createGame();
     }
 
     private void setupBackgroundAnimation() {

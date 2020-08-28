@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 /**
  * Game Configurations
- * Stores a collection of existing game configurations
- *      fishesManager items in the list are distinct
+ * Stores a collection of existing game configurations,
+ *  all game items in the list are distinct
  */
 public class GameConfigs {
 
-    private ArrayList<FishesManager> configs = new ArrayList<>();
+    private ArrayList<Game> configs = new ArrayList<>();
     private int currentGameIndex;
     private int gamesStarted;
 
@@ -23,16 +23,20 @@ public class GameConfigs {
         return instance;
     }
 
-    public ArrayList<FishesManager> getConfigs() {
+    public ArrayList<Game> getConfigs() {
         return configs;
     }
 
-    public void setConfigs(ArrayList<FishesManager> configs) {
+    public void setConfigs(ArrayList<Game> configs) {
         this.configs = configs;
     }
 
     public void setCurrentGameIndex(int currentGameIndex) {
         this.currentGameIndex = currentGameIndex;
+    }
+
+    public Game getCurrentGame(){
+        return configs.get(currentGameIndex);
     }
 
     public int getGamesStarted() {
@@ -47,33 +51,28 @@ public class GameConfigs {
         this.gamesStarted++;
     }
 
-    public int getIndex(FishesManager manager){
-        // Returns -1 if manager does not exist in array
+    public Game get(int index){
+        return configs.get(index);
+    }
+
+    public int getIndex(Game game){
+        // Returns -1 if game does not exist in array
         if(configs == null){
             return -1;
         }
 
         for(int i = 0; i < configs.size(); i++){
-            FishesManager l = configs.get(i);
-            if(l.getRows() == manager.getRows()
-                    && l.getCols() == manager.getCols()
-                    && l.getTotalFishes() == manager.getTotalFishes()){
+            Game tempGame = configs.get(i);
+            if(tempGame.getRows() == game.getRows()
+                    && tempGame.getCols() == game.getCols()
+                    && tempGame.getTotalFishes() == game.getTotalFishes()){
                 return i;
             }
         }
         return -1;
     }
 
-    public FishesManager get(int index){
-        return configs.get(index);
+    public void add(Game game){
+        configs.add(game);
     }
-
-    public FishesManager getCurrentGame(){
-        return configs.get(currentGameIndex);
-    }
-
-    public void add(FishesManager manager){
-        configs.add(manager);
-    }
-
 }

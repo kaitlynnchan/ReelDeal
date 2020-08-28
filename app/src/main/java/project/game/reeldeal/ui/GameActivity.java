@@ -23,18 +23,11 @@ import androidx.fragment.app.FragmentManager;
 
 import project.game.reeldeal.R;
 import project.game.reeldeal.model.GameConfigs;
-import project.game.reeldeal.model.FishesManager;
+import project.game.reeldeal.model.Game;
 
 /**
  * Game Screen
- * Displays:
- *      grid of buttons,
- *      number of scans used,
- *      fishes found,
- *      total fishes,
- *      high score,
- *      and games played
- * Allows users to play the game according to game logic
+ * Display and allows user to play game and see date
  */
 public class GameActivity extends AppCompatActivity {
 
@@ -48,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     private static final String EDITOR_BUTTON_SIZE = "editor_button_size";
 
     private GameConfigs configs;
-    private FishesManager manager;
+    private Game game;
     private int rows;
     private int cols;
     private int totalFishes;
@@ -56,7 +49,6 @@ public class GameActivity extends AppCompatActivity {
     private int scans = 0;
     private int found = 0;
     private Button[][] buttons;
-    private boolean[][] fishRevealed;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -68,21 +60,20 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         configs = GameConfigs.getInstance();
-        manager = configs.getCurrentGame();
-        rows = manager.getRows();
-        cols = manager.getCols();
-        totalFishes = manager.getTotalFishes();
-        highScore = manager.getHighScore();
+        game = configs.getCurrentGame();
+        rows = game.getRows();
+        cols = game.getCols();
+        totalFishes = game.getTotalFishes();
+        highScore = game.getHighScore();
 
         buttons = new Button[rows][cols];
-        fishRevealed = new boolean[rows][cols];
 
         boolean isGameSaved = getIsGameSaved(this);
         if(isGameSaved){
             loadSavedGameState();
         } else{
             configs.incrementGamesStarted();
-            manager.fillArray();
+            game.fillArray();
             setupButtonGrid();
         }
 
@@ -116,10 +107,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadSavedGameState() {
+        game.setGameBoard(configs.getCurrentGame().getGameBoard());
+        setupButtonGrid();
+
         SharedPreferences sharedPreferences =
                 this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
-        manager.setArray(configs.getCurrentGame().getArray());
-        setupButtonGrid();
 
         String buttonSize = sharedPreferences.getString(EDITOR_BUTTON_SIZE, "0,0");
         assert buttonSize != null;
@@ -130,19 +122,19 @@ public class GameActivity extends AppCompatActivity {
         scans = 0;
         found = 0;
 
-        for(int r = 0; r < rows; r++){
-            for(int c = 0; c < cols; c++){
-                boolean isButtonClickable = sharedPreferences.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                boolean isButtonClickable = game.getTile(row, col).isClickable();
                 if(!isButtonClickable){
-                    int count = manager.scanRowCol(r, c);
-                    setScan(r, c, count);
+                    int count = game.scanRowCol(row, col);
+                    setScan(row, col, count);
                 }
 
-                boolean test = sharedPreferences.getBoolean("fishRevealed[" + r + "][" + c + "] value", false);
-                if(test){
-                    fishRevealed[r][c] = true;
+                boolean isFishRevealed = game.getTile(row, col).isFishRevealed();
+                boolean isFishThere = game.getTile(row, col).isFishThere();
+                if(isFishThere && isFishRevealed){
                     lockButton(widthBtn, heightBtn);
-                    setButtonImage(r, c, widthBtn, heightBtn);
+                    setButtonImage(row, col, widthBtn, heightBtn);
                     updateFoundCountTxt();
                 }
             }
@@ -193,7 +185,7 @@ public class GameActivity extends AppCompatActivity {
         final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
         final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
 
-        int count = manager.scanRowCol(row, col);
+        int count = game.scanRowCol(row, col);
         if(count == -1){
             setFishesFound(row, col);
             fishFoundMedia.start();
@@ -227,9 +219,8 @@ public class GameActivity extends AppCompatActivity {
     private void setFishesFound(int row, int col) {
         Button button = buttons[row][col];
 
-        // Lets manager know that the fish has been revealed
-        manager.setArrayIndexValue(row, col, false);
-        fishRevealed[row][col] = true;
+        // Lets game know that the fish has been revealed
+        game.getTile(row, col).setFishRevealed(true);
 
         int width = button.getWidth();
         int height = button.getHeight();
@@ -266,7 +257,8 @@ public class GameActivity extends AppCompatActivity {
         Button button = buttons[row][col];
         Resources resources = this.getResources();
         Bitmap originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.fish);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth,
+                newHeight, true);
         button.setBackground(new BitmapDrawable(resources, scaledBitmap));
     }
 
@@ -298,25 +290,25 @@ public class GameActivity extends AppCompatActivity {
         animateWave(waveBelow);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            animateButtonWave(col, waveBelow, rBelow);
+            animateButtonWave(col, rBelow, waveBelow);
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            animateButtonWave(col, waveAbove, rAbove);
+            animateButtonWave(col, rAbove, waveAbove);
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            animateButtonWave(cRight, waveRight, row);
+            animateButtonWave(cRight, row, waveRight);
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            animateButtonWave(cLeft, waveLeft, row);
+            animateButtonWave(cLeft, row, waveLeft);
         }
     }
 
-    private void animateButtonWave(int col, Animation wave, int row) {
+    private void animateButtonWave(int col, int row, Animation wave) {
         Button button = buttons[row][col];
-        if (!fishRevealed[row][col] && button.isClickable()) {
+        if (!game.getTile(row, col).isFishRevealed() && game.getTile(row, col).isClickable()) {
             button.startAnimation(wave);
         }
     }
@@ -333,6 +325,7 @@ public class GameActivity extends AppCompatActivity {
         button.setText(count + "");
         button.setTextSize(16);
         button.setClickable(false);
+        game.getTile(row, col).setClicked();
 
         // Update scan count text
         scans++;
@@ -340,32 +333,17 @@ public class GameActivity extends AppCompatActivity {
         txtScans.setText("" + scans);
     }
 
-    private void saveGameState(){
-        configs.getCurrentGame().setArray(manager.getArray());
-        saveIsGameSaved(true);
+    private void saveGameState(boolean isGameSaved){
+        configs.getCurrentGame().setGameBoard(game.getGameBoard());
 
-        SharedPreferences sharedPreferences =
-                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        String buttonSize = buttons[0][0].getWidth() + "," + buttons[0][0].getHeight();
-        editor.putString(EDITOR_BUTTON_SIZE, buttonSize);
-
-        for(int r = 0; r < rows; r++){
-            for(int c = 0; c < cols; c++){
-                editor.putBoolean("buttons[" + r + "][" + c + "].isClickable", buttons[r][c].isClickable());
-                editor.putBoolean("fishRevealed[" + r + "][" + c + "] value", fishRevealed[r][c]);
-            }
-        }
-
-        editor.apply();
-    }
-
-    private void saveIsGameSaved(boolean isGameSaved) {
         SharedPreferences sharedPreferences =
                 this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
+
+        String buttonSize = buttons[0][0].getWidth() + "," + buttons[0][0].getHeight();
+        editor.putString(EDITOR_BUTTON_SIZE, buttonSize);
+
         editor.apply();
         MainActivity.saveGameConfigs(this, configs);
     }
@@ -413,7 +391,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        saveGameState();
+        saveGameState(true);
     }
 
     private void setupBackButton() {
@@ -429,6 +407,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveIsGameSaved(false);
+        saveGameState(false);
     }
 }

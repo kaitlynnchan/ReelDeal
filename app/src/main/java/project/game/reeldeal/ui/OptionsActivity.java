@@ -13,16 +13,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import project.game.reeldeal.R;
-import project.game.reeldeal.model.FishesManager;
+import project.game.reeldeal.model.Game;
 import project.game.reeldeal.model.GameConfigs;
 
 /**
  * Options Screen
- * Displays:
- *      radio buttons for number of fishes,
- *      size of game,
- *      configuration high score,
- *      games played
  * Allows user to select options displayed and
  *  to reset saved information
  */
@@ -105,23 +100,25 @@ public class OptionsActivity extends AppCompatActivity {
                 radioButtonSize.setChecked(true);
             }
         }
-        setFishesManager();
+        setGame();
     }
 
-    private void setFishesManager(){
-        FishesManager manager = new FishesManager(numRows, numColumns, numFishes, -1);
+    private void setGame(){
+        Game game = new Game(numRows, numColumns, numFishes, -1);
 
         // Set high score depending whether config exists or not
-        index = configs.getIndex(manager);
+        index = configs.getIndex(game);
         if(index == -1){
             highScore = -1;
-            configs.add(manager);
+            configs.add(game);
         } else{
             highScore = configs.get(index).getHighScore();
         }
     }
 
     private void setupHighScoreText() {
+        setGame();
+
         TextView txtHighScore = findViewById(R.id.textHighScore);
         String strHighScore = getString(R.string.high_score);
         if (highScore == -1) {
