@@ -15,6 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
+        android:contentDescription="@string/back"
         android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center|right"
         android:foregroundTint="#000000"

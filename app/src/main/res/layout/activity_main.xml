@@ -11,42 +11,46 @@
         android:id="@+id/imageFishLeft1"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/fish"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="181dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="181dp" />
 
     <ImageView
         android:id="@+id/imageFishLeft2"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/fish"
         android:rotation="20"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="315dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="315dp" />
 
     <ImageView
         android:id="@+id/imageFishRight1"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/fish"
         android:rotation="-10"
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="635dp"
-        tools:layout_editor_absoluteY="134dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="134dp" />
 
     <ImageView
         android:id="@+id/imageFishRight2"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@string/fish"
         android:rotation="-30"
         android:scaleX="-1"
         app:srcCompat="@drawable/fish"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="615dp"
-        tools:layout_editor_absoluteY="251dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="251dp" />
 
     <TextView
         android:id="@+id/textReelDeal"

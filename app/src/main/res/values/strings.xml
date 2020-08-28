@@ -46,7 +46,8 @@
         <a href="https://blog.mindorks.com/implementing-preferences-settings-screen-in-android">preference settings</a>,
         <a href="https://stackoverflow.com/questions/15333529/how-to-provide-shadow-to-button">visual appearance of buttons</a>,
         <a href="https://stackoverflow.com/questions/3182393/android-textview-outline-text">visual appearance of text</a>,
-        <a href="https://www.youtube.com/watch?v=yDIbV-1cov4">vibrations</a>
+        <a href="https://www.youtube.com/watch?v=yDIbV-1cov4">vibrations</a>,
+        <a href="https://stackoverflow.com/questions/10905312/receive-result-from-dialogfragment">fragment</a>
         \n\n<b>Images</b>
         \n<a href="https://www.vectorstock.com/royalty-free-vector/fishing-rod-cartoon-icon-vector-7321528">Fishing pole</a>,
         <a href="https://www.colourbox.com/vector/underwater-seamless-landscape-cartoon-background-for-game-design-vector-17687138">ocean background</a>,
@@ -77,5 +78,7 @@
     <string name="pause">PAUSE</string>
     <string name="resume">Resume</string>
     <string name="stop">stop</string>
+    <string name="back">back</string>
+    <string name="fish">fish</string>
 
 </resources>
