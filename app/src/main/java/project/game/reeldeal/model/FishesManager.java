@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.model;
+package project.game.reeldeal.model;
 
 /**
  * FishesManager class
@@ -9,6 +9,7 @@ package cmpt276.assign3.assign3game.model;
  *          false = fish not present
  */
 public class FishesManager {
+
     private boolean[][] fishes;
     private int rows;
     private int cols;

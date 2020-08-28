@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cmpt276.assign3.assign3game.R;
+import project.game.reeldeal.R;
 
 /**
  * Welcome Screen
@@ -145,8 +145,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        handler.removeCallbacksAndMessages(null);
-        finish();
         super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
     }
 }

@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.model;
+package project.game.reeldeal.model;
 
 import java.util.ArrayList;
 

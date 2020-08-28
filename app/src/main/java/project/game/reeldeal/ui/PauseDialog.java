@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,8 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-import cmpt276.assign3.assign3game.R;
+import project.game.reeldeal.R;
 
+/**
+ * PAUSE DIALOG
+ * Shows blank game and stop/resume buttons
+ */
 public class PauseDialog extends AppCompatDialogFragment {
 
     private View view;

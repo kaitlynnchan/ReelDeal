@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import cmpt276.assign3.assign3game.R;
+import project.game.reeldeal.R;
 
 /**
  * Help Screen
@@ -19,8 +19,7 @@ import cmpt276.assign3.assign3game.R;
 public class HelpActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, HelpActivity.class);
-        return intent;
+        return new Intent(context, HelpActivity.class);
     }
 
     @Override

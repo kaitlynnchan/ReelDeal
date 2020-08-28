@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game;
+package project.game.reeldeal;
 
 import android.content.Context;
 

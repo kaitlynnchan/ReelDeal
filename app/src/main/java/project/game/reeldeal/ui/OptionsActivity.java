@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import cmpt276.assign3.assign3game.R;
-import cmpt276.assign3.assign3game.model.FishesManager;
-import cmpt276.assign3.assign3game.model.GameConfigs;
+import project.game.reeldeal.R;
+import project.game.reeldeal.model.FishesManager;
+import project.game.reeldeal.model.GameConfigs;
 
 /**
  * Options Screen
@@ -30,10 +30,10 @@ import cmpt276.assign3.assign3game.model.GameConfigs;
  */
 public class OptionsActivity extends AppCompatActivity {
 
-    public static final String PREFS = "prefs";
-    public static final String EDITOR_FISHES = "number of fishes";
-    public static final String EDITOR_ROWS = "Rows";
-    public static final String EDITOR_COLUMNS = "Columns";
+    private static final String PREFS = "prefs";
+    private static final String EDITOR_FISHES = "editor_fishes";
+    private static final String EDITOR_ROWS = "editor_rows";
+    private static final String EDITOR_COLUMNS = "editor_columns";
 
     private int savedNumOfFishes;
     private int savedRows;
@@ -43,8 +43,7 @@ public class OptionsActivity extends AppCompatActivity {
     private int index;
 
     public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, OptionsActivity.class);
-        return intent;
+        return new Intent(context, OptionsActivity.class);
     }
 
     @Override

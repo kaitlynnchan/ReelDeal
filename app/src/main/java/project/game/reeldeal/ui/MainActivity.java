@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,18 +21,19 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cmpt276.assign3.assign3game.R;
-import cmpt276.assign3.assign3game.model.GameConfigs;
-import cmpt276.assign3.assign3game.model.FishesManager;
+import project.game.reeldeal.R;
+import project.game.reeldeal.model.GameConfigs;
+import project.game.reeldeal.model.FishesManager;
 
 /**
  * Main menu
  * Displays: play, options, and help buttons to navigate screens
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_SAVED_GAME = "is there a saved game";
+
     public static boolean isGameSaved = false;
 
+    private static final String EXTRA_SAVED_GAME = "extra_saved_game";
     private GameConfigs config = GameConfigs.getInstance();
     private int index;
     private int widthScreen;
@@ -116,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         Button btnOptions = findViewById(R.id.buttonOptions);
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        createFishesManager();
         super.onResume();
+        createFishesManager();
     }
 
     private void setupMainBackground() {
