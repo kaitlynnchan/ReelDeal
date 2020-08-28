@@ -13,10 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.PauseActivity"
-            android:label="@string/title_activity_pause"
-            android:screenOrientation="sensorLandscape" />
-        <activity
             android:name=".ui.HelpActivity"
             android:label="@string/title_activity_help"
             android:screenOrientation="sensorLandscape" />

@@ -7,7 +7,7 @@
     android:background="@drawable/ocean_background"
     android:backgroundTint="#7A000000"
     android:backgroundTintMode="src_over"
-    tools:context=".ui.PauseActivity">
+    tools:context=".ui.PauseDialog">
 
     <TextView
         android:id="@+id/textPause"

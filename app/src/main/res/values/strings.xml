@@ -9,7 +9,6 @@
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_help">HelpActivity</string>
-    <string name="title_activity_pause">PauseActivity</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>

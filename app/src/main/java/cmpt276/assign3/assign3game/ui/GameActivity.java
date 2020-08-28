@@ -43,6 +43,7 @@ import cmpt276.assign3.assign3game.model.FishesManager;
 public class GameActivity extends AppCompatActivity {
 
     public static final String TAG_WIN_DIALOG = "Win dialog";
+    public static final String TAG_PAUSE_DIALOG = "Pause dialog";
     public static final String SHARED_PREFERENCES = "shared preferences";
     public static final String EDITOR_GAMES_STARTED = "games started";
     public static final String EDITOR_GAME_CONFIG = "game configurations";
@@ -50,6 +51,8 @@ public class GameActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES_BUTTONS = "shared preferences for buttons";
     public static final String EDITOR_WIDTH = "button width";
     public static final String EDITOR_HEIGHT = "button height";
+    public static final int REQUEST_CODE_RESUME = 50;
+    public static final int REQUEST_CODE_STOP = 51;
 
     private static final String EXTRA_IS_GAME_SAVED = "is there a game saved";
     public static final String EXTRA_CONFIGURATION_INDEX = "configuration index";
@@ -135,6 +138,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupButtonGrid() {
         TableLayout table = findViewById(R.id.tableLayoutButtonGrid);
+        table.removeAllViews();
 
         for(int r = 0; r < rows; r++){
             TableRow tableRow = new TableRow(this);
@@ -344,6 +348,9 @@ public class GameActivity extends AppCompatActivity {
         int widthBtn = preferencesBtns.getInt(EDITOR_WIDTH, 0);
         int heightBtn = preferencesBtns.getInt(EDITOR_HEIGHT, 0);
 
+        scans = 0;
+        found = 0;
+
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < cols; c++){
                 boolean isButtonClickable = preferencesBtns.getBoolean("buttons[" + r + "][" + c + "].isClickable", false);
@@ -417,22 +424,31 @@ public class GameActivity extends AppCompatActivity {
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = PauseActivity.makeLaunchIntent(GameActivity.this);
-                startActivityForResult(intent, 50);
+                onUserLeaveHint();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                PauseDialog dialogPause = new PauseDialog();
+                dialogPause.interfaceCommunicator = new PauseDialog.InterfaceCommunicator() {
+                    @Override
+                    public void sendRequestCode(int code) {
+                        if(code == REQUEST_CODE_STOP){
+                            onBackPressed();
+                        } else if(code == REQUEST_CODE_RESUME){
+                            loadSavedGame();
+                        }
+                    }
+                };
+                createBlankGame();
+                dialogPause.show(fragmentManager, TAG_PAUSE_DIALOG);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == Activity.RESULT_CANCELED){
-            return;
-        }
-
-        if(requestCode == 50){
-            onBackPressed();
+    private void createBlankGame(){
+        for(int r = 0; r < buttons.length; r++){
+            for(int c = 0; c < buttons[r].length; c++){
+                buttons[r][c].setBackgroundResource(R.drawable.button_corner);
+                buttons[r][c].setText(null);
+            }
         }
     }
 
