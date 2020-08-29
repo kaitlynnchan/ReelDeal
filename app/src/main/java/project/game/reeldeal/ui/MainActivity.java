@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         configs = GameConfigs.getInstance();
-        setupButtons();
         loadGameConfigs();
 
         setupBackgroundAnimation();
@@ -87,11 +86,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
-            buttonPlay.setTranslationX(-120);
         } else{
             buttonResume.setVisibility(View.GONE);
-            buttonPlay.setTranslationX(0);
         }
 
         Button buttonOptions = findViewById(R.id.button_options);
