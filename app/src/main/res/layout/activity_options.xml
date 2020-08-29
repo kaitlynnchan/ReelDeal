@@ -42,8 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
-    <RadioGroup
-        android:id="@+id/radio_num_fishes"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -51,20 +50,31 @@
         app:layout_constraintBottom_toTopOf="@+id/button_reset_score"
         app:layout_constraintEnd_toEndOf="@+id/text_num_fishes_options"
         app:layout_constraintStart_toStartOf="@+id/text_num_fishes_options"
-        app:layout_constraintTop_toBottomOf="@+id/text_num_fishes_options" />
+        app:layout_constraintTop_toBottomOf="@+id/text_num_fishes_options">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radio_num_fishes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/text_game_size_options"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:text="@string/game_size_options"
-        app:layout_constraintBottom_toBottomOf="@+id/text_num_fishes_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_middle"
         app:layout_constraintTop_toTopOf="@+id/text_num_fishes_options" />
 
-    <RadioGroup
-        android:id="@+id/radio_game_size"
+
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -72,8 +82,19 @@
         app:layout_constraintBottom_toTopOf="@+id/button_reset_games_started"
         app:layout_constraintEnd_toEndOf="@+id/text_game_size_options"
         app:layout_constraintStart_toStartOf="@+id/text_game_size_options"
-        app:layout_constraintTop_toBottomOf="@+id/text_game_size_options" />
+        app:layout_constraintTop_toBottomOf="@+id/text_game_size_options">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radio_game_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/text_high_score"
