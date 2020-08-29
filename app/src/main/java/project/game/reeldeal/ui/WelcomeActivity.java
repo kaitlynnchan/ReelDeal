@@ -1,4 +1,4 @@
-package cmpt276.assign3.assign3game.ui;
+package project.game.reeldeal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cmpt276.assign3.assign3game.R;
+import project.game.reeldeal.R;
 
 /**
  * Welcome Screen
@@ -44,16 +44,17 @@ public class WelcomeActivity extends AppCompatActivity {
 
         handler.postDelayed(new Runnable() {
             @Override public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         }, timer);
 
-        boolean isGameFinished = GameActivity.getGameFinished(this);
-        if(!isGameFinished){
-            Intent intent = MainActivity.makeLaunchIntent(this, !isGameFinished);
+        boolean isGameSaved = MainActivity.getIsGameSaved(this);
+        if(isGameSaved){
             handler.removeCallbacksAndMessages(null);
+
+            Intent intent = MainActivity.makeLaunchIntent(this);
             startActivity(intent);
             finish();
         }
@@ -61,14 +62,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void titleWelcomeAnimation() {
         // Fishing pole animations
-        ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
-        Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_rotate);
+        ImageView imgFishingPole = findViewById(R.id.image_fishing_pole);
+        Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this,
+                R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
 
         timer += 3000;
 
         // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewTitle);
+        TextView gameTitle = findViewById(R.id.text_title);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
                 "translationY",
                 (float) (heightScreen / 5) * -1);
@@ -84,12 +86,12 @@ public class WelcomeActivity extends AppCompatActivity {
         moveX.start();
 
         timer += 2000 + 500;
-        moveAfterFishing();
+        animateAfterFishing();
     }
 
-    private void moveAfterFishing() {
+    private void animateAfterFishing() {
         // Black overlay animation
-        View overlay = findViewById(R.id.viewOverlay);
+        View overlay = findViewById(R.id.view_overlay);
         overlay.setVisibility(View.VISIBLE);
         ViewPropertyAnimator fadeIn = overlay.animate();
         fadeIn.alpha(0.5f);
@@ -97,7 +99,7 @@ public class WelcomeActivity extends AppCompatActivity {
         fadeIn.setDuration(1000);
 
         // Game title animations
-        TextView gameName = findViewById(R.id.textViewTitle);
+        TextView gameName = findViewById(R.id.text_title);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
@@ -112,13 +114,14 @@ public class WelcomeActivity extends AppCompatActivity {
         moveX.setDuration(1000);
         moveX.start();
 
-        Animation scaleZoom = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.anim_zoom);
+        Animation scaleZoom = AnimationUtils.loadAnimation(WelcomeActivity.this,
+                R.anim.anim_zoom);
         scaleZoom.setStartOffset(timer);
         scaleZoom.setFillAfter(true);
         gameName.startAnimation(scaleZoom);
 
         // Author animation
-        TextView authors = findViewById(R.id.textViewAuthors);
+        TextView authors = findViewById(R.id.text_authors);
         ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
                 "translationX",
                 (float) (widthScreen / 3) * 2);
@@ -130,13 +133,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupSkipButton() {
-        Button btnSkip = findViewById(R.id.buttonSkip);
-        btnSkip.setOnClickListener(new View.OnClickListener() {
+        Button buttonSkip = findViewById(R.id.button_skip);
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
 
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this, false);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
@@ -145,8 +148,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        handler.removeCallbacksAndMessages(null);
-        finish();
         super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
     }
 }

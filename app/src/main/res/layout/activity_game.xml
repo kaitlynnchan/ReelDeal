@@ -8,7 +8,7 @@
     android:background="@drawable/ocean_background" >
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -17,12 +17,11 @@
         android:contentDescription="@string/back"
         android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center|right"
-        android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonPause"
+        android:id="@+id/button_pause"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
@@ -31,124 +30,102 @@
         android:contentDescription="@string/pause"
         android:foreground="@drawable/ic_pause"
         android:foregroundGravity="center"
-        android:foregroundTint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtViewTitleGame"
+        android:id="@+id/text_game_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lobster"
         android:text="@string/reel_deal"
-        android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewFound"
+        android:id="@+id/text_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="@string/found"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewFoundCount"
+        app:layout_constraintEnd_toStartOf="@+id/text_found_count"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewFoundCount"
+        android:id="@+id/text_found_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/found_count"
-        android:textColor="#000000"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewScans"
+        android:id="@+id/text_scans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="@string/scans_used"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewScansCount"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFound" />
+        app:layout_constraintEnd_toStartOf="@+id/text_scans_count"
+        app:layout_constraintTop_toBottomOf="@+id/text_found" />
 
     <TextView
-        android:id="@+id/textViewScansCount"
+        android:id="@+id/text_scans_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/scans_count"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewFoundCount"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFound" />
+        app:layout_constraintEnd_toEndOf="@+id/text_found_count"
+        app:layout_constraintTop_toBottomOf="@+id/text_found" />
 
     <TextView
-        android:id="@+id/textViewTotalFishes"
+        android:id="@+id/text_total_fishes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/total_fishes"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtViewTitleGame"
-        app:layout_constraintStart_toStartOf="@+id/txtViewTitleGame"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewTitleGame" />
+        app:layout_constraintEnd_toEndOf="@+id/text_game_title"
+        app:layout_constraintStart_toStartOf="@+id/text_game_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_game_title" />
 
     <TextView
-        android:id="@+id/textViewHighScore"
+        android:id="@+id/text_high_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/high_score"
-        android:textColor="#000000"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewGamesStarted"
+        android:id="@+id/text_games_started"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/games_started"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewHighScore"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHighScore" />
+        app:layout_constraintStart_toStartOf="@+id/text_high_score"
+        app:layout_constraintTop_toBottomOf="@+id/text_high_score" />
 
     <TableLayout
-        android:id="@+id/tableLayoutButtonGrid"
+        android:id="@+id/table_button_grid"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginBottom="16dp"
-        android:stretchColumns="*"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTotalFishes">
-    </TableLayout>
+        app:layout_constraintTop_toBottomOf="@+id/text_total_fishes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

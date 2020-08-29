@@ -8,7 +8,7 @@
     android:background="@drawable/ocean_background" >
 
     <ImageView
-        android:id="@+id/imageFishLeft1"
+        android:id="@+id/image_fish_left_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/fish"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteY="181dp" />
 
     <ImageView
-        android:id="@+id/imageFishLeft2"
+        android:id="@+id/image_fish_left_2"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/fish"
@@ -29,7 +29,7 @@
         tools:layout_editor_absoluteY="315dp" />
 
     <ImageView
-        android:id="@+id/imageFishRight1"
+        android:id="@+id/image_fish_right_1"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/fish"
@@ -41,7 +41,7 @@
         tools:layout_editor_absoluteY="134dp" />
 
     <ImageView
-        android:id="@+id/imageFishRight2"
+        android:id="@+id/image_fish_right_2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/fish"
@@ -53,14 +53,11 @@
         tools:layout_editor_absoluteY="251dp" />
 
     <TextView
-        android:id="@+id/textReelDeal"
+        android:id="@+id/text_game_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:fontFamily="@font/lobster"
-        android:outlineSpotShadowColor="@color/colorBlue"
-        android:paddingRight="5dp"
         android:paddingBottom="10dp"
         android:shadowColor="#000000"
         android:shadowDx="4"
@@ -69,19 +66,18 @@
         android:text="@string/reel_deal"
         android:textColor="@color/colorOrange"
         android:textSize="80sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPlay"
-        app:layout_constraintEnd_toEndOf="@+id/buttonPlay"
-        app:layout_constraintStart_toStartOf="@+id/buttonPlay" />
+        app:layout_constraintBottom_toTopOf="@+id/button_play"
+        app:layout_constraintEnd_toEndOf="@+id/button_play"
+        app:layout_constraintStart_toStartOf="@+id/button_play" />
 
     <Button
-        android:id="@+id/buttonPlay"
+        android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:paddingLeft="22dp"
-        android:paddingTop="5dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="2dp"
         android:text="@string/play"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +87,7 @@
         app:layout_constraintVertical_bias="0.59000003" />
 
     <Button
-        android:id="@+id/buttonOptions"
+        android:id="@+id/button_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -99,14 +95,13 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="@string/options"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintEnd_toEndOf="@+id/text_game_title"
         app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
+        app:layout_constraintStart_toStartOf="@+id/text_game_title"
+        app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
     <Button
-        android:id="@+id/buttonHelp"
+        android:id="@+id/button_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -114,10 +109,9 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/help"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textReelDeal"
+        app:layout_constraintEnd_toEndOf="@+id/text_game_title"
         app:layout_constraintHorizontal_bias="0.74"
-        app:layout_constraintStart_toStartOf="@+id/textReelDeal"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
+        app:layout_constraintStart_toStartOf="@+id/text_game_title"
+        app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,14 +7,13 @@
     android:background="@drawable/ocean_background"
     android:backgroundTint="#7A000000"
     android:backgroundTintMode="src_over"
-    tools:context=".ui.PauseDialog">
+    tools:context=".ui.PauseDialog" >
 
     <TextView
-        android:id="@+id/textPause"
+        android:id="@+id/text_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pause"
-        android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +22,7 @@
         app:layout_constraintVertical_bias="0.35000002" />
 
     <Button
-        android:id="@+id/buttonResume"
+        android:id="@+id/button_resume"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,13 +31,12 @@
         android:contentDescription="@string/resume"
         android:foreground="@drawable/ic_play_arrow"
         android:foregroundGravity="center"
-        android:foregroundTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textPause"
-        app:layout_constraintTop_toBottomOf="@+id/textPause" />
+        app:layout_constraintEnd_toEndOf="@+id/text_pause"
+        app:layout_constraintTop_toBottomOf="@+id/text_pause" />
 
     <Button
-        android:id="@+id/buttonStop"
+        android:id="@+id/button_stop"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -47,8 +45,8 @@
         android:contentDescription="@string/stop"
         android:foreground="@drawable/ic_stop"
         android:foregroundGravity="center"
-        android:foregroundTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textPause"
-        app:layout_constraintTop_toBottomOf="@+id/textPause" />
+        app:layout_constraintStart_toStartOf="@+id/text_pause"
+        app:layout_constraintTop_toBottomOf="@+id/text_pause" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
