@@ -56,7 +56,6 @@
         android:id="@+id/text_game_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:fontFamily="@font/lobster"
         android:paddingBottom="10dp"
         android:shadowColor="#000000"
@@ -67,8 +66,9 @@
         android:textColor="@color/colorOrange"
         android:textSize="80sp"
         app:layout_constraintBottom_toTopOf="@+id/button_play"
-        app:layout_constraintEnd_toEndOf="@+id/button_play"
-        app:layout_constraintStart_toStartOf="@+id/button_play" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_play"
@@ -76,15 +76,31 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:paddingLeft="15dp"
+        android:paddingTop="5dp"
         android:paddingRight="15dp"
-        android:paddingBottom="2dp"
+        android:paddingBottom="8dp"
         android:text="@string/play"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.59000003" />
+
+    <Button
+        android:id="@+id/button_resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="@string/resume"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_play" />
 
     <Button
         android:id="@+id/button_options"

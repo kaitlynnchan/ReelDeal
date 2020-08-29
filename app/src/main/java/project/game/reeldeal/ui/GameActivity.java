@@ -246,6 +246,8 @@ public class GameActivity extends AppCompatActivity {
                 textHighScore.setText(strHighScore);
             }
 
+            saveGameState(false);
+
             // Display win screen
             FragmentManager fragmentManager = getSupportFragmentManager();
             WinDialog dialogWin = new WinDialog(scans, highScore);
@@ -374,7 +376,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        saveGameState(true);
+        if(found == totalFishes){
+            saveGameState(false);
+        } else{
+            saveGameState(true);
+        }
     }
 
     private void setupBackButton() {
@@ -390,6 +396,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveGameState(false);
+        if(found == totalFishes){
+            saveGameState(false);
+        } else{
+            saveGameState(true);
+        }
     }
 }
