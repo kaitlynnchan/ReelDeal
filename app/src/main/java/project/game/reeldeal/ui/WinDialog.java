@@ -47,7 +47,7 @@ public class WinDialog extends AppCompatDialogFragment {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                getActivity().finish();
             }
         });
 

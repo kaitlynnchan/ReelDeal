@@ -59,15 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         configs = GameConfigs.getInstance();
-        setupButtons();
         loadGameConfigs();
-
-        boolean isGameSaved = getIsGameSaved(this);
-        if(isGameSaved){
-            createGame();
-            Intent intent = GameActivity.makeLaunchIntent(this);
-            startActivity(intent);
-        }
 
         setupBackgroundAnimation();
     }
@@ -77,10 +69,26 @@ public class MainActivity extends AppCompatActivity {
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveGameConfigs(MainActivity.this, configs, false);
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
+
+        Button buttonResume = findViewById(R.id.button_resume);
+        boolean isGameSaved = getIsGameSaved(this);
+        if(isGameSaved){
+            buttonResume.setVisibility(View.VISIBLE);
+            buttonResume.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                    startActivity(intent);
+                }
+            });
+        } else{
+            buttonResume.setVisibility(View.GONE);
+        }
 
         Button buttonOptions = findViewById(R.id.button_options);
         buttonOptions.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         createGame();
+        setupButtons();
     }
 
     private void setupBackgroundAnimation() {

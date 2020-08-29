@@ -49,15 +49,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
             }
         }, timer);
-
-        boolean isGameSaved = MainActivity.getIsGameSaved(this);
-        if(isGameSaved){
-            handler.removeCallbacksAndMessages(null);
-
-            Intent intent = MainActivity.makeLaunchIntent(this);
-            startActivity(intent);
-            finish();
-        }
     }
 
     private void titleWelcomeAnimation() {
