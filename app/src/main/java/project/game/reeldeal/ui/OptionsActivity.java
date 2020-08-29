@@ -60,6 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
         int[] numFishesArray = this.getResources().getIntArray(R.array.num_fishes_array);
         for (int i = 0; i < numFishesArray.length; i++) {
             final int buttonNumFishes = numFishesArray[i];
+
             RadioButton radioButtonFish = new RadioButton(this);
             radioButtonFish.setText(buttonNumFishes + getString(R.string.fishes));
             radioButtonFish.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +84,11 @@ public class OptionsActivity extends AppCompatActivity {
         for (int i = 0; i < numRowArray.length; i++) {
             final int buttonNumRow = numRowArray[i];
             final int buttonNumColumn = numColumnArray[i];
+
             RadioButton radioButtonGameSize = new RadioButton(this);
-            radioButtonGameSize.setText(buttonNumRow + getString(R.string.rows_and) + buttonNumColumn + getString(R.string.columns));
+            String strGameSize = buttonNumRow + getString(R.string.rows_and) + buttonNumColumn
+                    + getString(R.string.columns);
+            radioButtonGameSize.setText(strGameSize);
             radioButtonGameSize.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,7 +148,7 @@ public class OptionsActivity extends AppCompatActivity {
                 if(index != -1){
                     highScore = -1;
                     configs.get(index).setHighScore(highScore);
-                    MainActivity.saveGameConfigs(OptionsActivity.this, configs);
+                    MainActivity.saveGameConfigs(OptionsActivity.this, configs, false);
                     setupHighScoreText();
                 }
             }
@@ -156,7 +160,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 configs.setGamesStarted(0);
                 setupGamesStartedText();
-                MainActivity.saveGameConfigs(OptionsActivity.this, configs);
+                MainActivity.saveGameConfigs(OptionsActivity.this, configs, false);
             }
         });
     }

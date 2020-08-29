@@ -2,7 +2,6 @@ package project.game.reeldeal.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -36,9 +36,6 @@ public class GameActivity extends AppCompatActivity {
 
     private static final String TAG_WIN_DIALOG = "tag_win_dialog";
     private static final String TAG_PAUSE_DIALOG = "tag_pause_dialog";
-    private static final String SHARED_PREFS_GAME_STATE = "shared_prefs_game_state";
-    private static final String EDITOR_IS_GAME_SAVED = "editor_is_game_saved";
-    private static final String EDITOR_BUTTON_SIZE = "editor_button_size";
 
     private GameConfigs configs;
     private Game game;
@@ -67,78 +64,26 @@ public class GameActivity extends AppCompatActivity {
         highScore = game.getHighScore();
 
         buttons = new Button[rows][cols];
+        setupButtonGrid();
 
-        boolean isGameSaved = getIsGameSaved(this);
+        boolean isGameSaved = MainActivity.getIsGameSaved(this);
         if(isGameSaved){
-            loadSavedGameState();
+            TableLayout table = findViewById(R.id.table_button_grid);
+            ViewTreeObserver treeObserver = table.getViewTreeObserver();
+            treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    loadSavedGameState();
+                }
+            });
         } else{
             configs.incrementGamesStarted();
             game.fillArray();
-            setupButtonGrid();
         }
 
         setupDisplayText();
-        setupBackButton();
         setupPauseButton();
-    }
-
-    private void setupDisplayText() {
-        // Setup total Fishes text
-        TextView textTotalFishes = findViewById(R.id.text_total_fishes);
-        String strTotalFishes = getString(R.string.total_fishes);
-        strTotalFishes += "" + totalFishes;
-        textTotalFishes.setText(strTotalFishes);
-
-        // Setup high score
-        TextView textHighScore = findViewById(R.id.text_high_score);
-        String strHighScore = getString(R.string.high_score);
-        if(highScore == -1){
-            strHighScore += getString(R.string.no_answer);
-        } else{
-            strHighScore += "" + highScore;
-        }
-        textHighScore.setText(strHighScore);
-
-        // Setup games started
-        TextView textGamesStarted = findViewById(R.id.text_games_started);
-        String strGamesStarted = getString(R.string.games_started);
-        strGamesStarted += "" + configs.getGamesStarted();
-        textGamesStarted.setText(strGamesStarted);
-    }
-
-    private void loadSavedGameState() {
-        game.setGameBoard(configs.getCurrentGame().getGameBoard());
-        setupButtonGrid();
-
-        SharedPreferences sharedPreferences =
-                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
-
-        String buttonSize = sharedPreferences.getString(EDITOR_BUTTON_SIZE, "0,0");
-        assert buttonSize != null;
-        String[] split = buttonSize.split(",");
-        int widthBtn = Integer.parseInt(split[0]);
-        int heightBtn = Integer.parseInt(split[1]);
-
-        scans = 0;
-        found = 0;
-
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
-                boolean isButtonClickable = game.getTile(row, col).isClickable();
-                if(!isButtonClickable){
-                    int count = game.scanRowCol(row, col);
-                    setScan(row, col, count);
-                }
-
-                boolean isFishRevealed = game.getTile(row, col).isFishRevealed();
-                boolean isFishThere = game.getTile(row, col).isFishThere();
-                if(isFishThere && isFishRevealed){
-                    lockButton(widthBtn, heightBtn);
-                    setButtonImage(row, col, widthBtn, heightBtn);
-                    updateFoundCountTxt();
-                }
-            }
-        }
+        setupBackButton();
     }
 
     private void setupButtonGrid() {
@@ -178,6 +123,33 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void loadSavedGameState() {
+        game.setGameBoard(configs.getCurrentGame().getGameBoard());
+        scans = 0;
+        found = 0;
+
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                boolean isButtonClickable = game.getTile(row, col).isClickable();
+                if(!isButtonClickable){
+                    int count = game.scanRowCol(row, col);
+                    setScan(row, col, count);
+                }
+
+                int widthBtn = buttons[row][col].getWidth();
+                int heightBtn = buttons[row][col].getHeight();
+
+                boolean isFishRevealed = game.getTile(row, col).isFishRevealed();
+                boolean isFishThere = game.getTile(row, col).isFishThere();
+                if(isFishThere && isFishRevealed){
+                    lockButton(widthBtn, heightBtn);
+                    setButtonImage(row, col, widthBtn, heightBtn);
+                    updateFoundCountTxt();
+                }
+            }
+        }
+    }
+
     private void updateButtons(int row, int col) {
         // Adding vibration to buttons
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -190,23 +162,7 @@ public class GameActivity extends AppCompatActivity {
             setFishesFound(row, col);
             fishFoundMedia.start();
             vibrator.vibrate(4000);
-            // Game finished
-            if(found == totalFishes){
-                // Setup new high score
-                if(highScore == -1 || scans < highScore){
-                    configs.getCurrentGame().setHighScore(scans);
-
-                    TextView textHighScore = findViewById(R.id.text_high_score);
-                    String strHighScore = getString(R.string.high_score);
-                    strHighScore += "  " + scans;
-                    textHighScore.setText(strHighScore);
-                }
-
-                // Display win screen
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                WinDialog dialogWin = new WinDialog(scans, highScore);
-                dialogWin.show(fragmentManager, TAG_WIN_DIALOG);
-            }
+            checkGameFinished();
         } else{
             // Fix animations to move one at a time
             buttonAnimate(row, col);
@@ -278,6 +234,25 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void checkGameFinished() {
+        if(found == totalFishes){
+            // Setup new high score
+            if(highScore == -1 || scans < highScore){
+                configs.getCurrentGame().setHighScore(scans);
+
+                TextView textHighScore = findViewById(R.id.text_high_score);
+                String strHighScore = getString(R.string.high_score);
+                strHighScore += "  " + scans;
+                textHighScore.setText(strHighScore);
+            }
+
+            // Display win screen
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            WinDialog dialogWin = new WinDialog(scans, highScore);
+            dialogWin.show(fragmentManager, TAG_WIN_DIALOG);
+        }
+    }
+
     private void buttonAnimate(int row, int col) {
         Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
         Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
@@ -333,25 +308,33 @@ public class GameActivity extends AppCompatActivity {
         txtScans.setText("" + scans);
     }
 
-    private void saveGameState(boolean isGameSaved){
-        configs.getCurrentGame().setGameBoard(game.getGameBoard());
+    private void setupDisplayText() {
+        // Setup total Fishes text
+        TextView textTotalFishes = findViewById(R.id.text_total_fishes);
+        String strTotalFishes = getString(R.string.total_fishes);
+        strTotalFishes += "" + totalFishes;
+        textTotalFishes.setText(strTotalFishes);
 
-        SharedPreferences sharedPreferences =
-                this.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
+        // Setup high score
+        TextView textHighScore = findViewById(R.id.text_high_score);
+        String strHighScore = getString(R.string.high_score);
+        if(highScore == -1){
+            strHighScore += getString(R.string.no_answer);
+        } else{
+            strHighScore += "" + highScore;
+        }
+        textHighScore.setText(strHighScore);
 
-        String buttonSize = buttons[0][0].getWidth() + "," + buttons[0][0].getHeight();
-        editor.putString(EDITOR_BUTTON_SIZE, buttonSize);
-
-        editor.apply();
-        MainActivity.saveGameConfigs(this, configs);
+        // Setup games started
+        TextView textGamesStarted = findViewById(R.id.text_games_started);
+        String strGamesStarted = getString(R.string.games_started);
+        strGamesStarted += "" + configs.getGamesStarted();
+        textGamesStarted.setText(strGamesStarted);
     }
 
-    public static boolean getIsGameSaved(Context context){
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(SHARED_PREFS_GAME_STATE, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(EDITOR_IS_GAME_SAVED, false);
+    private void saveGameState(boolean isGameSaved){
+        configs.getCurrentGame().setGameBoard(game.getGameBoard());
+        MainActivity.saveGameConfigs(this, configs, isGameSaved);
     }
 
     private void setupPauseButton() {

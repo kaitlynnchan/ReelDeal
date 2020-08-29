@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SHARED_PREFS_GAMES = "shared_prefs_games";
     private static final String EDITOR_GAME_CONFIGS = "editor_game_configs";
     private static final String EDITOR_GAMES_STARTED = "editor_games_started";
+    private static final String EDITOR_IS_GAME_SAVED = "editor_is_game_saved";
     private GameConfigs configs;
 
     private Handler handler = new Handler();
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         loadGameConfigs();
 
-        boolean isGameSaved = GameActivity.getIsGameSaved(this);
+        boolean isGameSaved = getIsGameSaved(this);
         if(isGameSaved){
             createGame();
             Intent intent = GameActivity.makeLaunchIntent(this);
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         configs.setGamesStarted(gamesStarted);
     }
 
-    public static void saveGameConfigs(Context context, GameConfigs configs) {
+    public static void saveGameConfigs(Context context, GameConfigs configs, boolean isGameSaved) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,8 +125,15 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(EDITOR_GAME_CONFIGS, json);
 
         editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
+        editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
 
         editor.apply();
+    }
+
+    public static boolean getIsGameSaved(Context context){
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(EDITOR_IS_GAME_SAVED, false);
     }
 
     private void createGame() {

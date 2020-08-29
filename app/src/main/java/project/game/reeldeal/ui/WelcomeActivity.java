@@ -50,7 +50,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         }, timer);
 
-        boolean isGameSaved = GameActivity.getIsGameSaved(this);
+        boolean isGameSaved = MainActivity.getIsGameSaved(this);
         if(isGameSaved){
             handler.removeCallbacksAndMessages(null);
 

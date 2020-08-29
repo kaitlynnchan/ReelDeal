@@ -68,11 +68,10 @@
     <string name="num_fishes_options">Choose the Number of Fishes:</string>
     <string name="options">OPTIONS</string>
     <string name="game_size_options">Choose size of game:</string>
-    <string name="rows_and"><![CDATA[ \u0020 rows & \u0020 ]]></string>
-    <string name="columns">  \u0020 columns</string>
-    <string name="fishes"> \u0020 Fishes</string>
+    <string name="rows_and">\u0020rows &amp;\u0020</string>
+    <string name="columns">\u0020columns</string>
+    <string name="fishes">\u0020fishes</string>
     <string name="total_fishes">Total Fishes:\u0020\u0020</string>
-    <string name="empty" />
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
     <string name="pause">PAUSE</string>
