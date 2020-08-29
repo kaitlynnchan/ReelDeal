@@ -1,66 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
-    android:background="@drawable/dock">
+    android:background="@drawable/dock" >
 
     <ImageView
-        android:id="@+id/imageBucket"
+        android:id="@+id/image_bucket"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/bucket_of_fishes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textCongrats"
+        app:layout_constraintStart_toStartOf="@+id/text_congrats_msg"
         app:srcCompat="@drawable/bucket_with_fish" />
 
     <ImageView
-        android:id="@+id/imageLeft"
+        android:id="@+id/image_confetti_left"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:contentDescription="@string/confetti"
         android:scaleX="-1"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewWin"
-        app:layout_constraintEnd_toStartOf="@+id/textViewWin"
-        app:layout_constraintTop_toTopOf="@+id/textViewWin"
+        app:layout_constraintBottom_toBottomOf="@+id/text_win"
+        app:layout_constraintEnd_toStartOf="@+id/text_win"
+        app:layout_constraintTop_toTopOf="@+id/text_win"
         app:srcCompat="@drawable/confetti" />
 
     <ImageView
-        android:id="@+id/imageRight"
+        android:id="@+id/image_confetti_right"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewWin"
-        app:layout_constraintStart_toEndOf="@+id/textViewWin"
-        app:layout_constraintTop_toTopOf="@+id/textViewWin"
+        android:contentDescription="@string/confetti"
+        app:layout_constraintBottom_toBottomOf="@+id/text_win"
+        app:layout_constraintStart_toEndOf="@+id/text_win"
+        app:layout_constraintTop_toTopOf="@+id/text_win"
         app:srcCompat="@drawable/confetti" />
 
     <TextView
-        android:id="@+id/textViewWin"
+        android:id="@+id/text_win"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/win_title"
-        android:textColor="#000000"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/textCongrats"
+        app:layout_constraintBottom_toTopOf="@+id/text_congrats_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textCongrats"
+        android:id="@+id/text_congrats_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
         android:background="#B5FFFFFF"
         android:gravity="center"
         android:paddingLeft="8dp"
@@ -68,50 +63,44 @@
         android:paddingRight="8dp"
         android:paddingBottom="8dp"
         android:text="@string/congrats_message"
-        android:textColor="#000000"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewScore"
+        android:id="@+id/text_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/score"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textCongrats"
-        app:layout_constraintEnd_toEndOf="@+id/textCongrats"
-        app:layout_constraintStart_toStartOf="@+id/textCongrats" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_congrats_msg"
+        app:layout_constraintEnd_toEndOf="@+id/text_congrats_msg"
+        app:layout_constraintStart_toStartOf="@+id/text_congrats_msg" />
 
     <Button
-        android:id="@+id/buttonOK"
+        android:id="@+id/button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_background"
         android:text="@android:string/ok"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textCongrats"
-        app:layout_constraintTop_toBottomOf="@+id/textCongrats" />
+        app:layout_constraintEnd_toEndOf="@+id/text_congrats_msg"
+        app:layout_constraintTop_toBottomOf="@+id/text_congrats_msg" />
 
     <TextView
-        android:id="@+id/textViewBest"
+        android:id="@+id/text_best"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:text="@string/best"
+        android:textColor="#BC000000"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewScore"
-        app:layout_constraintStart_toEndOf="@+id/textViewScore"
-        app:layout_constraintTop_toTopOf="@+id/textViewScore" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_score"
+        app:layout_constraintStart_toEndOf="@+id/text_score"
+        app:layout_constraintTop_toTopOf="@+id/text_score" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,7 +56,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupRadioButtons() {
-        RadioGroup radioGroupFish = findViewById(R.id.radioGroupTotalFishes);
+        RadioGroup radioNumFishes = findViewById(R.id.radio_num_fishes);
         int[] numFishesArray = this.getResources().getIntArray(R.array.num_fishes_array);
         for (int i = 0; i < numFishesArray.length; i++) {
             final int buttonNumFishes = numFishesArray[i];
@@ -70,22 +70,22 @@ public class OptionsActivity extends AppCompatActivity {
                     setupHighScoreText();
                 }
             });
-            radioGroupFish.addView(radioButtonFish);
+            radioNumFishes.addView(radioButtonFish);
 
             if(buttonNumFishes == numFishes){
                 radioButtonFish.setChecked(true);
             }
         }
 
-        RadioGroup radioGroupSize = findViewById(R.id.radioGroupSize);
+        RadioGroup radioGameSize = findViewById(R.id.radio_game_size);
         int[] numRowArray = this.getResources().getIntArray(R.array.num_rows_array);
         int[] numColumnArray = this.getResources().getIntArray(R.array.num_columns_array);
         for (int i = 0; i < numRowArray.length; i++) {
             final int buttonNumRow = numRowArray[i];
             final int buttonNumColumn = numColumnArray[i];
-            RadioButton radioButtonSize = new RadioButton(this);
-            radioButtonSize.setText(buttonNumRow + getString(R.string.rows_and) + buttonNumColumn + getString(R.string.columns));
-            radioButtonSize.setOnClickListener(new View.OnClickListener() {
+            RadioButton radioButtonGameSize = new RadioButton(this);
+            radioButtonGameSize.setText(buttonNumRow + getString(R.string.rows_and) + buttonNumColumn + getString(R.string.columns));
+            radioButtonGameSize.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     numRows = buttonNumRow;
@@ -94,10 +94,10 @@ public class OptionsActivity extends AppCompatActivity {
                     setupHighScoreText();
                 }
             });
-            radioGroupSize.addView(radioButtonSize);
+            radioGameSize.addView(radioButtonGameSize);
 
             if(buttonNumRow == numRows && buttonNumColumn == numColumns){
-                radioButtonSize.setChecked(true);
+                radioButtonGameSize.setChecked(true);
             }
         }
         setGame();
@@ -119,26 +119,26 @@ public class OptionsActivity extends AppCompatActivity {
     private void setupHighScoreText() {
         setGame();
 
-        TextView txtHighScore = findViewById(R.id.textHighScore);
+        TextView textHighScore = findViewById(R.id.text_high_score);
         String strHighScore = getString(R.string.high_score);
         if (highScore == -1) {
             strHighScore += getString(R.string.no_answer);
         } else {
             strHighScore += "" + highScore;
         }
-        txtHighScore.setText(strHighScore);
+        textHighScore.setText(strHighScore);
     }
 
     private void setupGamesStartedText(){
-        TextView txtGamesPlayed = findViewById(R.id.textGamesStarted);
+        TextView textGamesPlayed = findViewById(R.id.text_games_started);
         String strGamesPlayed = getString(R.string.games_started);
         strGamesPlayed += "" + configs.getGamesStarted();
-        txtGamesPlayed.setText(strGamesPlayed);
+        textGamesPlayed.setText(strGamesPlayed);
     }
 
     private void setupResetButtons() {
-        Button btnResetScore = findViewById(R.id.buttonResetScore);
-        btnResetScore.setOnClickListener(new View.OnClickListener() {
+        Button buttonResetScore = findViewById(R.id.button_reset_score);
+        buttonResetScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(index != -1){
@@ -150,8 +150,8 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
-        Button btnResetGames = findViewById(R.id.buttonResetGamesNum);
-        btnResetGames.setOnClickListener(new View.OnClickListener() {
+        Button buttonResetGamesStarted = findViewById(R.id.button_reset_games_started);
+        buttonResetGamesStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 configs.setGamesStarted(0);
@@ -193,7 +193,7 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

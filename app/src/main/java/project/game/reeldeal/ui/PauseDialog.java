@@ -40,7 +40,7 @@ public class PauseDialog extends AppCompatDialogFragment {
     }
 
     private void setupButtons() {
-        Button buttonResume = view.findViewById(R.id.buttonResume);
+        Button buttonResume = view.findViewById(R.id.button_resume);
         buttonResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +49,7 @@ public class PauseDialog extends AppCompatDialogFragment {
             }
         });
 
-        Button buttonStop = view.findViewById(R.id.buttonStop);
+        Button buttonStop = view.findViewById(R.id.button_stop);
         buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

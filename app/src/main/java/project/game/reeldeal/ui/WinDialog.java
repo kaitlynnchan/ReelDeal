@@ -33,18 +33,18 @@ public class WinDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_win, null);
 
-        TextView txtScore = view.findViewById(R.id.textViewScore);
+        TextView textScore = view.findViewById(R.id.text_score);
         String strScore = getString(R.string.score);
         strScore += "  " + score;
-        txtScore.setText(strScore);
+        textScore.setText(strScore);
 
         if(score < highScore || highScore == -1){
-            TextView txtBest = view.findViewById(R.id.textViewBest);
-            txtBest.setVisibility(View.VISIBLE);
+            TextView textBest = view.findViewById(R.id.text_best);
+            textBest.setVisibility(View.VISIBLE);
         }
 
-        Button btnOk = view.findViewById(R.id.buttonOK);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        Button buttonOk = view.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();

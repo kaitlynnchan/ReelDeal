@@ -64,16 +64,16 @@ public class MainActivity extends AppCompatActivity {
         boolean isGameSaved = GameActivity.getIsGameSaved(this);
         if(isGameSaved){
             createGame();
-            Intent intentGame = GameActivity.makeLaunchIntent(this);
-            startActivity(intentGame);
+            Intent intent = GameActivity.makeLaunchIntent(this);
+            startActivity(intent);
         }
 
         setupBackgroundAnimation();
     }
 
     private void setupButtons() {
-        Button btnPlay = findViewById(R.id.buttonPlay);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        Button buttonPlay = findViewById(R.id.button_play);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnOptions = findViewById(R.id.buttonOptions);
-        btnOptions.setOnClickListener(new View.OnClickListener() {
+        Button buttonOptions = findViewById(R.id.button_options);
+        buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnHelp = findViewById(R.id.buttonHelp);
-        btnHelp.setOnClickListener(new View.OnClickListener() {
+        Button buttonHelp = findViewById(R.id.button_help);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
@@ -119,11 +119,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
-
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
         editor.putString(EDITOR_GAME_CONFIGS, json);
+
+        editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
 
         editor.apply();
     }
@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
         int heightScreen = displayMetrics.heightPixels;
         final int widthScreen = displayMetrics.widthPixels;
 
-        fishLeft1 = findViewById(R.id.imageFishLeft1);
-        fishLeft2 = findViewById(R.id.imageFishLeft2);
-        fishRight1 = findViewById(R.id.imageFishRight2);
-        fishRight2 = findViewById(R.id.imageFishRight1);
+        fishLeft1 = findViewById(R.id.image_fish_left_1);
+        fishLeft2 = findViewById(R.id.image_fish_left_2);
+        fishRight1 = findViewById(R.id.image_fish_right_2);
+        fishRight2 = findViewById(R.id.image_fish_right_1);
         fishWidth = fishLeft1.getWidth();
 
         fishLeft1.setX(-fishWidth);

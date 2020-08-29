@@ -80,5 +80,8 @@
     <string name="stop">stop</string>
     <string name="back">back</string>
     <string name="fish">fish</string>
+    <string name="confetti">confetti</string>
+    <string name="bucket_of_fishes">bucket of fishes</string>
+    <string name="fishing_pole">fishing pole</string>
 
 </resources>

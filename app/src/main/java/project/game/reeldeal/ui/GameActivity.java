@@ -77,33 +77,33 @@ public class GameActivity extends AppCompatActivity {
             setupButtonGrid();
         }
 
-        setupTextDisplay();
+        setupDisplayText();
         setupBackButton();
         setupPauseButton();
     }
 
-    private void setupTextDisplay() {
+    private void setupDisplayText() {
         // Setup total Fishes text
-        TextView txtTotalFishes = findViewById(R.id.textViewTotalFishes);
+        TextView textTotalFishes = findViewById(R.id.text_total_fishes);
         String strTotalFishes = getString(R.string.total_fishes);
         strTotalFishes += "" + totalFishes;
-        txtTotalFishes.setText(strTotalFishes);
+        textTotalFishes.setText(strTotalFishes);
 
         // Setup high score
-        TextView txtHighScore = findViewById(R.id.textViewHighScore);
+        TextView textHighScore = findViewById(R.id.text_high_score);
         String strHighScore = getString(R.string.high_score);
         if(highScore == -1){
             strHighScore += getString(R.string.no_answer);
         } else{
             strHighScore += "" + highScore;
         }
-        txtHighScore.setText(strHighScore);
+        textHighScore.setText(strHighScore);
 
         // Setup games started
-        TextView txtGamesStarted = findViewById(R.id.textViewGamesStarted);
+        TextView textGamesStarted = findViewById(R.id.text_games_started);
         String strGamesStarted = getString(R.string.games_started);
         strGamesStarted += "" + configs.getGamesStarted();
-        txtGamesStarted.setText(strGamesStarted);
+        textGamesStarted.setText(strGamesStarted);
     }
 
     private void loadSavedGameState() {
@@ -142,7 +142,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupButtonGrid() {
-        TableLayout table = findViewById(R.id.tableLayoutButtonGrid);
+        TableLayout table = findViewById(R.id.table_button_grid);
         table.removeAllViews();
 
         for(int r = 0; r < rows; r++){
@@ -182,8 +182,8 @@ public class GameActivity extends AppCompatActivity {
         // Adding vibration to buttons
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         //Adding sounds to button click in game
-        final MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
-        final MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
+        MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
+        MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
 
         int count = game.scanRowCol(row, col);
         if(count == -1){
@@ -196,10 +196,10 @@ public class GameActivity extends AppCompatActivity {
                 if(highScore == -1 || scans < highScore){
                     configs.getCurrentGame().setHighScore(scans);
 
-                    TextView txtHighScore = findViewById(R.id.textViewHighScore);
+                    TextView textHighScore = findViewById(R.id.text_high_score);
                     String strHighScore = getString(R.string.high_score);
                     strHighScore += "  " + scans;
-                    txtHighScore.setText(strHighScore);
+                    textHighScore.setText(strHighScore);
                 }
 
                 // Display win screen
@@ -240,15 +240,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void lockButton(int width, int height) {
-        for(int r = 0; r < rows; r++){
-            for(int c = 0; c < cols; c++){
-                Button btnLock = buttons[r][c];
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                Button buttonLock = buttons[row][col];
 
-                btnLock.setMinWidth(width);
-                btnLock.setMaxWidth(width);
+                buttonLock.setMinWidth(width);
+                buttonLock.setMaxWidth(width);
 
-                btnLock.setMinHeight(height);
-                btnLock.setMaxHeight(height);
+                buttonLock.setMinHeight(height);
+                buttonLock.setMaxHeight(height);
             }
         }
     }
@@ -264,16 +264,16 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateFoundCountTxt() {
         found++;
-        TextView txtFound = findViewById(R.id.textViewFoundCount);
-        txtFound.setText("" + found);
+        TextView textFound = findViewById(R.id.text_found_count);
+        textFound.setText("" + found);
     }
 
-    private void setButtonText(Button temp) {
-        if(!temp.isClickable()){
-            int count = Integer.parseInt(temp.getText().toString());
+    private void setButtonText(Button button) {
+        if(!button.isClickable()){
+            int count = Integer.parseInt(button.getText().toString());
             if(count > 0){
                 count--;
-                temp.setText(count + "");
+                button.setText(count + "");
             }
         }
     }
@@ -290,23 +290,23 @@ public class GameActivity extends AppCompatActivity {
         animateWave(waveBelow);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            animateButtonWave(col, rBelow, waveBelow);
+            animateButtonWave(rBelow, col, waveBelow);
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            animateButtonWave(col, rAbove, waveAbove);
+            animateButtonWave(rAbove, col, waveAbove);
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            animateButtonWave(cRight, row, waveRight);
+            animateButtonWave(row, cRight, waveRight);
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            animateButtonWave(cLeft, row, waveLeft);
+            animateButtonWave(row, cLeft, waveLeft);
         }
     }
 
-    private void animateButtonWave(int col, int row, Animation wave) {
+    private void animateButtonWave(int row, int col, Animation wave) {
         Button button = buttons[row][col];
         if (!game.getTile(row, col).isFishRevealed() && game.getTile(row, col).isClickable()) {
             button.startAnimation(wave);
@@ -329,7 +329,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Update scan count text
         scans++;
-        TextView txtScans = findViewById(R.id.textViewScansCount);
+        TextView txtScans = findViewById(R.id.text_scans_count);
         txtScans.setText("" + scans);
     }
 
@@ -355,7 +355,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupPauseButton() {
-        Button buttonPause = findViewById(R.id.buttonPause);
+        Button buttonPause = findViewById(R.id.button_pause);
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -380,10 +380,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void createBlankGame(){
-        for(int r = 0; r < buttons.length; r++){
-            for(int c = 0; c < buttons[r].length; c++){
-                buttons[r][c].setBackgroundResource(R.drawable.button_corner);
-                buttons[r][c].setText(null);
+        for(int row = 0; row < buttons.length; row++){
+            for(int col = 0; col < buttons[row].length; col++){
+                buttons[row][col].setBackgroundResource(R.drawable.button_corner);
+                buttons[row][col].setText(null);
             }
         }
     }
@@ -395,7 +395,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -27,25 +27,25 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        setText();
+        setupTexts();
         setupBackButton();
     }
 
+    private void setupTexts() {
+        TextView textAboutContent = findViewById(R.id.text_about);
+        textAboutContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView textCitationsContent = findViewById(R.id.text_citations);
+        textCitationsContent.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     private void setupBackButton() {
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-    }
-
-    private void setText() {
-        TextView aboutContent = findViewById(R.id.textAboutContent);
-        aboutContent.setMovementMethod(LinkMovementMethod.getInstance());
-
-        TextView citationContent = findViewById(R.id.textCitationContent);
-        citationContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

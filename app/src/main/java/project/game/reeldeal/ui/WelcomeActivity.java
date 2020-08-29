@@ -62,7 +62,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void titleWelcomeAnimation() {
         // Fishing pole animations
-        ImageView imgFishingPole = findViewById(R.id.imageFishingPole);
+        ImageView imgFishingPole = findViewById(R.id.image_fishing_pole);
         Animation rotate = AnimationUtils.loadAnimation(WelcomeActivity.this,
                 R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
@@ -70,7 +70,7 @@ public class WelcomeActivity extends AppCompatActivity {
         timer += 3000;
 
         // Game title animations
-        TextView gameTitle = findViewById(R.id.textViewTitle);
+        TextView gameTitle = findViewById(R.id.text_title);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
                 "translationY",
                 (float) (heightScreen / 5) * -1);
@@ -91,7 +91,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void animateAfterFishing() {
         // Black overlay animation
-        View overlay = findViewById(R.id.viewOverlay);
+        View overlay = findViewById(R.id.view_overlay);
         overlay.setVisibility(View.VISIBLE);
         ViewPropertyAnimator fadeIn = overlay.animate();
         fadeIn.alpha(0.5f);
@@ -99,7 +99,7 @@ public class WelcomeActivity extends AppCompatActivity {
         fadeIn.setDuration(1000);
 
         // Game title animations
-        TextView gameName = findViewById(R.id.textViewTitle);
+        TextView gameName = findViewById(R.id.text_title);
         ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
                 "translationY",
                 (float) (heightScreen / 3) * -1);
@@ -121,7 +121,7 @@ public class WelcomeActivity extends AppCompatActivity {
         gameName.startAnimation(scaleZoom);
 
         // Author animation
-        TextView authors = findViewById(R.id.textViewAuthors);
+        TextView authors = findViewById(R.id.text_authors);
         ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
                 "translationX",
                 (float) (widthScreen / 3) * 2);
@@ -133,8 +133,8 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupSkipButton() {
-        Button btnSkip = findViewById(R.id.buttonSkip);
-        btnSkip.setOnClickListener(new View.OnClickListener() {
+        Button buttonSkip = findViewById(R.id.button_skip);
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
