@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import project.game.reeldeal.R;
+import project.game.reeldeal.model.Constant;
 import project.game.reeldeal.model.Game;
 import project.game.reeldeal.model.GameConfigs;
 
@@ -180,22 +181,19 @@ public class OptionsActivity extends AppCompatActivity {
     public static int getNumFishes(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        int defaultNumFishes = context.getResources().getInteger(R.integer.default_num_fishes);
-        return sharedPreferences.getInt(EDITOR_NUM_FISHES, defaultNumFishes);
+        return sharedPreferences.getInt(EDITOR_NUM_FISHES, Constant.DEFAULT_NUM_FISHES);
     }
 
     public static int getNumRows(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        int defaultNumRows = context.getResources().getInteger(R.integer.default_num_rows);
-        return sharedPreferences.getInt(EDITOR_NUM_ROWS, defaultNumRows);
+        return sharedPreferences.getInt(EDITOR_NUM_ROWS, Constant.DEFAULT_NUM_ROWS);
     }
 
     public static int getNumColumns(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        int defaultNumColumns = context.getResources().getInteger(R.integer.default_num_columns);
-        return sharedPreferences.getInt(EDITOR_NUM_COLUMNS, defaultNumColumns);
+        return sharedPreferences.getInt(EDITOR_NUM_COLUMNS, Constant.DEFAULT_NUM_COLUMNS);
     }
 
     private void setupBackButton() {
