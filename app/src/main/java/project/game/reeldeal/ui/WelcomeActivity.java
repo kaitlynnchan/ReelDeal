@@ -58,20 +58,18 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.anim.anim_rotate);
         imgFishingPole.startAnimation(rotate);
 
-        timer += 3000;
+        timer += 3500;
 
         // Game title animations
         TextView gameTitle = findViewById(R.id.text_title);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,
-                "translationY",
-                (float) (heightScreen / 5) * -1);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,"translationY",
+                (heightScreen / -7f) * 2);
         moveY.setStartDelay(timer);
         moveY.setDuration(2000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle,
-                "translationX",
-                (float) widthScreen / 5);
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX",
+                widthScreen / 5f);
         moveX.setStartDelay(timer);
         moveX.setDuration(2000);
         moveX.start();
@@ -91,16 +89,14 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Game title animations
         TextView gameName = findViewById(R.id.text_title);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName,
-                "translationY",
-                (float) (heightScreen / 3) * -1);
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName, "translationY",
+                heightScreen / -3f);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName,
-                "translationX",
-                (float) widthScreen / 7);
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName, "translationX",
+                widthScreen / 9f);
         moveX.setStartDelay(timer);
         moveX.setDuration(1000);
         moveX.start();
@@ -113,9 +109,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Author animation
         TextView authors = findViewById(R.id.text_authors);
-        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors,
-                "translationX",
-                (float) (widthScreen / 3) * 2);
+        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, "translationX",
+                (widthScreen / 3f) * 2);
         moveAuthorX.setStartDelay(timer);
         moveAuthorX.setDuration(1000);
         moveAuthorX.start();

@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
             treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    buttonPlay.setTranslationY(buttonPlay.getHeight()/2f);
-                    buttonOptions.setTranslationY(buttonPlay.getHeight()/2f);
-                    buttonHelp.setTranslationY(buttonPlay.getHeight()/2f);
+                    buttonPlay.setTranslationY(buttonPlay.getHeight() / 2f);
+                    buttonOptions.setTranslationY(buttonPlay.getHeight() / 2f);
+                    buttonHelp.setTranslationY(buttonPlay.getHeight() / 2f);
                 }
             });
         } else{

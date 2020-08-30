@@ -77,7 +77,7 @@
     <string name="fish">fish</string>
     <string name="win_title">You Win!!</string>
     <string name="score">Your Score:</string>
-    <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n</string>
+    <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n\n</string>
     <string name="best">BEST!!</string>
     <string name="confetti">confetti</string>
     <string name="bucket_of_fishes">bucket of fishes</string>
