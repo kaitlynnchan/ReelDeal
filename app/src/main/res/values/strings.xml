@@ -9,15 +9,18 @@
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_help">HelpActivity</string>
+    <string name="welcome_skip">SKIP</string>
+    <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
+    <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
+    <string name="play">NEW GAME</string>
+    <string name="reel_deal">REEL DEAL\u0020\u0020</string>
+    <string name="help">HELP</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
     <string name="found_count">0</string>
     <string name="high_score">High Score:\u0020\u0020</string>
     <string name="games_started">Games Started:\u0020\u0020</string>
-    <string name="welcome_skip">SKIP</string>
-    <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
-    <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
     <string name="about_authors_content"><u>About Authors</u>
         \nCreators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
         \nBrought to you by: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276 - SUMMER 2020</a></string>
@@ -57,17 +60,10 @@
         \n\n<b>Sounds</b>
         \n<a href="https://www.youtube.com/watch?v=ZzbGjJwJe80">Sonar sounds</a>
     </string>
-    <string name="win_title">You Win!!</string>
-    <string name="score">Your Score:</string>
-    <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n</string>
-    <string name="help">HELP</string>
-    <string name="best">BEST!!</string>
-    <string name="reel_deal">REEL DEAL\u0020\u0020</string>
-    <string name="play">PLAY</string>
     <string name="beta">BETA</string>
-    <string name="num_fishes_options">Choose the Number of Fishes:</string>
+    <string name="num_fishes_options">Number of Fishes:</string>
     <string name="options">OPTIONS</string>
-    <string name="game_size_options">Choose size of game:</string>
+    <string name="game_size_options">Game Size:</string>
     <string name="rows_and">\u0020rows &amp;\u0020</string>
     <string name="columns">\u0020columns</string>
     <string name="fishes">\u0020fishes</string>
@@ -75,10 +71,14 @@
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
     <string name="pause">PAUSE</string>
-    <string name="resume">Resume</string>
+    <string name="resume">Resume Game</string>
     <string name="stop">stop</string>
     <string name="back">back</string>
     <string name="fish">fish</string>
+    <string name="win_title">You Win!!</string>
+    <string name="score">Your Score:</string>
+    <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n\n</string>
+    <string name="best">BEST!!</string>
     <string name="confetti">confetti</string>
     <string name="bucket_of_fishes">bucket of fishes</string>
     <string name="fishing_pole">fishing pole</string>

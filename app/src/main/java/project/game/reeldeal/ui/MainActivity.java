@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -59,30 +60,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         configs = GameConfigs.getInstance();
-        setupButtons();
         loadGameConfigs();
-
-        boolean isGameSaved = getIsGameSaved(this);
-        if(isGameSaved){
-            createGame();
-            Intent intent = GameActivity.makeLaunchIntent(this);
-            startActivity(intent);
-        }
 
         setupBackgroundAnimation();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createGame();
+        setupButtons();
+    }
+
+    private void createGame() {
+        int totalFishes = OptionsActivity.getNumFishes(this);
+        int rows = OptionsActivity.getNumRows(this);
+        int columns = OptionsActivity.getNumColumns(this);
+        Game game = new Game(rows, columns, totalFishes, -1);
+
+        int index = configs.getIndex(game);
+        if(index == -1){
+            configs.add(game);
+            index = configs.getIndex(game);
+        }
+        configs.setCurrentGameIndex(index);
+    }
+
     private void setupButtons() {
-        Button buttonPlay = findViewById(R.id.button_play);
+        final Button buttonPlay = findViewById(R.id.button_play);
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveGameConfigs(MainActivity.this, configs, false);
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
 
-        Button buttonOptions = findViewById(R.id.button_options);
+        final Button buttonOptions = findViewById(R.id.button_options);
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonHelp = findViewById(R.id.button_help);
+        final Button buttonHelp = findViewById(R.id.button_help);
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +114,34 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button buttonResume = findViewById(R.id.button_resume);
+        boolean isGameSaved = getIsGameSaved(this);
+        if(isGameSaved){
+            buttonResume.setVisibility(View.VISIBLE);
+            buttonResume.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                    startActivity(intent);
+                }
+            });
+
+            ViewTreeObserver treeObserver = buttonResume.getViewTreeObserver();
+            treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    buttonPlay.setTranslationY(buttonPlay.getHeight() / 2f);
+                    buttonOptions.setTranslationY(buttonPlay.getHeight() / 2f);
+                    buttonHelp.setTranslationY(buttonPlay.getHeight() / 2f);
+                }
+            });
+        } else{
+            buttonResume.setVisibility(View.GONE);
+            buttonPlay.setTranslationY(0);
+            buttonOptions.setTranslationY(0);
+            buttonHelp.setTranslationY(0);
+        }
     }
 
     private void loadGameConfigs() {
@@ -123,10 +166,8 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
         editor.putString(EDITOR_GAME_CONFIGS, json);
-
         editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
         editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
-
         editor.apply();
     }
 
@@ -134,27 +175,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         return sharedPreferences.getBoolean(EDITOR_IS_GAME_SAVED, false);
-    }
-
-    private void createGame() {
-        int numFishes = OptionsActivity.getNumFishes(this);
-        int rows = OptionsActivity.getNumRows(this);
-        int columns = OptionsActivity.getNumColumns(this);
-        Game game = new Game(rows, columns, numFishes, -1);
-
-        // Set high score depending whether config exists or not
-        int index = configs.getIndex(game);
-        if(index == -1){
-            configs.add(game);
-            index = configs.getIndex(game);
-        }
-        configs.setCurrentGameIndex(index);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        createGame();
     }
 
     private void setupBackgroundAnimation() {

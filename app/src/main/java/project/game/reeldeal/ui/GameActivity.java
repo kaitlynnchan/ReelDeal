@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
         configs = GameConfigs.getInstance();
         game = configs.getCurrentGame();
         rows = game.getRows();
-        cols = game.getCols();
+        cols = game.getColumns();
         totalFishes = game.getTotalFishes();
         highScore = game.getHighScore();
 
@@ -96,7 +96,7 @@ public class GameActivity extends AppCompatActivity {
         TableLayout table = findViewById(R.id.table_button_grid);
         table.removeAllViews();
 
-        for(int r = 0; r < rows; r++){
+        for(int row = 0; row < rows; row++){
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -104,9 +104,9 @@ public class GameActivity extends AppCompatActivity {
                     1.0f ));
             table.addView(tableRow);
 
-            for(int c = 0; c < cols; c++){
-                final int FINAL_ROW = r;
-                final int FINAL_COL = c;
+            for(int col = 0; col < cols; col++){
+                final int FINAL_ROW = row;
+                final int FINAL_COL = col;
 
                 Button button = new Button(this);
                 button.setLayoutParams(new TableRow.LayoutParams(
@@ -124,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
                 });
 
                 tableRow.addView(button);
-                buttons[r][c] = button;
+                buttons[row][col] = button;
             }
         }
     }
@@ -139,17 +139,18 @@ public class GameActivity extends AppCompatActivity {
                 boolean isButtonClickable = game.getTile(row, col).isClickable();
                 if(!isButtonClickable){
                     int count = game.scanRowCol(row, col);
-                    setScan(row, col, count);
+                    setScanButtonText(row, col, count);
                 }
 
-                int widthBtn = buttons[row][col].getWidth();
-                int heightBtn = buttons[row][col].getHeight();
+                Button button = buttons[row][col];
+                int widthBtn = button.getWidth();
+                int heightBtn = button.getHeight();
 
                 boolean isFishRevealed = game.getTile(row, col).isFishRevealed();
                 boolean isFishThere = game.getTile(row, col).isFishThere();
                 if(isFishThere && isFishRevealed){
-                    lockButton(widthBtn, heightBtn);
-                    setButtonImage(row, col, widthBtn, heightBtn);
+                    lockButtons(widthBtn, heightBtn);
+                    setButtonImage(button, widthBtn, heightBtn);
                     updateFoundCountTxt();
                 }
             }
@@ -161,43 +162,46 @@ public class GameActivity extends AppCompatActivity {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         int count = game.scanRowCol(row, col);
         if(count == -1){
+            fishFoundMedia.start();
             setFishesFound(row, col);
             SoundEffect.playSound(soundPool, SoundEffect.FOUND);
             vibrator.vibrate(4000);
+
+            setFishButton(row, col);
             checkGameFinished();
         } else{
             // Fix animations to move one at a time
             buttonAnimate(row, col);
             SoundEffect.playSound(soundPool, SoundEffect.SCAN);
             vibrator.vibrate(2500);
-            setScan(row, col, count);
+
+            animateScanning(row, col);
+            setScanButtonText(row, col, count);
         }
     }
 
-    private void setFishesFound(int row, int col) {
-        Button button = buttons[row][col];
-
-        // Lets game know that the fish has been revealed
+    private void setFishButton(int row, int col) {
         game.getTile(row, col).setFishRevealed(true);
 
+        Button button = buttons[row][col];
         int width = button.getWidth();
         int height = button.getHeight();
-        lockButton(width, height);
-        setButtonImage(row, col, width, height);
+        lockButtons(width, height);
+        setButtonImage(button, width, height);
         updateFoundCountTxt();
 
-        // Update already clicked buttons
+        // Update already clicked buttons in row and col
         for(int r = 0; r < rows; r++){
             Button temp = buttons[r][col];
-            setButtonText(temp);
+            updateButtonText(temp);
         }
         for(int c = 0; c < cols; c++){
             Button temp = buttons[row][c];
-            setButtonText(temp);
+            updateButtonText(temp);
         }
     }
 
-    private void lockButton(int width, int height) {
+    private void lockButtons(int width, int height) {
         for(int row = 0; row < rows; row++){
             for(int col = 0; col < cols; col++){
                 Button buttonLock = buttons[row][col];
@@ -211,8 +215,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void setButtonImage(int row, int col, int newWidth, int newHeight) {
-        Button button = buttons[row][col];
+    private void setButtonImage(Button button, int newWidth, int newHeight) {
         Resources resources = this.getResources();
         Bitmap originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.fish);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth,
@@ -226,7 +229,7 @@ public class GameActivity extends AppCompatActivity {
         textFound.setText("" + found);
     }
 
-    private void setButtonText(Button button) {
+    private void updateButtonText(Button button) {
         if(!button.isClickable()){
             int count = Integer.parseInt(button.getText().toString());
             if(count > 0){
@@ -248,14 +251,15 @@ public class GameActivity extends AppCompatActivity {
                 textHighScore.setText(strHighScore);
             }
 
-            // Display win screen
+            saveGameState(false);
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             WinDialog dialogWin = new WinDialog(scans, highScore);
             dialogWin.show(fragmentManager, TAG_WIN_DIALOG);
         }
     }
 
-    private void buttonAnimate(int row, int col) {
+    private void animateScanning(int row, int col) {
         Animation waveLeft = new TranslateAnimation(0, -15, 0, 0);
         Animation waveRight = new TranslateAnimation(0, 15, 0, 0);
         Animation waveAbove = new TranslateAnimation(0, 0, 0, -15);
@@ -267,26 +271,19 @@ public class GameActivity extends AppCompatActivity {
         animateWave(waveBelow);
 
         for(int rBelow = row + 1; rBelow < rows; rBelow++){
-            animateButtonWave(rBelow, col, waveBelow);
+            startButtonAnimation(rBelow, col, waveBelow);
         }
 
         for(int rAbove = row - 1; rAbove >= 0; rAbove--){
-            animateButtonWave(rAbove, col, waveAbove);
+            startButtonAnimation(rAbove, col, waveAbove);
         }
 
         for(int cRight = col + 1; cRight < cols; cRight++){
-            animateButtonWave(row, cRight, waveRight);
+            startButtonAnimation(row, cRight, waveRight);
         }
 
         for(int cLeft = col - 1; cLeft >= 0; cLeft--){
-            animateButtonWave(row, cLeft, waveLeft);
-        }
-    }
-
-    private void animateButtonWave(int row, int col, Animation wave) {
-        Button button = buttons[row][col];
-        if (!game.getTile(row, col).isFishRevealed() && game.getTile(row, col).isClickable()) {
-            button.startAnimation(wave);
+            startButtonAnimation(row, cLeft, waveLeft);
         }
     }
 
@@ -296,7 +293,14 @@ public class GameActivity extends AppCompatActivity {
         wave.setRepeatMode(Animation.REVERSE);
     }
 
-    private void setScan(int row, int col, int count) {
+    private void startButtonAnimation(int row, int col, Animation animation) {
+        Button button = buttons[row][col];
+        if (!game.getTile(row, col).isFishRevealed() && game.getTile(row, col).isClickable()) {
+            button.startAnimation(animation);
+        }
+    }
+
+    private void setScanButtonText(int row, int col, int count) {
         Button button = buttons[row][col];
         button.setPadding(0,0,0,0);
         button.setText(count + "");
@@ -306,8 +310,8 @@ public class GameActivity extends AppCompatActivity {
 
         // Update scan count text
         scans++;
-        TextView txtScans = findViewById(R.id.text_scans_count);
-        txtScans.setText("" + scans);
+        TextView textScans = findViewById(R.id.text_scans_count);
+        textScans.setText("" + scans);
     }
 
     private void setupDisplayText() {
@@ -365,8 +369,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void createBlankGame(){
-        for(int row = 0; row < buttons.length; row++){
-            for(int col = 0; col < buttons[row].length; col++){
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
                 buttons[row][col].setBackgroundResource(R.drawable.button_corner);
                 buttons[row][col].setText(null);
             }
@@ -376,7 +380,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        saveGameState(true);
+        if(found != totalFishes){
+            saveGameState(true);
+        }
     }
 
     private void setupBackButton() {
@@ -392,6 +398,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveGameState(false);
+        if(found != totalFishes){
+            saveGameState(true);
+        }
     }
 }
