@@ -162,16 +162,12 @@ public class GameActivity extends AppCompatActivity {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         int count = game.scanRowCol(row, col);
         if(count == -1){
-            fishFoundMedia.start();
-            setFishesFound(row, col);
             SoundEffect.playSound(soundPool, SoundEffect.FOUND);
             vibrator.vibrate(4000);
 
             setFishButton(row, col);
             checkGameFinished();
         } else{
-            // Fix animations to move one at a time
-            buttonAnimate(row, col);
             SoundEffect.playSound(soundPool, SoundEffect.SCAN);
             vibrator.vibrate(2500);
 
