@@ -104,14 +104,13 @@
         android:id="@+id/button_options"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/button_background"
         android:text="@string/options"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_play" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_help"
+        app:layout_constraintEnd_toStartOf="@+id/button_help"
+        app:layout_constraintTop_toTopOf="@+id/button_help" />
 
     <Button
         android:id="@+id/button_help"
@@ -125,8 +124,23 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_play" />
+
+    <Button
+        android:id="@+id/button_settings"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/settings"
+        android:foreground="@drawable/ic_settings"
+        android:foregroundGravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_help"
+        app:layout_constraintStart_toEndOf="@+id/button_help"
+        app:layout_constraintTop_toTopOf="@+id/button_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
