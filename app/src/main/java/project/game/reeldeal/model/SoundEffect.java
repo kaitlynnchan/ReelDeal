@@ -12,7 +12,7 @@ public final class SoundEffect {
     public static int SCAN;
 
     private SoundEffect() {
-        throw new IllegalAccessError();
+        throw new IllegalAccessError("Cannot access constructor");
     }
 
     public static SoundPool buildSoundPool(){
