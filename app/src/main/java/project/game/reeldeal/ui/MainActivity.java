@@ -65,6 +65,27 @@ public class MainActivity extends AppCompatActivity {
         setupBackgroundAnimation();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createGame();
+        setupButtons();
+    }
+
+    private void createGame() {
+        int totalFishes = OptionsActivity.getNumFishes(this);
+        int rows = OptionsActivity.getNumRows(this);
+        int columns = OptionsActivity.getNumColumns(this);
+        Game game = new Game(rows, columns, totalFishes, -1);
+
+        int index = configs.getIndex(game);
+        if(index == -1){
+            configs.add(game);
+            index = configs.getIndex(game);
+        }
+        configs.setCurrentGameIndex(index);
+    }
+
     private void setupButtons() {
         final Button buttonPlay = findViewById(R.id.button_play);
         buttonPlay.setOnClickListener(new View.OnClickListener() {
@@ -145,10 +166,8 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(configs.getConfigs());
         editor.putString(EDITOR_GAME_CONFIGS, json);
-
         editor.putInt(EDITOR_GAMES_STARTED, configs.getGamesStarted());
         editor.putBoolean(EDITOR_IS_GAME_SAVED, isGameSaved);
-
         editor.apply();
     }
 
@@ -156,28 +175,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         return sharedPreferences.getBoolean(EDITOR_IS_GAME_SAVED, false);
-    }
-
-    private void createGame() {
-        int numFishes = OptionsActivity.getNumFishes(this);
-        int rows = OptionsActivity.getNumRows(this);
-        int columns = OptionsActivity.getNumColumns(this);
-        Game game = new Game(rows, columns, numFishes, -1);
-
-        // Set high score depending whether config exists or not
-        int index = configs.getIndex(game);
-        if(index == -1){
-            configs.add(game);
-            index = configs.getIndex(game);
-        }
-        configs.setCurrentGameIndex(index);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        createGame();
-        setupButtons();
     }
 
     private void setupBackgroundAnimation() {

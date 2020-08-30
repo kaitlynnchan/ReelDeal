@@ -24,6 +24,9 @@ import project.game.reeldeal.R;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
+    private static final String TRANSLATION_Y = "translationY";
+    private static final String TRANSLATION_X = "translationX";
+
     private Handler handler = new Handler();
     private int heightScreen;
     private int widthScreen;
@@ -44,9 +47,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         handler.postDelayed(new Runnable() {
             @Override public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
-                startActivity(intent);
-                finish();
+                launchMainActivity();
             }
         }, timer);
     }
@@ -62,13 +63,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Game title animations
         TextView gameTitle = findViewById(R.id.text_title);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle,"translationY",
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameTitle, TRANSLATION_Y,
                 (heightScreen / -7f) * 2);
         moveY.setStartDelay(timer);
         moveY.setDuration(2000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, "translationX",
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameTitle, TRANSLATION_X,
                 widthScreen / 5f);
         moveX.setStartDelay(timer);
         moveX.setDuration(2000);
@@ -89,13 +90,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Game title animations
         TextView gameName = findViewById(R.id.text_title);
-        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName, "translationY",
+        ObjectAnimator moveY = ObjectAnimator.ofFloat(gameName, TRANSLATION_Y,
                 heightScreen / -3f);
         moveY.setStartDelay(timer);
         moveY.setDuration(1000);
         moveY.start();
 
-        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName, "translationX",
+        ObjectAnimator moveX = ObjectAnimator.ofFloat(gameName, TRANSLATION_X,
                 widthScreen / 9f);
         moveX.setStartDelay(timer);
         moveX.setDuration(1000);
@@ -109,7 +110,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Author animation
         TextView authors = findViewById(R.id.text_authors);
-        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, "translationX",
+        ObjectAnimator moveAuthorX = ObjectAnimator.ofFloat(authors, TRANSLATION_X,
                 (widthScreen / 3f) * 2);
         moveAuthorX.setStartDelay(timer);
         moveAuthorX.setDuration(1000);
@@ -124,12 +125,15 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
-
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
-                startActivity(intent);
-                finish();
+                launchMainActivity();
             }
         });
+    }
+
+    private void launchMainActivity() {
+        Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
+        startActivity(intent);
+        finish();
     }
 
     @Override

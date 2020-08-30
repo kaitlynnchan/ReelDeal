@@ -31,6 +31,7 @@ public class OptionsActivity extends AppCompatActivity {
     private int numFishes;
     private int numRows;
     private int numColumns;
+
     private GameConfigs configs = GameConfigs.getInstance();
     private int highScore;
     private int index;
@@ -49,8 +50,8 @@ public class OptionsActivity extends AppCompatActivity {
         numColumns = getNumColumns(this);
 
         setupRadioButtons();
-        setupHighScoreText();
-        setupGamesStartedText();
+        updateIndex();
+        setGamesStartedText();
         setupResetButtons();
         setupBackButton();
     }
@@ -68,7 +69,7 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     numFishes = buttonNumFishes;
                     saveOptions();
-                    setupHighScoreText();
+                    updateIndex();
                 }
             });
             radioNumFishes.addView(radioButtonFish);
@@ -95,7 +96,7 @@ public class OptionsActivity extends AppCompatActivity {
                     numRows = buttonNumRow;
                     numColumns = buttonNumColumn;
                     saveOptions();
-                    setupHighScoreText();
+                    updateIndex();
                 }
             });
             radioGameSize.addView(radioButtonGameSize);
@@ -104,10 +105,9 @@ public class OptionsActivity extends AppCompatActivity {
                 radioButtonGameSize.setChecked(true);
             }
         }
-        setGame();
     }
 
-    private void setGame(){
+    private void updateIndex(){
         Game game = new Game(numRows, numColumns, numFishes, -1);
 
         // Set high score depending whether config exists or not
@@ -118,11 +118,10 @@ public class OptionsActivity extends AppCompatActivity {
         } else{
             highScore = configs.get(index).getHighScore();
         }
+        setHighScoreText();
     }
 
-    private void setupHighScoreText() {
-        setGame();
-
+    private void setHighScoreText() {
         TextView textHighScore = findViewById(R.id.text_high_score);
         String strHighScore = getString(R.string.high_score);
         if (highScore == -1) {
@@ -133,11 +132,11 @@ public class OptionsActivity extends AppCompatActivity {
         textHighScore.setText(strHighScore);
     }
 
-    private void setupGamesStartedText(){
-        TextView textGamesPlayed = findViewById(R.id.text_games_started);
-        String strGamesPlayed = getString(R.string.games_started);
-        strGamesPlayed += "" + configs.getGamesStarted();
-        textGamesPlayed.setText(strGamesPlayed);
+    private void setGamesStartedText(){
+        TextView textGamesStarted = findViewById(R.id.text_games_started);
+        String strGamesStarted = getString(R.string.games_started);
+        strGamesStarted += "" + configs.getGamesStarted();
+        textGamesStarted.setText(strGamesStarted);
     }
 
     private void setupResetButtons() {
@@ -148,8 +147,9 @@ public class OptionsActivity extends AppCompatActivity {
                 if(index != -1){
                     highScore = -1;
                     configs.get(index).setHighScore(highScore);
-                    MainActivity.saveGameConfigs(OptionsActivity.this, configs, false);
-                    setupHighScoreText();
+                    MainActivity.saveGameConfigs(OptionsActivity.this, configs,
+                            false);
+                    updateIndex();
                 }
             }
         });
@@ -159,8 +159,9 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 configs.setGamesStarted(0);
-                setupGamesStartedText();
-                MainActivity.saveGameConfigs(OptionsActivity.this, configs, false);
+                setGamesStartedText();
+                MainActivity.saveGameConfigs(OptionsActivity.this, configs,
+                        false);
             }
         });
     }
@@ -173,6 +174,7 @@ public class OptionsActivity extends AppCompatActivity {
         editor.putInt(EDITOR_NUM_ROWS, numRows);
         editor.putInt(EDITOR_NUM_COLUMNS, numColumns);
         editor.apply();
+        MainActivity.saveGameConfigs(this, configs, false);
     }
 
     public static int getNumFishes(Context context){
