@@ -7,8 +7,5 @@
         android:pivotY="50"
         android:duration="2500"
         android:repeatCount="1"
-        android:repeatMode="reverse">
-    </rotate>
-
-
+        android:repeatMode="reverse" />
 </set>

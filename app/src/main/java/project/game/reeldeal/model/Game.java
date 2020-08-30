@@ -9,13 +9,13 @@ public class Game {
 
     private GameTile[][] gameBoard;
     private int rows;
-    private int cols;
+    private int columns;
     private int totalFishes;
     private int highScore;
 
-    public Game(int rows, int cols, int totalFishes, int highScore) {
+    public Game(int rows, int columns, int totalFishes, int highScore) {
         this.rows = rows;
-        this.cols = cols;
+        this.columns = columns;
         this.totalFishes = totalFishes;
         this.highScore = highScore;
     }
@@ -32,8 +32,8 @@ public class Game {
         return rows;
     }
 
-    public int getCols() {
-        return cols;
+    public int getColumns() {
+        return columns;
     }
 
     public int getTotalFishes() {
@@ -53,9 +53,9 @@ public class Game {
     }
 
     public void fillArray(){
-        gameBoard = new GameTile[rows][cols];
+        gameBoard = new GameTile[rows][columns];
         for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
+            for(int col = 0; col < columns; col++){
                 gameBoard[row][col] = new GameTile();
             }
         }
@@ -64,7 +64,7 @@ public class Game {
         int tempTotalFishes = totalFishes;
         while(tempTotalFishes > 0){
             int row = (int) ( Math.random() * rows );
-            int col = (int) ( Math.random() * cols );
+            int col = (int) ( Math.random() * columns);
             if(!isFishThere(row, col)) {
                 gameBoard[row][col].setFishThere(true);
                 tempTotalFishes--;
@@ -72,8 +72,9 @@ public class Game {
         }
     }
 
+    // Return -1 if there is a fish at specified position
+    //  else returns number of fishes in row and col
     public int scanRowCol(int row, int col){
-        // return -1 if the position in the array has a fish
         if(isFishThere(row, col) && !gameBoard[row][col].isFishRevealed()){
             return -1;
         }
@@ -84,7 +85,7 @@ public class Game {
                 fishTracker++;
             }
         }
-        for(int c = 0; c < cols; c++){
+        for(int c = 0; c < columns; c++){
             if(isFishThere(row, c) && !gameBoard[row][c].isFishRevealed()){
                 fishTracker++;
             }
@@ -95,5 +96,4 @@ public class Game {
     private boolean isFishThere(int row, int col){
         return gameBoard[row][col].isFishThere();
     }
-
 }

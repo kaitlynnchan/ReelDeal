@@ -4,29 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/ocean_background"
-    android:backgroundTint="#7A000000"
+    android:background="@drawable/dock"
     android:backgroundTintMode="src_over"
-    tools:context=".ui.PauseDialog" >
+    tools:context=".ui.PauseDialog">
 
     <TextView
         android:id="@+id/text_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="@string/pause"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_resume"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="45dp"
         android:background="@drawable/button_background"
         android:contentDescription="@string/resume"
         android:foreground="@drawable/ic_play_arrow"
@@ -40,7 +38,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/button_background"
         android:contentDescription="@string/stop"
         android:foreground="@drawable/ic_stop"

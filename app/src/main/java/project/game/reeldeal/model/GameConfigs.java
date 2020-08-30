@@ -64,7 +64,7 @@ public class GameConfigs {
         for(int i = 0; i < configs.size(); i++){
             Game tempGame = configs.get(i);
             if(tempGame.getRows() == game.getRows()
-                    && tempGame.getCols() == game.getCols()
+                    && tempGame.getColumns() == game.getColumns()
                     && tempGame.getTotalFishes() == game.getTotalFishes()){
                 return i;
             }
