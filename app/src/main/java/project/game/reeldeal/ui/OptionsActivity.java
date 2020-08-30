@@ -181,19 +181,22 @@ public class OptionsActivity extends AppCompatActivity {
     public static int getNumFishes(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_NUM_FISHES, Constant.DEFAULT_NUM_FISHES);
+        int defaultNumFishes = context.getResources().getInteger(Constant.DEFAULT_NUM_FISHES);
+        return sharedPreferences.getInt(EDITOR_NUM_FISHES, defaultNumFishes);
     }
 
     public static int getNumRows(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_NUM_ROWS, Constant.DEFAULT_NUM_ROWS);
+        int defaultNumRows = context.getResources().getInteger(Constant.DEFAULT_NUM_ROWS);
+        return sharedPreferences.getInt(EDITOR_NUM_ROWS, defaultNumRows);
     }
 
     public static int getNumColumns(Context context){
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_NUM_COLUMNS, Constant.DEFAULT_NUM_COLUMNS);
+        int defaultNumColumns = context.getResources().getInteger(Constant.DEFAULT_NUM_COLUMNS);
+        return sharedPreferences.getInt(EDITOR_NUM_COLUMNS, defaultNumColumns);
     }
 
     private void setupBackButton() {

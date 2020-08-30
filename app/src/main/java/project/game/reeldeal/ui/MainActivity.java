@@ -115,6 +115,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button buttonSettings = findViewById(R.id.button_settings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SettingsActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
         Button buttonResume = findViewById(R.id.button_resume);
         boolean isGameSaved = getIsGameSaved(this);
         if(isGameSaved){
@@ -131,9 +140,11 @@ public class MainActivity extends AppCompatActivity {
             treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    buttonPlay.setTranslationY(buttonPlay.getHeight() / 2f);
-                    buttonOptions.setTranslationY(buttonPlay.getHeight() / 2f);
-                    buttonHelp.setTranslationY(buttonPlay.getHeight() / 2f);
+                    float translationY = buttonPlay.getHeight() / 2f;
+                    buttonPlay.setTranslationY(translationY);
+                    buttonOptions.setTranslationY(translationY);
+                    buttonHelp.setTranslationY(translationY);
+                    buttonSettings.setTranslationY(translationY);
                 }
             });
         } else{
@@ -141,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             buttonPlay.setTranslationY(0);
             buttonOptions.setTranslationY(0);
             buttonHelp.setTranslationY(0);
+            buttonSettings.setTranslationY(0);
         }
     }
 

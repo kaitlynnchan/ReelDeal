@@ -9,6 +9,7 @@
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
@@ -82,5 +83,8 @@
     <string name="confetti">confetti</string>
     <string name="bucket_of_fishes">bucket of fishes</string>
     <string name="fishing_pole">fishing pole</string>
+    <string name="settings">SETTINGS</string>
+    <string name="sound_effects">Sound Effects:</string>
+    <string name="toggle_button">toggle button</string>
 
 </resources>

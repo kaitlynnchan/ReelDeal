@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import project.game.reeldeal.R;
 import project.game.reeldeal.model.GameConfigs;
 import project.game.reeldeal.model.Game;
+import project.game.reeldeal.model.SoundEffect;
 
 /**
  * Game Screen
@@ -46,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private int scans = 0;
     private int found = 0;
     private Button[][] buttons;
+    private SoundPool soundPool;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -62,6 +64,9 @@ public class GameActivity extends AppCompatActivity {
         cols = game.getColumns();
         totalFishes = game.getTotalFishes();
         highScore = game.getHighScore();
+
+        soundPool = SoundEffect.buildSoundPool();
+        SoundEffect.loadSounds(this, soundPool);
 
         buttons = new Button[rows][cols];
         setupButtonGrid();
@@ -154,19 +159,15 @@ public class GameActivity extends AppCompatActivity {
     private void updateButtons(int row, int col) {
         // Adding vibration to buttons
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        //Adding sounds to button click in game
-        MediaPlayer media = MediaPlayer.create(this, R.raw.sonar_low);
-        MediaPlayer fishFoundMedia = MediaPlayer.create(this, R.raw.sonar_high);
-
         int count = game.scanRowCol(row, col);
         if(count == -1){
-            fishFoundMedia.start();
+            SoundEffect.playSound(soundPool, SoundEffect.FOUND);
             vibrator.vibrate(4000);
 
             setFishButton(row, col);
             checkGameFinished();
         } else{
-            media.start();
+            SoundEffect.playSound(soundPool, SoundEffect.SCAN);
             vibrator.vibrate(2500);
 
             animateScanning(row, col);
@@ -395,5 +396,12 @@ public class GameActivity extends AppCompatActivity {
         if(found != totalFishes){
             saveGameState(true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
     }
 }
