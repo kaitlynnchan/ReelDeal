@@ -376,9 +376,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        if(found == totalFishes){
-            saveGameState(false);
-        } else{
+        if(found != totalFishes){
             saveGameState(true);
         }
     }
@@ -396,9 +394,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(found == totalFishes){
-            saveGameState(false);
-        } else{
+        if(found != totalFishes){
             saveGameState(true);
         }
     }

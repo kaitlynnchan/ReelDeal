@@ -56,6 +56,7 @@
         android:id="@+id/text_game_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lobster"
         android:paddingBottom="10dp"
         android:shadowColor="#000000"
@@ -65,10 +66,10 @@
         android:text="@string/reel_deal"
         android:textColor="@color/colorOrange"
         android:textSize="80sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_play"
@@ -84,49 +85,48 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59000003" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_resume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button_background"
         android:paddingLeft="13dp"
         android:paddingRight="13dp"
         android:text="@string/resume"
         app:layout_constraintBottom_toBottomOf="@+id/button_play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.67"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_play" />
+        app:layout_constraintEnd_toEndOf="@+id/button_play"
+        app:layout_constraintStart_toStartOf="@+id/button_play" />
 
     <Button
         android:id="@+id/button_options"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:text="@string/options"
-        app:layout_constraintEnd_toEndOf="@+id/text_game_title"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="@+id/text_game_title"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
     <Button
         android:id="@+id/button_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
+        android:contentDescription="@string/help"
+        android:foreground="@drawable/ic_help_outline"
+        android:foregroundGravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/help"
-        app:layout_constraintEnd_toEndOf="@+id/text_game_title"
-        app:layout_constraintHorizontal_bias="0.74"
-        app:layout_constraintStart_toStartOf="@+id/text_game_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

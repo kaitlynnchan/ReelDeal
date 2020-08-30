@@ -66,7 +66,7 @@
 
     <TextView
         android:id="@+id/text_game_size_options"
-        android:layout_width="225dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:text="@string/game_size_options"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +112,7 @@
         android:id="@+id/button_reset_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:background="@drawable/button_background"
         android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,7 +124,7 @@
         android:id="@+id/text_games_started"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/games_started"
         app:layout_constraintBottom_toBottomOf="@+id/button_reset_games_started"
         app:layout_constraintEnd_toStartOf="@+id/button_reset_games_started"

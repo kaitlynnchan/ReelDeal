@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -65,12 +66,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button buttonPlay = findViewById(R.id.button_play);
+        final Button buttonPlay = findViewById(R.id.button_play);
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveGameConfigs(MainActivity.this, configs, false);
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
+        final Button buttonOptions = findViewById(R.id.button_options);
+        buttonOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
+        final Button buttonHelp = findViewById(R.id.button_help);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -86,27 +105,22 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+
+            ViewTreeObserver treeObserver = buttonResume.getViewTreeObserver();
+            treeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    buttonPlay.setTranslationY(buttonPlay.getHeight()/2f);
+                    buttonOptions.setTranslationY(buttonPlay.getHeight()/2f);
+                    buttonHelp.setTranslationY(buttonPlay.getHeight()/2f);
+                }
+            });
         } else{
             buttonResume.setVisibility(View.GONE);
+            buttonPlay.setTranslationY(0);
+            buttonOptions.setTranslationY(0);
+            buttonHelp.setTranslationY(0);
         }
-
-        Button buttonOptions = findViewById(R.id.button_options);
-        buttonOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
-                startActivity(intent);
-            }
-        });
-
-        Button buttonHelp = findViewById(R.id.button_help);
-        buttonHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
-                startActivity(intent);
-            }
-        });
     }
 
     private void loadGameConfigs() {
