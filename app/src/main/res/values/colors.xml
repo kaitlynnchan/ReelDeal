@@ -8,4 +8,5 @@
     <color name="colorBlue">#3EA7AB</color>
     <color name="colorDarkBlue">#00476e</color>
     <color name="colorOrange">#FFf8a43a</color>
+    <color name="colorWhiteTranslucent">#B5FFFFFF</color>
 </resources>

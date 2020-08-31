@@ -4,41 +4,48 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="title_activity_game">GameActivity</string>
-    <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_welcome">WelcomeScreen</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
     <string name="welcome_skip">SKIP</string>
     <string name="welcome_title">REEL\n\t\t\t\tDEAL\u0020\u0020</string>
     <string name="welcome_authors">by Kaitlynn Chan\n\t\t\t\tand Sunayani Sarkar</string>
+    <string name="beta">BETA</string>
+    <string name="fishing_pole">fishing pole</string>
+
     <string name="play">NEW GAME</string>
     <string name="reel_deal">REEL DEAL\u0020\u0020</string>
-    <string name="help">HELP</string>
     <string name="scans_used">Scans Used:</string>
     <string name="scans_count">0</string>
     <string name="found">Found:</string>
     <string name="found_count">0</string>
     <string name="high_score">High Score:\u0020\u0020</string>
     <string name="games_started">Games Started:\u0020\u0020</string>
+    <string name="total_fishes">Total Fishes:\u0020\u0020</string>
+    <string name="back">back</string>
+    <string name="fish">fish</string>
+
+    <string name="help">HELP</string>
     <string name="about_authors_content"><u>About Authors</u>
         \nCreators of Reel Deal: Kaitlynn Chan and Sunayani Sarkar
         \nBrought to you by: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276 - SUMMER 2020</a></string>
     <string name="how_to_play_content"><u>How to play</u>
         \n<b>Objective</b>
         \nCatch all the fish with performing the least amount of sonar scans.
-        \n\n<b>Changing Settings</b>
-        \nTo change settings go into OPTIONS, from there you can select the game size and number
-        of fishes you must fish. You can also reset the high score for any of the game configurations
-        and reset the number of times the game has been started.
+        \n\n<b>Changing Game Options</b>
+        \nTo change game options go into OPTIONS, from there you can select the game size and number of fishes you must fish.
+        You can also reset the high score for any of the game configurations and reset the number of times the game has been started.
         \n\n<b>Playing the game</b>
-        \n1 . To play the game click PLAY on the main menu, then it will take you to the game board.
-        \n2 . To catch the fishes click on the buttons. If you find a fish an image of a fish will appear,
-        otherwise a sonar scan will be performed and a number will appear on the button. This number
-        indicates how many fishes are left in that row and column.
-        \n3 . Clicking a button that has already been clicked has no effect,
-        however you are allowed to click on a fish to perform a scan.
+        \n1 . To play the game click NEW GAME on the main menu, then it will take you to the game board.
+        You can also click RESUME GAME if there is already a game in progress.
+        \n2 . To fish click on the blue buttons. If you find a fish an image of a fish will appear,
+        otherwise a sonar scan will happen and a number will be shown on the button.
+        This number indicates how many fishes are left in that row and column.
+        \n3 . You can only click on buttons without any numbers, this includes any buttons with fishes.
         \n4 . Once you catch all the fishes you win the game!
     </string>
     <string name="citations_content"><u>Citations</u>
@@ -61,28 +68,27 @@
         \n\n<b>Sounds</b>
         \n<a href="https://www.youtube.com/watch?v=ZzbGjJwJe80">Sonar sounds</a>
     </string>
-    <string name="beta">BETA</string>
-    <string name="num_fishes_options">Number of Fishes:</string>
+
     <string name="options">OPTIONS</string>
+    <string name="num_fishes_options">Number of Fishes:</string>
     <string name="game_size_options">Game Size:</string>
     <string name="rows_and">\u0020rows &amp;\u0020</string>
     <string name="columns">\u0020columns</string>
     <string name="fishes">\u0020fishes</string>
-    <string name="total_fishes">Total Fishes:\u0020\u0020</string>
     <string name="no_answer">N/A</string>
     <string name="reset">RESET</string>
+
     <string name="pause">PAUSE</string>
     <string name="resume">Resume Game</string>
     <string name="stop">stop</string>
-    <string name="back">back</string>
-    <string name="fish">fish</string>
+
     <string name="win_title">You Win!!</string>
     <string name="score">Your Score:</string>
     <string name="congrats_message">Congratulations on winning the game!\nClick the OK button to go back to the main menu\n\n</string>
     <string name="best">BEST!!</string>
     <string name="confetti">confetti</string>
     <string name="bucket_of_fishes">bucket of fishes</string>
-    <string name="fishing_pole">fishing pole</string>
+
     <string name="settings">SETTINGS</string>
     <string name="sound_effects">Sound Effects:</string>
     <string name="toggle_button">toggle button</string>
